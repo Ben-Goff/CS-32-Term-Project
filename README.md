@@ -38,26 +38,66 @@ physical/digital workspace.
 
 The first crucial feature is a method of collecting user input on goals, their deadlines, and
 schedule of non goal-related commitments; this is how the app collects the data that it will
-process. The challenge of this feature will be making the input process as non-tedious and 
+process. The challenge of this feature will be making the input process as non-tedious and
 non-intrusive as possible while still collecting sufficient data.
 
 The second crucial feature is a method of assigning blocks of time towards getting a list of tasks
-done, each of which by a certain due date. This is the core scheduling feature of the app, and 
-the challenge here will be determining the core algorithm to fulfill this feature.
+done, each of which by a certain due date. This is the core scheduling feature of the app, and the
+challenge here will be determining the core algorithm to fulfill this feature.
 
 The third is a way for the user to let the app know on the progress that they are making, and a way
-for the app to update the schedule according to this progress. This is how the app becomes 
-flexible to unplanned outcomes. Perhaps the app can update the tasks and due dates and simply 
-remake the schedule, but it may be necessary to implement multiple "lifestyles" of productivity 
-that work best for different users.
+for the app to update the schedule according to this progress. This is how the app becomes flexible
+to unplanned outcomes. Perhaps the app can update the tasks and due dates and simply remake the
+schedule, but it may be necessary to implement multiple "lifestyles" of productivity that work best
+for different users.
 
-The final requirement is for the app to detect potential issues such as frequent rescheduling, or 
-the user reporting that little progress has been made on a task, and provide recommendations 
-accordingly. This is so that the app can help the user improve, rather than simply reinforce, 
-productivity. Deciding on how the app should detect and categorize such issues is speculated to 
-be the most difficult task of the project.
+The final requirement is for the app to detect potential issues such as frequent rescheduling, or
+the user reporting that little progress has been made on a task, and provide recommendations
+accordingly. This is so that the app can help the user improve, rather than simply reinforce,
+productivity. Deciding on how the app should detect and categorize such issues is speculated to be
+the most difficult task of the project.
 
 ### Idea 2
+
+Study scheduler web app: addresses a similar problem to the previous idea but with different 
+features:
+
+Problem: With all that students have to balance - classes, homework, extracurriculars, sports,
+social commitments - it can be hard to fit everything into a sustainable schedule. Although many
+calendar apps exist, they rely on the student finding their optimal schedule on their own, and
+holding themselves to the schedule.
+
+Solution: A web app that intelligently creates schedules for a student given their obligations and
+predicted time commitments.
+
+Feature #1: Throughout the day, users will be able to log how long scheduled tasks took in
+actuality. Using this data, schedules can be improved on in future days with more fine-tuned times.
+This feature is important in helping users realize what is realistic for them to complete given time
+constraints. In addition, it will help them have a better grasp on their daily schedule. The most
+challenging part of this feature is knowing which tasks are similar in nature to each other, and
+should have altered time allocation in the future.
+
+Feature #2: Chooses an order of tasks for each day that minimizes burnout. It could do this by
+grouping tasks into categories and mixing them together throughout the day. This way, users wont
+have 3 hours of straight reading followed by 3 hours of straight problem sets. In my experience,
+variety throughout the day helps me stay focused while studying. The most challenging part of this
+feature is figuring out how users can separate tasks by type. Options include having a set of
+options they can choose from, which could allow us to include more functionality for each, or
+allowing users to define their own categories, which would give users the most variety of options.
+
+Feature #3: Promote motivation and efficiency throughout the day. This could be done in a few
+different ways. The first would be to tie the app to a chrome extension that would blacklist a set
+of websites while the user should be focusing (or whitelist just the ones needed to focus on a
+specific task). The second approach is to be able to connect with friends in you same classes /
+activities. With these fellow users, you could start a "study streak," where every day you
+successfully do your work for your shared class / activity without being distracted (visiting a
+blacklisted website in chrome), the streak goes up by one. When one of you fail to do so, the streak
+breaks. This social motivation would work similarly to snapchat streaks, which have proven extremely
+effective. We would need to reach out to users to see if this second approach would be effective, as
+I believe it's viability depends heavily on users study methodology. Would this add more pressure on
+their studies, which could decrease productivity, or would it give them the push they need to stay
+on track? The most challenging part of this feature would be providing the infrastructure for users
+to connect to each other through their profiles.
 
 ### Idea 3
 
