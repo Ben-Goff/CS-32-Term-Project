@@ -6,6 +6,12 @@
 
 Benjamin:
 
+- Coding strengths: I think that I have good attention to detail, which makes me good at debugging my code.
+I also think that I am patient when working in groups.
+
+- Coding weaknesses: I came from the CS19 track, so I have limited experience with object-oriented programming.
+  In addition, I sometimes struggle with code readability and procrastination.
+
 Cameron
 
 Dustin:
