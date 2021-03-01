@@ -6,6 +6,7 @@
 
 Benjamin:
 
+<<<<<<< HEAD
 - Coding strengths: I think that I have good attention to detail, which makes me good at debugging my code.
 I also think that I am patient when working in groups.
 
@@ -13,6 +14,9 @@ I also think that I am patient when working in groups.
   In addition, I sometimes struggle with code readability and procrastination.
 
 Cameron
+=======
+Cameron:
+>>>>>>> 8d14dd293c32877a4e20742363ec3ae857061f0d
 
 Dustin:
 
@@ -24,6 +28,13 @@ Dustin:
   everything implemented first.
 
 Miru:
+
+* Strengths: I'm pretty familiar with Java and object oriented programming in Java since I've 
+  been using it on and off for several years now. I also think I generally do an okay to good job with
+  commenting my code as I write it and keeping it easily readable.
+* Weaknesses: I can have an unfortunate tendency to procrastinate and am not very confident
+  in my understanding of data structures and making my code more efficient. I also tend to not
+  test my code as thoroughly as I probably should. 
 
 **Project Idea(s):** _Fill this in with three unique ideas! (Due by March 1)_
 
