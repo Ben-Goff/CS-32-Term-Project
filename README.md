@@ -6,14 +6,23 @@
 
 Benjamin:
 
+<<<<<<< HEAD
 - Coding strengths: I think that I have good attention to detail, which makes me good at debugging my code.
 I also think that I am patient when working in groups.
 
 - Coding weaknesses: I came from the CS19 track, so I have limited experience with object-oriented programming.
   In addition, I sometimes struggle with code readability and procrastination.
-  
+
 Cameron:
 
+* Strengths: I like to think I am good at setting up a project's structure, as in creating appropriate
+  class heirarchies, interface implentation, inheretance, etc. I am good at choosing appropriate data
+  structures for time efficiency. Like Dustin, I also like to think I am good at making pseudo code for
+  a given algorithm.
+* Weaknesses: Clearly, my biggest weakness is comitting changes. I am not great at finding edge cases for 
+  testing, and I tend to avoid testing till the end of a project. I am also not very great at front end coding
+  (e.g. writing html, css, js).
+  
 Dustin:
 
 * Strengths: I'd like to think that I'm good at planning out code and getting ideas onto pseudo-code
