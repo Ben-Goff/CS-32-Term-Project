@@ -79,6 +79,8 @@ accordingly. This is so that the app can help the user improve, rather than simp
 productivity. Deciding on how the app should detect and categorize such issues is speculated to be
 the most difficult task of the project.
 
+**HTA Approval (dpark20):** Idea approved
+
 ### Idea 2
 
 Study scheduler web app: addresses a similar problem to the previous idea but with different 
@@ -120,6 +122,10 @@ I believe it's viability depends heavily on users study methodology. Would this 
 their studies, which could decrease productivity, or would it give them the push they need to stay
 on track? The most challenging part of this feature would be providing the infrastructure for users
 to connect to each other through their profiles.
+
+**HTA Approval (dpark20):** Idea not approved - it needs more algorithmic complexity beyond just the features you have!
+
+Good ideas! Looking forward to seeing what you make.
 
 ### Idea 3
 
