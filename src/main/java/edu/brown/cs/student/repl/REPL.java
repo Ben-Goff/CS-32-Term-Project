@@ -1,7 +1,7 @@
 package edu.brown.cs.student.repl;
 
-import edu.brown.cs.madhavramesh.stars.TriggerAction;
-import edu.brown.cs.madhavramesh.stars.TriggerActionExecutor;
+import edu.brown.cs.student.weekli.TriggerAction;
+import edu.brown.cs.student.weekli.TriggerActionExecutor;
 
 import java.io.BufferedReader;
 import java.io.IOException;

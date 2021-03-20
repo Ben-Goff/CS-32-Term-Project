@@ -7,7 +7,7 @@ import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-
+import com.google.gson.Gson;
 import edu.brown.cs.student.repl.REPL;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
@@ -18,9 +18,7 @@ import spark.Response;
 import spark.Spark;
 import spark.TemplateViewRoute;
 import spark.template.freemarker.FreeMarkerEngine;
-
 import com.google.common.collect.ImmutableMap;
-
 import freemarker.template.Configuration;
 
 /**
@@ -30,7 +28,7 @@ import freemarker.template.Configuration;
 public final class Main {
 
   private static final int DEFAULT_PORT = 4567;
-  //private static final Gson GSON = new Gson();
+  private static final Gson GSON = new Gson();
   private static final List<TriggerAction> ACTIONS = Arrays.asList();
 
   /**
@@ -63,8 +61,6 @@ public final class Main {
 
     // Process commands in a REPL
     REPL.run(ACTIONS);
-
-    // TODO: Process commands in a REPL
   }
 
   private static FreeMarkerEngine createEngine() {
