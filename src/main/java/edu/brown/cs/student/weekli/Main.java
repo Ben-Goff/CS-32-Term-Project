@@ -1,11 +1,14 @@
-package edu.brown.cs.student.stars;
+package edu.brown.cs.student.weekli;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
+import edu.brown.cs.student.repl.REPL;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 import spark.ExceptionHandler;
@@ -27,6 +30,8 @@ import freemarker.template.Configuration;
 public final class Main {
 
   private static final int DEFAULT_PORT = 4567;
+  //private static final Gson GSON = new Gson();
+  private static final List<TriggerAction> ACTIONS = Arrays.asList();
 
   /**
    * The initial method called when execution begins.
@@ -56,7 +61,8 @@ public final class Main {
       runSparkServer((int) options.valueOf("port"));
     }
 
-    System.out.println("HELLO WORLD");
+    // Process commands in a REPL
+    REPL.run(ACTIONS);
 
     // TODO: Process commands in a REPL
   }
