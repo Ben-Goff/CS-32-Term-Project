@@ -1,4 +1,4 @@
-package edu.brown.cs.student.weekli;
+package edu.brown.cs.student.weekli.schedule;
 
 import java.util.Calendar;
 /**

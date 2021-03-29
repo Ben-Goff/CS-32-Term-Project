@@ -1,11 +1,11 @@
-package edu.brown.cs.student.weekli;
+package edu.brown.cs.student.weekli.schedule;
 
 import java.util.Calendar;
 
 /**
  * Represents a commitment in the schedule.
  */
-public class Commitment implements Event{
+public class Commitment implements Event {
 
   private Calendar startDate;
   private Calendar endDate;
