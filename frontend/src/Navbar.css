@@ -1,0 +1,13 @@
+.flexbox-section {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.Logo {
+    width: 50px;
+    height: 52px;
+
+    background: #FBE08F;
+    border-radius: 10px;
+}
