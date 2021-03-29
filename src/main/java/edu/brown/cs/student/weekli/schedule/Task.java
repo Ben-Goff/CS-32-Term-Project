@@ -1,14 +1,59 @@
 package edu.brown.cs.student.weekli.schedule;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 public class Task implements Event {
 
+  private Calendar startDate;
+  private Calendar endDate;
+  private long estTime;
+  private String name;
+  private String description;
+  private double progress;
+  private final long iD;
+  private final static int category = 1;
+  private List<Block> taskBlocks;
+  private long blockLength;
 
+  /**
+   * Constructor.
+   * @param start the start date
+   * @param end the end date
+   * @param estTime length of time to complete task
+   * @param name the name
+   * @param description the description
+   * @throws NumberFormatException if estTime < 0
+   */
+  public Task(Calendar start, Calendar end, long estTime, String name, String description, long blockLength) throws NumberFormatException {
+    if (estTime < 0) {
+      throw new NumberFormatException("ERROR: Duration of event is negative.");
+    } else {
+      this.estTime = estTime;
+    }
+    this.startDate = start;
+    this.endDate = end;
+    this.name = name;
+    this.description = description;
+    this.progress = 0;
+    this.iD = (new Date()).getTime();
+    this.blockLength = blockLength;
+    this.taskBlocks = blockBuilder();
+  }
 
-
-
-
+  public List<Block> blockBuilder() {
+    int blockCount = (int) (Math.ceil(this.estTime / this.blockLength));
+    Block[] taskBlocks = new Block[blockCount];
+    Block temp;
+    for(int i = 0; i < blockCount; i++) {
+      temp = new Block(this.startDate, this.blockLength, false, this.iD);
+      taskBlocks[i] = temp;
+    }
+    return Arrays.asList(taskBlocks);
+  }
 
   /**
    * Get the start date of the event.
@@ -17,7 +62,7 @@ public class Task implements Event {
    */
   @Override
   public Calendar getStartDate() {
-    return null;
+    return startDate;
   }
 
   /**
@@ -27,7 +72,7 @@ public class Task implements Event {
    */
   @Override
   public Calendar getEndDate() {
-    return null;
+    return endDate;
   }
 
   /**
@@ -37,7 +82,7 @@ public class Task implements Event {
    */
   @Override
   public String getDescription() {
-    return null;
+    return description;
   }
 
   /**
@@ -47,7 +92,7 @@ public class Task implements Event {
    */
   @Override
   public int getCategory() {
-    return 0;
+    return category;
   }
 
   /**
@@ -57,7 +102,7 @@ public class Task implements Event {
    */
   @Override
   public String getName() {
-    return null;
+    return name;
   }
 
   /**
@@ -67,6 +112,47 @@ public class Task implements Event {
    */
   @Override
   public long getEstimatedTime() {
-    return 0;
+    return estTime;
   }
+
+  /**
+   * Set the estimated time to complete event.
+   *
+   */
+  public void setEstimatedTime(long time) {
+    this.estTime = time;
+  }
+
+/**
+ * Get the progress of the event.
+ *
+ * @return the progress
+ */
+public long getProgress() {
+    return estTime;
+    }
+
+/**
+ * Set the event progress.
+ *
+ */
+public void setProgress(double prog) {
+  setEstimatedTime((long) (getEstimatedTime() / (1 - this.progress) * (1 - prog)));
+  this.progress = prog;
+}
+
+  /**
+   * Gets the unique iD of the task
+   * @return the unique iD
+   */
+  @Override
+  public long getID() {
+    return this.iD;
+  }
+
+  @Override
+  public List<Block> getBlocks() {
+    return this.taskBlocks;
+  }
+
 }

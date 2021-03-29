@@ -1,6 +1,11 @@
 package edu.brown.cs.student.weekli.schedule;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Represents a commitment in the schedule.
@@ -12,7 +17,9 @@ public class Commitment implements Event {
   private long estTime;
   private String name;
   private String description;
-  private final int category = 0;
+  private final long iD;
+  private final static int category = 0;
+  private final Block commitBlock;
 
   /**
    * Constructor.
@@ -23,16 +30,18 @@ public class Commitment implements Event {
    * @throws NumberFormatException if estTime < 0
    */
   public Commitment(Calendar start, Calendar end, String name, String description) throws NumberFormatException {
+    this.iD = (new Date()).getTime();
     this.startDate = start;
     this.endDate = end;
-    this.name = name;
-    this.description = description;
     long time = endDate.getTimeInMillis() - startDate.getTimeInMillis();
     if (time < 0) {
       throw new NumberFormatException("ERROR: Duration of event is negative.");
     } else {
       this.estTime = time;
     }
+    this.name = name;
+    this.description = description;
+    this.commitBlock = new Block(this.startDate, this.estTime, true, this.iD);
   }
 
   /**
@@ -93,5 +102,24 @@ public class Commitment implements Event {
   @Override
   public long getEstimatedTime() {
     return this.estTime;
+  }
+
+  /**
+   * Gets the unique iD of the commitment
+   * @return the unique iD
+   */
+  @Override
+  public long getID() {
+    return this.iD;
+  }
+
+  /**
+   * Gets the blocks
+   * @return
+   */
+  @Override
+  public List<Block> getBlocks() {
+    List<Block> blocks = Collections.singletonList(this.commitBlock);
+    return blocks;
   }
 }
