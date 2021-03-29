@@ -1,0 +1,9 @@
+.main-grid {
+    display: grid;
+    grid-template-columns: minmax(250px, 20%) 1fr;
+    grid-template-rows: 50px 1fr;
+    grid-template-areas:
+        "header header"
+        "sidebar main";
+    margin: 10px;
+}

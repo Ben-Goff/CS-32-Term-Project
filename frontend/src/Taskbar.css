@@ -1,0 +1,14 @@
+.Taskbar {
+    grid-area: sidebar;
+    background-color: pink;
+    border: 5px solid black;
+    overflow: scroll;
+    height: 800px;
+}
+
+.task-box {
+    background-color: cadetblue;
+    border: 5px solid black;
+    height: 150px;
+    margin: 10px;
+}

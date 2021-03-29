@@ -1,13 +1,29 @@
-.flexbox-section {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
+.Navbar {
+    grid-area: header;
 }
 
-.Logo {
+.navbar-body {
+    display: grid;
+    grid-template-columns: minmax(250px, 20%) 1fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+        "logo navbarmain";
+    background-color: coral;
+}
+
+.logo-area {
+    grid-area: logo;
+    border: 5px solid black;
+}
+
+.logo {
     width: 50px;
     height: 52px;
-
     background: #FBE08F;
-    border-radius: 10px;
+    border-radius: 5px;
+}
+
+.navbar-main {
+    grid-area: navbarmain;
+    border: 5px solid black;
 }

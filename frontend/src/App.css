@@ -3,6 +3,16 @@ html {
   font-family: 'Inter', sans-serif;
 }
 
+.flexbox-section {
+  display: flex;
+  justify-content: space-between;
+}
+
+.temp-section {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
 .App {
   /*text-align: center;*/
 }
