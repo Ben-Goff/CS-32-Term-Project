@@ -1,0 +1,5 @@
+.Day {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+}

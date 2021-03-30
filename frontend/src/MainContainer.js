@@ -3,7 +3,7 @@ import './App.css';
 
 import Navbar from "./Navbar";
 import Taskbar from "./Taskbar";
-import Calendar from "./Calendar";
+import CalendarContainer from "./Calendar/CalendarContainer";
 
 function MainContainer() {
     return (
@@ -11,7 +11,7 @@ function MainContainer() {
             <div className="main-grid">
                 <Navbar/>
                 <Taskbar/>
-                <Calendar/>
+                <CalendarContainer/>
             </div>
         </div>
     );

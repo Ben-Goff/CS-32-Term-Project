@@ -1,0 +1,22 @@
+.CalendarContainer {
+    grid-area: main;
+    background-color: #5ebe5e;
+    border: 5px solid black;
+
+    display: grid;
+    grid-template-columns: auto 889px auto;
+    grid-template-rows: 100px auto 20px;
+
+    overflow: scroll;
+    height: 600px;
+}
+
+.HourLabels {
+    grid-row: 2;
+    grid-column: 1;
+}
+
+.BottomFiller {
+    grid-row: 3;
+    grid-column: 1 / span 3;
+}
