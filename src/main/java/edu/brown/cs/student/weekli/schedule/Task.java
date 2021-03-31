@@ -46,7 +46,7 @@ public class Task implements Event {
     Block[] taskBlocks = new Block[blockCount];
     Block temp;
     for(int i = 0; i < blockCount; i++) {
-      temp = new Block(this.startDate, this.blockLength, false, this.iD);
+      temp = new Block(this.startDate, this.blockLength, this.endDate, this.iD);
       taskBlocks[i] = temp;
     }
     return Arrays.asList(taskBlocks);

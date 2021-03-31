@@ -1,10 +1,6 @@
 package edu.brown.cs.student.weekli.schedule;
 
-import java.util.UUID;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Represents a commitment in the schedule.
@@ -19,6 +15,7 @@ public class Commitment implements Event {
   private final UUID iD;
   private final static int category = 0;
   private final Block commitBlock;
+  private final Optional<Long> repeating;
 
   /**
    * Constructor.
@@ -28,7 +25,7 @@ public class Commitment implements Event {
    * @param description the description
    * @throws NumberFormatException if estTime < 0
    */
-  public Commitment(long start, long end, String name, String description) throws NumberFormatException {
+  public Commitment(long start, long end, String name, String description, Optional<Long> repeating) throws NumberFormatException {
     this.iD = UUID.randomUUID();
     this.startDate = start;
     this.endDate = end;
@@ -39,8 +36,9 @@ public class Commitment implements Event {
       this.estTime = time;
     }
     this.name = name;
+    this.repeating = repeating;
     this.description = description;
-    this.commitBlock = new Block(this.startDate, this.estTime, true, this.iD);
+    this.commitBlock = new Block(this.startDate, this.estTime, this.endDate, this.iD);
   }
 
   /**
@@ -118,7 +116,18 @@ public class Commitment implements Event {
    */
   @Override
   public List<Block> getBlocks() {
-    List<Block> blocks = Collections.singletonList(this.commitBlock);
-    return blocks;
+    List<Block> blocks = new ArrayList<>();
+    if (this.repeating.isPresent()) {
+      final long weekMillis = 604800000;
+      final int repetitions = (int) Math.ceil(weekMillis / this.repeating.get());
+      for (int i = 0; i < repetitions; i++) {
+        long start = this.startDate + i*repeating.get();
+        blocks.add(new Block(start, this.estTime, start + this.estTime, this.iD));
+      }
+      return blocks;
+    } else {
+      blocks = Collections.singletonList(this.commitBlock);
+      return blocks;
+    }
   }
 }

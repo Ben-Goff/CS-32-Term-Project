@@ -6,17 +6,19 @@ import java.util.UUID;
 public class Block {
 
   private final long startTime;
+  private final long endTime;
   private final long duration;
   private final UUID iD;
   private final boolean commitment;
   private UUID projectID;
   private int projectPriority;
 
-  public Block(long startTime, long duration, boolean commitment, UUID iD) {
+  public Block(long startTime, long duration, long endTime, UUID iD) {
     this.duration = duration;
     this.startTime = startTime;
+    this.endTime = endTime;
     this.iD = iD;
-    this.commitment = commitment;
+    this.commitment = Math.abs(endTime - startTime - duration) < 0.001;
   }
 
 
@@ -26,6 +28,10 @@ public class Block {
 
   public long getStartTime() {
     return startTime;
+  }
+
+  public long getEndTime() {
+    return endTime;
   }
 
   public long getDuration() {
