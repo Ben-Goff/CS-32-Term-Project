@@ -1,7 +1,8 @@
 package edu.brown.cs.student.weekli.schedule;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.UUID;
 
 public class Project {
 
@@ -9,11 +10,11 @@ public class Project {
   private String description;
   private double progress;
   private List<Task> checkpoints;
-  private List<Long> iD;
+  private UUID iD;
 
-  public Project(List<Task> checkpoints, String name, String description) {
-    this.checkpoints = checkpoints;
-    this.iD = checkpoints.stream().map(t -> t.getID()).collect(Collectors.toList());
+  public Project(String name, String description) {
+    this.checkpoints = new ArrayList<>();
+    this.iD = UUID.randomUUID();
     this.name = name;
     this.description = description;
     double total = 0;
@@ -27,6 +28,14 @@ public class Project {
     return name;
   }
 
+  public void updateProgress() {
+    double total = 0;
+    for (Task c : this.checkpoints) {
+      total += c.getProgress();
+    }
+    this.progress = total / this.checkpoints.size();
+  }
+
   public double getProgress() {
     return progress;
   }
@@ -35,11 +44,19 @@ public class Project {
     return description;
   }
 
-  public List<Long> getiD() {
+  public UUID getiD() {
     return iD;
   }
 
   public List<Task> getCheckpoints() {
     return checkpoints;
+  }
+
+  public void addCheckpoint(Task checkpoint) {
+    checkpoint.addProjectID(this.iD);
+    for (Block b: checkpoint.getBlocks()) {
+      b.makePartOfProject(this.iD, this.checkpoints.size());
+    }
+    this.checkpoints.add(checkpoint);
   }
 }

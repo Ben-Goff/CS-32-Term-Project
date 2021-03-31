@@ -1,7 +1,6 @@
 package edu.brown.cs.student.weekli.schedule;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.UUID;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -12,12 +11,12 @@ import java.util.List;
  */
 public class Commitment implements Event {
 
-  private Calendar startDate;
-  private Calendar endDate;
+  private long startDate;
+  private long endDate;
   private long estTime;
   private String name;
   private String description;
-  private final long iD;
+  private final UUID iD;
   private final static int category = 0;
   private final Block commitBlock;
 
@@ -29,11 +28,11 @@ public class Commitment implements Event {
    * @param description the description
    * @throws NumberFormatException if estTime < 0
    */
-  public Commitment(Calendar start, Calendar end, String name, String description) throws NumberFormatException {
-    this.iD = (new Date()).getTime();
+  public Commitment(long start, long end, String name, String description) throws NumberFormatException {
+    this.iD = UUID.randomUUID();
     this.startDate = start;
     this.endDate = end;
-    long time = endDate.getTimeInMillis() - startDate.getTimeInMillis();
+    long time = endDate - startDate;
     if (time < 0) {
       throw new NumberFormatException("ERROR: Duration of event is negative.");
     } else {
@@ -50,7 +49,7 @@ public class Commitment implements Event {
    * @return the start date
    */
   @Override
-  public Calendar getStartDate() {
+  public long getStartDate() {
     return this.startDate;
   }
 
@@ -60,7 +59,7 @@ public class Commitment implements Event {
    * @return the end date
    */
   @Override
-  public Calendar getEndDate() {
+  public long getEndDate() {
     return this.endDate;
   }
 
@@ -109,7 +108,7 @@ public class Commitment implements Event {
    * @return the unique iD
    */
   @Override
-  public long getID() {
+  public UUID getID() {
     return this.iD;
   }
 

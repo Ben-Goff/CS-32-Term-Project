@@ -2,6 +2,7 @@ package edu.brown.cs.student.weekli.schedule;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Interface to represent events.
@@ -12,13 +13,13 @@ public interface Event {
    * Get the start date of the event.
    * @return the start date
    */
-  Calendar getStartDate();
+  long getStartDate();
 
   /**
    * Get the end date of the event.
    * @return the end date
    */
-  Calendar getEndDate();
+  long getEndDate();
 
   /**
    * Get the event description.
@@ -48,7 +49,7 @@ public interface Event {
    * Get the unique ID of the event.
    * @return the unique ID
    */
-  long getID();
+  UUID getID();
 
   /**
    * Get the Blocks corresponding with the event.

@@ -1,23 +1,20 @@
 package edu.brown.cs.student.weekli.schedule;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class Task implements Event {
 
-  private Calendar startDate;
-  private Calendar endDate;
+  private long startDate;
+  private long endDate;
   private long estTime;
   private String name;
   private String description;
   private double progress;
-  private final long iD;
+  private final UUID iD;
   private final static int category = 1;
   private List<Block> taskBlocks;
   private long blockLength;
+  private UUID projectiD;
 
   /**
    * Constructor.
@@ -28,7 +25,7 @@ public class Task implements Event {
    * @param description the description
    * @throws NumberFormatException if estTime < 0
    */
-  public Task(Calendar start, Calendar end, long estTime, String name, String description, long blockLength) throws NumberFormatException {
+  public Task(long start, long end, long estTime, String name, String description, long blockLength) throws NumberFormatException {
     if (estTime < 0) {
       throw new NumberFormatException("ERROR: Duration of event is negative.");
     } else {
@@ -39,7 +36,7 @@ public class Task implements Event {
     this.name = name;
     this.description = description;
     this.progress = 0;
-    this.iD = (new Date()).getTime();
+    this.iD = UUID.randomUUID();
     this.blockLength = blockLength;
     this.taskBlocks = blockBuilder();
   }
@@ -61,7 +58,7 @@ public class Task implements Event {
    * @return the start date
    */
   @Override
-  public Calendar getStartDate() {
+  public long getStartDate() {
     return startDate;
   }
 
@@ -71,7 +68,7 @@ public class Task implements Event {
    * @return the end date
    */
   @Override
-  public Calendar getEndDate() {
+  public long getEndDate() {
     return endDate;
   }
 
@@ -146,13 +143,17 @@ public void setProgress(double prog) {
    * @return the unique iD
    */
   @Override
-  public long getID() {
+  public UUID getID() {
     return this.iD;
   }
 
   @Override
   public List<Block> getBlocks() {
     return this.taskBlocks;
+  }
+
+  public void addProjectID(UUID projID) {
+    this.projectiD = projID;
   }
 
 }
