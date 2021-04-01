@@ -7,18 +7,14 @@ public class Block {
 
   private final long startTime;
   private final long endTime;
-  private final long duration;
   private final UUID iD;
-  private final boolean commitment;
-  private UUID projectID;
+  private UUID projectID = null;
   private int projectPriority;
 
-  public Block(long startTime, long duration, long endTime, UUID iD) {
-    this.duration = duration;
+  public Block(long startTime, long endTime, UUID iD) {
     this.startTime = startTime;
     this.endTime = endTime;
     this.iD = iD;
-    this.commitment = Math.abs(endTime - startTime - duration) < 0.001;
   }
 
 
@@ -32,14 +28,6 @@ public class Block {
 
   public long getEndTime() {
     return endTime;
-  }
-
-  public long getDuration() {
-    return duration;
-  }
-
-  public boolean isCommitment() {
-    return commitment;
   }
 
   public void makePartOfProject(UUID piD, int priority) {

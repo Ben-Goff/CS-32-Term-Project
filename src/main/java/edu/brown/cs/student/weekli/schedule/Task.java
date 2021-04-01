@@ -2,7 +2,7 @@ package edu.brown.cs.student.weekli.schedule;
 
 import java.util.*;
 
-public class Task implements Event {
+public class Task {
 
   private long startDate;
   private long endDate;
@@ -13,7 +13,7 @@ public class Task implements Event {
   private final UUID iD;
   private final static int category = 1;
   private List<Block> taskBlocks;
-  private long blockLength;
+  private long sessionTime;
   private UUID projectiD;
 
   /**
@@ -25,7 +25,7 @@ public class Task implements Event {
    * @param description the description
    * @throws NumberFormatException if estTime < 0
    */
-  public Task(long start, long end, long estTime, String name, String description, long blockLength) throws NumberFormatException {
+  public Task(long start, long end, long estTime, String name, String description, long sessionTime) throws NumberFormatException {
     if (estTime < 0) {
       throw new NumberFormatException("ERROR: Duration of event is negative.");
     } else {
@@ -37,19 +37,7 @@ public class Task implements Event {
     this.description = description;
     this.progress = 0;
     this.iD = UUID.randomUUID();
-    this.blockLength = blockLength;
-    this.taskBlocks = blockBuilder();
-  }
-
-  public List<Block> blockBuilder() {
-    int blockCount = (int) (Math.ceil(this.estTime / this.blockLength));
-    Block[] taskBlocks = new Block[blockCount];
-    Block temp;
-    for(int i = 0; i < blockCount; i++) {
-      temp = new Block(this.startDate, this.blockLength, this.endDate, this.iD);
-      taskBlocks[i] = temp;
-    }
-    return Arrays.asList(taskBlocks);
+    this.sessionTime = sessionTime;
   }
 
   /**
@@ -57,7 +45,6 @@ public class Task implements Event {
    *
    * @return the start date
    */
-  @Override
   public long getStartDate() {
     return startDate;
   }
@@ -67,7 +54,6 @@ public class Task implements Event {
    *
    * @return the end date
    */
-  @Override
   public long getEndDate() {
     return endDate;
   }
@@ -77,9 +63,17 @@ public class Task implements Event {
    *
    * @return the description
    */
-  @Override
   public String getDescription() {
     return description;
+  }
+
+  /**
+   * Get the length of blocks that come from this task.
+   *
+   * @return the length
+   */
+  public long getSessionTime() {
+    return sessionTime;
   }
 
   /**
@@ -87,7 +81,6 @@ public class Task implements Event {
    *
    * @return the event category
    */
-  @Override
   public int getCategory() {
     return category;
   }
@@ -97,7 +90,6 @@ public class Task implements Event {
    *
    * @return the name of the event
    */
-  @Override
   public String getName() {
     return name;
   }
@@ -107,7 +99,6 @@ public class Task implements Event {
    *
    * @return the estimated time
    */
-  @Override
   public long getEstimatedTime() {
     return estTime;
   }
@@ -142,14 +133,8 @@ public void setProgress(double prog) {
    * Gets the unique iD of the task
    * @return the unique iD
    */
-  @Override
   public UUID getID() {
     return this.iD;
-  }
-
-  @Override
-  public List<Block> getBlocks() {
-    return this.taskBlocks;
   }
 
   public void addProjectID(UUID projID) {

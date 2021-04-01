@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * Represents a commitment in the schedule.
  */
-public class Commitment implements Event {
+public class Commitment {
 
   private long startDate;
   private long endDate;
@@ -25,6 +25,7 @@ public class Commitment implements Event {
    * @param description the description
    * @throws NumberFormatException if estTime < 0
    */
+  //TODO: handle commitments happening in the past when schedules remade causing bins to be made in the past
   public Commitment(long start, long end, String name, String description, Optional<Long> repeating) throws NumberFormatException {
     this.iD = UUID.randomUUID();
     this.startDate = start;
@@ -46,7 +47,6 @@ public class Commitment implements Event {
    *
    * @return the start date
    */
-  @Override
   public long getStartDate() {
     return this.startDate;
   }
@@ -56,7 +56,6 @@ public class Commitment implements Event {
    *
    * @return the end date
    */
-  @Override
   public long getEndDate() {
     return this.endDate;
   }
@@ -66,7 +65,6 @@ public class Commitment implements Event {
    *
    * @return the description
    */
-  @Override
   public String getDescription() {
     return this.description;
   }
@@ -76,7 +74,6 @@ public class Commitment implements Event {
    *
    * @return the event category
    */
-  @Override
   public int getCategory() {
     return this.category;
   }
@@ -86,7 +83,6 @@ public class Commitment implements Event {
    *
    * @return the name of the event
    */
-  @Override
   public String getName() {
     return this.name;
   }
@@ -96,7 +92,6 @@ public class Commitment implements Event {
    *
    * @return the estimated time
    */
-  @Override
   public long getEstimatedTime() {
     return this.estTime;
   }
@@ -105,7 +100,6 @@ public class Commitment implements Event {
    * Gets the unique iD of the commitment
    * @return the unique iD
    */
-  @Override
   public UUID getID() {
     return this.iD;
   }
@@ -114,11 +108,10 @@ public class Commitment implements Event {
    * Gets the blocks
    * @return
    */
-  @Override
   public List<Block> getBlocks() {
     List<Block> blocks = new ArrayList<>();
     if (this.repeating.isPresent()) {
-      final long weekMillis = 604800000;
+      final long weekMillis = 604800000L * 5;
       final int repetitions = (int) Math.ceil(weekMillis / this.repeating.get());
       for (int i = 0; i < repetitions; i++) {
         long start = this.startDate + i*repeating.get();
