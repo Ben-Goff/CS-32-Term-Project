@@ -1,12 +1,11 @@
-import './Calendar.css';
+import './Day.css';
 import '../App.css';
-import Hour from "./Hour";
 
 function Day() {
 
     let hours = [];
     for (let i = 0; i < 24; i++) {
-        hours.push(Hour());
+        hours.push(<div className="Hour"></div>);
     }
 
     return (

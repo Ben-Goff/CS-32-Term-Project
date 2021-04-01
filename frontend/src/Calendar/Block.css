@@ -1,0 +1,7 @@
+.Block {
+    position: absolute;
+    z-index: 100;
+
+    width: 125px;
+    border-radius: 10px;
+}

@@ -1,22 +1,58 @@
 .CalendarContainer {
     grid-area: main;
-    background-color: #5ebe5e;
+    background-color: #e1dcbf;
     border: 5px solid black;
 
     display: grid;
     grid-template-columns: auto 889px auto;
-    grid-template-rows: 100px auto 20px;
+    grid-template-rows: 60px auto 20px;
 
     overflow: scroll;
     height: 600px;
 }
 
 .HourLabels {
-    grid-row: 2;
+    grid-row: 1/2;
     grid-column: 1;
+
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: 48px repeat(24, 60px);
+    align-content: flex-start;
+    text-align: right;
 }
 
 .BottomFiller {
     grid-row: 3;
     grid-column: 1 / span 3;
+}
+
+.DayLabels{
+    position: relative;
+    
+    grid-row: 1;
+    grid-column: 2;
+
+    display: grid;
+    grid-template-columns: repeat(7, 127px);
+    grid-template-rows: auto auto;
+    align-content: end;
+
+    text-align: center;
+    font-weight: bold;
+}
+
+.TodayCircle{
+    position: absolute;
+    z-index: 100;
+
+    background: #389ec1;
+    width: 42px;
+    height: 42px;
+    border-radius: 30px;
+    opacity: 0.3;
+
+    display: inline-block;
+    vertical-align: center;
+    transform: translate(-13px);
 }
