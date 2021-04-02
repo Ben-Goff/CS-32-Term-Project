@@ -54,9 +54,6 @@ public class Project {
 
   public void addCheckpoint(Task checkpoint) {
     checkpoint.addProjectID(this.iD);
-    for (Block b: checkpoint.getBlocks()) {
-      b.makePartOfProject(this.iD, this.checkpoints.size());
-    }
     this.checkpoints.add(checkpoint);
   }
 }

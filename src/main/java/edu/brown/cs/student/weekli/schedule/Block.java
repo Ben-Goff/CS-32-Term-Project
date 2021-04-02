@@ -9,7 +9,6 @@ public class Block {
   private final long endTime;
   private final UUID iD;
   private UUID projectID = null;
-  private int projectPriority;
 
   public Block(long startTime, long endTime, UUID iD) {
     this.startTime = startTime;
@@ -32,6 +31,5 @@ public class Block {
 
   public void makePartOfProject(UUID piD, int priority) {
     this.projectID = piD;
-    this.projectPriority = priority;
   }
 }

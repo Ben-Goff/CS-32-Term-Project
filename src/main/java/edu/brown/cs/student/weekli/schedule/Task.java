@@ -12,7 +12,6 @@ public class Task {
   private double progress;
   private final UUID iD;
   private final static int category = 1;
-  private List<Block> taskBlocks;
   private long sessionTime;
   private UUID projectiD;
 
