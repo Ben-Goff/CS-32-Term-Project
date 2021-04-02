@@ -6,7 +6,6 @@ public class TimeBin {
 
     private final long startTime;
     private final long endTime;
-    private long capacity;
     private List<Task> tasks;
     private NavigableSet<Block> blocks;
 
@@ -14,50 +13,47 @@ public class TimeBin {
     public TimeBin(long startTime, long endTime) {
         this.startTime = startTime;
         this.endTime = endTime;
-        this.capacity = endTime - startTime;
         this.blocks = new TreeSet<>(Comparator.comparingLong(Block::getStartTime));
         this.tasks = new ArrayList<>();
     }
 
     public boolean addBlock(Task t) {
-      tasks.add(t);
-      tasks.sort(new WiggleComparator(startTime, endTime));
-
-      long dur = t.getSessionTime();
-      long start = Math.max(startTime, t.getStartDate());
-      long end = Math.min(endTime, t.getEndDate());
-
-      Block toAdd = addLeftSide(blocks, t.getID(), dur, start, end);
-
+      long tDur = t.getSessionTime();
+      long tStart = Math.max(startTime, t.getStartDate());
+      long tEnd = Math.min(endTime, t.getEndDate());
+      long tMean = (tEnd - tStart) / 2;
+      Block toAdd = addLeftSide(blocks, t.getID(), tDur, tStart, tEnd);
       if (toAdd != null) {
         blocks.add(toAdd);
+        tasks.add(t);
+        tasks.sort(new WiggleComparator(startTime, endTime));
       } else {
-
         NavigableSet<Block> attempt = new TreeSet<>(Comparator.comparingLong(Block::getStartTime));
-
         for (Task task : tasks) {
-          long duration = task.getSessionTime();
-
-          long startSearch = Math.max(startTime, task.getStartDate());
-          long endSearch = Math.min(endTime, task.getEndDate());
-
-          long bigMean = (end - start) / 2;
-          long searchMean = (endSearch - startSearch) / 2;
-
-          if (searchMean < bigMean) {
-            toAdd = addLeftSide(attempt, task.getID(), duration, startSearch, endSearch);
+          long curDur = task.getSessionTime();
+          long curStart = Math.max(startTime, task.getStartDate());
+          long curEnd = Math.min(endTime, task.getEndDate());
+          long curMean = (curEnd - curStart) / 2;
+          if (curMean < tMean) {
+            toAdd = addLeftSide(attempt, task.getID(), curDur, curStart, curEnd);
           } else {
-            toAdd = addRightSide(attempt.descendingSet(), task.getID(), duration, startSearch, endSearch);
+            toAdd = addRightSide(attempt.descendingSet(), task.getID(), curDur, curStart, curEnd);
           }
-
           if(toAdd == null) {
             return false;
           } else {
             attempt.add(toAdd);
           }
-
         }
-        blocks = attempt;
+        toAdd = addLeftSide(attempt, t.getID(), tDur, tStart, tEnd);
+        if (toAdd != null) {
+          blocks = attempt;
+          blocks.add(toAdd);
+          tasks.add(t);
+          tasks.sort(new WiggleComparator(startTime, endTime));
+        } else {
+          return false;
+        }
       }
       return true;
     }
@@ -83,6 +79,7 @@ public class TimeBin {
       return new Block(startSearch, startSearch + duration, id);
     }
 
+
   public Block addRightSide(NavigableSet<Block> blocks, UUID id, long duration, long startSearch, long endSearch) {
     if ((endSearch - startSearch) < duration) {
       return null;
@@ -100,7 +97,6 @@ public class TimeBin {
         }
       }
     }
-
     return new Block(endSearch - duration, endSearch, id);
   }
 
@@ -119,7 +115,6 @@ public class TimeBin {
     public long getEndTime() {
         return endTime;
     }
-
 
     public static class WiggleComparator implements Comparator<Task> {
 
@@ -184,7 +179,6 @@ public class TimeBin {
         return Long.compare(wiggle1, wiggle2);
       }
     }
-
 }
 
 
