@@ -1,12 +1,15 @@
 package edu.brown.cs.student.weekli.schedule;
 
+import com.sun.source.tree.Tree;
+
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class TimeBin {
 
     private final long startTime;
     private final long endTime;
-    private List<Task> tasks;
+    private NavigableSet<Task> tasks;
     private NavigableSet<Block> blocks;
 
 
@@ -14,7 +17,7 @@ public class TimeBin {
         this.startTime = startTime;
         this.endTime = endTime;
         this.blocks = new TreeSet<>(Comparator.comparingLong(Block::getStartTime));
-        this.tasks = new ArrayList<>();
+        this.tasks = new TreeSet<>(new WiggleComparator(this.startTime, this.endTime));
     }
 
     public boolean addBlock(Task t) {
@@ -26,7 +29,6 @@ public class TimeBin {
       if (toAdd != null) {
         blocks.add(toAdd);
         tasks.add(t);
-        tasks.sort(new WiggleComparator(startTime, endTime));
       } else {
         NavigableSet<Block> attempt = new TreeSet<>(Comparator.comparingLong(Block::getStartTime));
         for (Task task : tasks) {
@@ -40,7 +42,7 @@ public class TimeBin {
             toAdd = addRightSide(attempt.descendingSet(), task.getID(), curDur, curStart, curEnd);
           }
           if(toAdd == null) {
-            return false;
+            throw new RuntimeException("blocks did not refit");
           } else {
             attempt.add(toAdd);
           }
@@ -50,7 +52,6 @@ public class TimeBin {
           blocks = attempt;
           blocks.add(toAdd);
           tasks.add(t);
-          tasks.sort(new WiggleComparator(startTime, endTime));
         } else {
           return false;
         }
@@ -101,11 +102,11 @@ public class TimeBin {
   }
 
     public List<Task> getTasks() {
-      return tasks;
+      return new ArrayList<>(tasks);
     }
 
-    public NavigableSet<Block> getBlocks() {
-        return blocks;
+    public List<Block> getBlocks() {
+      return new ArrayList<>(blocks);
     }
 
     public long getStartTime() {

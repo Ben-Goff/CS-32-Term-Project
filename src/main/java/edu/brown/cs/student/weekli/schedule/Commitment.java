@@ -39,7 +39,7 @@ public class Commitment {
     this.name = name;
     this.repeating = repeating;
     this.description = description;
-    this.commitBlock = new Block(this.startDate, this.estTime, this.endDate, this.iD);
+    this.commitBlock = new Block(this.startDate, this.endDate, this.iD);
   }
 
   /**
@@ -115,12 +115,11 @@ public class Commitment {
       final int repetitions = (int) Math.ceil(weekMillis / this.repeating.get());
       for (int i = 0; i < repetitions; i++) {
         long start = this.startDate + i*repeating.get();
-        blocks.add(new Block(start, this.estTime, start + this.estTime, this.iD));
+        blocks.add(new Block(start, start + this.estTime, this.iD));
       }
-      return blocks;
     } else {
       blocks = Collections.singletonList(this.commitBlock);
-      return blocks;
     }
+    return blocks;
   }
 }
