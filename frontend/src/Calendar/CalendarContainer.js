@@ -1,6 +1,7 @@
 import './CalendarContainer.css';
 import '../App.css';
 import Calendar from "./Calendar";
+import {getMonday} from "../WeekliHelpers";
 
 function CalendarContainer(props) {
 
@@ -22,9 +23,13 @@ function CalendarContainer(props) {
     })
 
     let d = new Date();
-    let circlePosition = (d.getDay() - 1) % 6; // modulo is to convert to monday-start
-    dayLabels[circlePosition] = <div className="circled">{dayLabels[circlePosition]}</div>
-    console.log(circlePosition)
+
+    if (getMonday(d).getDate() === props.getDisplayMonday().getDate()  &&
+        getMonday(d).getMonth() === props.getDisplayMonday().getMonth()){
+        let circlePosition = (d.getDay() - 1) % 6; // modulo is to convert to monday-start
+        dayLabels[circlePosition] = <div className="circled">{dayLabels[circlePosition]}</div>
+        //console.log(circlePosition)
+    }
 
     return (
         <div className="CalendarContainer">
