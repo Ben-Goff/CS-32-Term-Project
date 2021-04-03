@@ -2,6 +2,10 @@ import './Navbar.css';
 import './App.css';
 
 function Navbar() {
+    let d = new Date();
+    let month = ["January", "February", "March", "April", "June", "July", "August", "September", "November", "December"][d.getMonth()];
+    let day = d.getDate();
+
     return (
         <div className="Navbar">
             <div className="navbar-body">
@@ -13,7 +17,7 @@ function Navbar() {
                     <div className="flexbox-section">
                         <div className="flexbox-section">
                             <div className="temp-section">
-                                April 2021
+                                {month + " " + day}
                             </div>
 
                             <div className="temp-section">
