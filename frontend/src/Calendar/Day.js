@@ -1,15 +1,18 @@
 import './Day.css';
 import '../App.css';
 
-function Day() {
+function Day(props) {
 
     let hours = [];
     for (let i = 0; i < 24; i++) {
-        hours.push(<div className="Hour"></div>);
+        hours.push(<div className="Hour"/>);
     }
 
     return (
         <div className="Day">
+            <div className="block-container">
+                {props.blocks}
+            </div>
             {hours}
         </div>
     );

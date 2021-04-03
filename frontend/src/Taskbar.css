@@ -3,7 +3,7 @@
     background-color: pink;
     border: 5px solid black;
     overflow: scroll;
-    height: 600px;
+    height: inherit;
 }
 
 .task-box {

@@ -1,11 +1,17 @@
 html {
   background-color: #4a80db;
   font-family: 'Inter', sans-serif;
+  overflow: hidden;
 }
 
 .flexbox-section {
   display: flex;
   justify-content: space-between;
+}
+
+.AppContent {
+  margin: 10px auto;
+  max-width: 90vw;
 }
 
 .temp-section {

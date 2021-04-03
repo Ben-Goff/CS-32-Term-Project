@@ -3,55 +3,43 @@ import '../App.css';
 import Calendar from "./Calendar";
 
 function CalendarContainer() {
-
-    let hourLabels = [];
-    for (let i = 0; i < 24; i++) {
-        if (i === 0) {
-            hourLabels.push("12am");
-        } else if (i <= 12) {
-            hourLabels.push(i + "am");
-        } else if (i === 12) {
-            hourLabels.push("12pm");
-        } else if (i >= 12) {
-            hourLabels.push(i - 12 + "pm");
-        }
+    // Credit: https://stackoverflow.com/questions/4156434/javascript-get-the-first-day-of-the-week-from-current-date
+    function getMonday(d) {
+        d = new Date(d);
+        let day = d.getDay(),
+            diff = d.getDate() - day + (day == 0 ? -6:1); // adjust when day is sunday
+        return new Date(d.setDate(diff));
     }
 
-    let daysOfWeek = ["Su", "M", "T", "W", "Th", "F", "Sa"]
+    let dayNames = ["M", "T", "W", "Th", "F", "S", "Su"];
+    let dayNumbers = [];
+    const monday = getMonday(new Date());
+
+    let curDay = monday;
+    for (let i = 0; i < 7; i++) {
+        dayNumbers.push(curDay.getDate());
+        let nextDay = new Date(curDay);
+        nextDay.setDate(nextDay.getDate() + 1);
+        curDay = nextDay;
+    }
+
+    let dayLabels = [0, 1, 2, 3, 4, 5, 6].map(idx => {
+        return <div className="DayLabel">{dayNames[idx]}<br/>{dayNumbers[idx]}</div>
+    })
+
     let d = new Date();
-    let circlePosition = d.getDay();
+    let circlePosition = (d.getDay() - 1) % 6; // modulo is to convert to monday-start
+    dayLabels[circlePosition] = <div className="circled">{dayLabels[circlePosition]}</div>
     console.log(circlePosition)
 
     return (
         <div className="CalendarContainer">
             <div className="DayLabels">
-
-                {daysOfWeek.map((item, index) => (
-                    <div>
-                        {index == circlePosition &&
-                        <div className="TodayCircle"></div>}
-                        {daysOfWeek[index]}
-                    </div>
-                    )
-                )}
-                <div>21</div>
-                <div>22</div>
-                <div>23</div>
-                <div>24</div>
-                <div>25</div>
-                <div>26</div>
-                <div>27</div>
+                {dayLabels}
             </div>
-            <div className="HourLabels">
-                <div></div>
-                {hourLabels.map((item, index) => (
-                    <div>
-                        {hourLabels[index]}
-                    </div>
-                ))}
+            <div className="scrollable">
+                <Calendar/>
             </div>
-            <Calendar/>
-            <div className="BottomFiller"/>
         </div>
     );
 }
