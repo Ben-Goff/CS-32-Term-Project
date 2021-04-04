@@ -58,6 +58,10 @@ function Navbar(props) {
         setYear(nextSunday.getFullYear());
     }
 
+    const createTask = () => {
+        //MAKE A POPUP
+    }
+
 
     return (
         <div className="Navbar">
@@ -90,8 +94,10 @@ function Navbar(props) {
                         </div>
 
                         <div className="flexbox-section">
+
                             <button className="button create">
                                 <img src="plus.png" className="plus"/> <div className="create-text">Create</div>
+
                             </button>
 
                             <button className="button progress">
