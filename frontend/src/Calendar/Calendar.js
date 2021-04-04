@@ -9,11 +9,11 @@ function Calendar() {
     for (let i = 0; i < 24; i++) {
         if (i === 0) {
             hourLabels.push("12 am");
-        } else if (i <= 12) {
+        } else if (i < 12) {
             hourLabels.push(i + " am");
         } else if (i === 12) {
             hourLabels.push("12 pm");
-        } else if (i >= 12) {
+        } else if (i > 12) {
             hourLabels.push(i - 12 + " pm");
         }
     }

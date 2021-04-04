@@ -4,8 +4,8 @@ import React, {useState, useEffect} from "react";
 import {getMonday} from "./WeekliHelpers";
 
 function Navbar(props) {
-    let monthList = ["January", "February", "March", "April", "May", "June", "July", "August",
-        "September", "October", "November", "December"]
+    let monthList = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
+        "Sep", "Oct", "Nov", "Dec"]
 
     const [month, setMonth] = useState(0); //The month to display
     const [day, setDay] = useState(0);
