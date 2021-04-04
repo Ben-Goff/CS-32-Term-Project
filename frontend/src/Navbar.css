@@ -8,12 +8,12 @@
     grid-template-rows: auto;
     grid-template-areas:
         "logo navbarmain";
-    background-color: coral;
+    /*background-color: coral;*/
 }
 
 .logo-area {
     grid-area: logo;
-    border: 5px solid black;
+    /*border: 5px solid black;*/
 }
 
 .logo {
@@ -25,5 +25,5 @@
 
 .navbar-main {
     grid-area: navbarmain;
-    border: 5px solid black;
+    /*border: 5px solid black;*/
 }

@@ -5,6 +5,7 @@ import './App.css';
 function Taskbar() {
     return (
         <div className="Taskbar">
+            <div className="space-filler"/>
             <div className="taskbar-contents">
                 <div className="task-box">
                     Wake Up
