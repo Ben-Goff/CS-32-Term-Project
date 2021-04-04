@@ -1,36 +1,61 @@
 import './Navbar.css';
 import './App.css';
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {getMonday} from "./WeekliHelpers";
 
 function Navbar(props) {
     let monthList = ["January", "February", "March", "April", "May", "June", "July", "August",
         "September", "October", "November", "December"]
 
-    let d = new Date();
-    const [month, setMonth] = useState(monthList[d.getMonth()]); //The month to display
-    const [day, setDay] = useState(d.getDate());
+    const [month, setMonth] = useState(0); //The month to display
+    const [day, setDay] = useState(0);
+    const[month2, setMonth2] = useState(0);
+    const [day2, setDay2] = useState(0);
+    const [year, setYear] = useState(0);
+
+    useEffect(() => {
+        thisWeek();
+    }, [])
 
     const prevWeek = () => {
         let lastMonday = new Date(props.getDisplayMonday());
         lastMonday.setDate(lastMonday.getDate() - 7);
         props.setMonday(lastMonday)
-        setMonth(monthList[lastMonday.getMonth()])
-        setDay(lastMonday.getDate())
+        setMonth(monthList[lastMonday.getMonth()]);
+        setDay(lastMonday.getDate());
+
+        let lastSunday = new Date(lastMonday);
+        lastSunday.setDate(lastSunday.getDate() + 6);
+        setMonth2(monthList[lastSunday.getMonth()]);
+        setDay2(lastSunday.getDate());
+        setYear(lastSunday.getFullYear());
     }
 
     const thisWeek = () => {
-        setMonth(monthList[d.getMonth()])
-        setDay(d.getDate())
-        props.setMonday(getMonday(new Date()));
+        let thisMonday = new Date(getMonday(new Date()));
+        props.setMonday(thisMonday);
+        setMonth(monthList[thisMonday.getMonth()]);
+        setDay(thisMonday.getDate());
+
+        let thisSunday = new Date(thisMonday);
+        thisSunday.setDate(thisSunday.getDate() + 6);
+        setMonth2(monthList[thisSunday.getMonth()]);
+        setDay2(thisSunday.getDate());
+        setYear(thisSunday.getFullYear());
     }
 
     const nextWeek = () => {
         let nextMonday = new Date(props.getDisplayMonday());
         nextMonday.setDate(nextMonday.getDate() + 7);
-        props.setMonday(nextMonday)
-        setMonth(monthList[nextMonday.getMonth()])
-        setDay(nextMonday.getDate())
+        props.setMonday(nextMonday);
+        setMonth(monthList[nextMonday.getMonth()]);
+        setDay(nextMonday.getDate());
+
+        let nextSunday = new Date(nextMonday);
+        nextSunday.setDate(nextSunday.getDate() + 6);
+        setMonth2(monthList[nextSunday.getMonth()]);
+        setDay2(nextSunday.getDate());
+        setYear(nextSunday.getFullYear());
     }
 
 
@@ -39,40 +64,43 @@ function Navbar(props) {
             <div className="navbar-body">
                 <div className="logo-area">
                     <img src="WeekliLogo.png" className="logo"/>
+                    <div className="logo-text">
+                        Weekli
+                    </div>
                 </div>
 
                 <div className="navbar-main">
                     <div className="flexbox-section">
                         <div className="flexbox-section">
-                            <div className="temp-section">
-                                {month + " " + day}
+                            <div className="date-label">
+                                {month + " " + day + " - " + month2 + " " + day2 + " " + year}
                             </div>
 
-                            <button className="button button1" onClick={prevWeek}>
-                                Prev Week
+                            <button className="button prev-week" onClick={prevWeek}>
+                                {"<"}
                             </button>
 
-                            <button className="button button1" onClick={thisWeek}>
+                            <button className="button next-week" onClick={nextWeek}>
+                                {">"}
+                            </button>
+
+                            <button className="button this-week" onClick={thisWeek}>
                                 This Week
-                            </button>
-
-                            <button className="button button1" onClick={nextWeek}>
-                                Next Week
                             </button>
                         </div>
 
                         <div className="flexbox-section">
-                            <div className="temp-section">
-                                Create
-                            </div>
+                            <button className="button create">
+                                <img src="plus.png" className="plus"/> <div className="create-text">Create</div>
+                            </button>
 
-                            <div className="temp-section">
-                                Progress
-                            </div>
+                            <button className="button progress">
+                                <img src="bars.png" className="bars"/> <div className="progress-text">Progress</div>
+                            </button>
 
-                            <div className="temp-section">
-                                Menu
-                            </div>
+                            <button className="menu">
+                                <img src="Hamburger_icon.png" className="hamburger"/>
+                            </button>
                         </div>
                     </div>
                 </div>

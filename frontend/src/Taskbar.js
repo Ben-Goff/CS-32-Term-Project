@@ -8,35 +8,51 @@ function Taskbar() {
             <div className="space-filler"/>
             <div className="taskbar-contents">
                 <div className="task-box">
-                    Wake Up
+                    <div className="contents">
+                        Wake Up
+                    </div>
                 </div>
 
                 <div className="task-box">
-                    Take Shower
+                    <div className="contents">
+                        Take Shower
+                    </div>
                 </div>
 
                 <div className="task-box">
-                    Brush Teeth
+                    <div className="contents">
+                        Brush Teeth
+                    </div>
                 </div>
 
                 <div className="task-box">
+                    <div className="contents">
                     Eat Breakfast
+                    </div>
                 </div>
 
                 <div className="task-box">
-                    Eat Lunch
+                    <div className="contents">
+                        Eat Lunch
+                    </div>
                 </div>
 
                 <div className="task-box">
-                    Eat Dinner
+                    <div className="contents">
+                        Eat Dinner
+                    </div>
                 </div>
 
                 <div className="task-box">
-                    Ponder the Meaninglessness of Life
+                    <div className="contents">
+                        Ponder the Meaninglessness of Life
+                    </div>
                 </div>
 
                 <div className="task-box">
-                    Sleep
+                    <div className="contents">
+                        Sleep
+                    </div>
                 </div>
 
             </div>

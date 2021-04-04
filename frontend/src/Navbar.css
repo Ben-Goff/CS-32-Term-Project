@@ -3,6 +3,7 @@
 }
 
 .navbar-body {
+    margin-top: 10px;
     display: grid;
     grid-template-columns: minmax(250px, 20%) 1fr;
     grid-template-rows: auto;
@@ -13,7 +14,14 @@
 
 .logo-area {
     grid-area: logo;
+    display: flex;
     /*border: 5px solid black;*/
+}
+
+.logo-text {
+    margin-left: 10px;
+    font-size: 48px;
+    margin-top: -10px;
 }
 
 .logo {
@@ -21,36 +29,104 @@
     height: 52px;
     background: #FBE08F;
     border-radius: 5px;
+    margin-top: -10px;
+}
+
+.date-label {
+    font-size: 24px;
+    margin-top: 15px;
+    white-space: nowrap;
 }
 
 .navbar-main {
+    margin-left: 10px;
     grid-area: navbarmain;
     /*border: 5px solid black;*/
 }
 
-/*Taken from https://www.w3schools.com/css/tryit.asp?filename=trycss_buttons_hover*/
 .button {
-    background-color: #4CAF50; /* Green */
+    padding: 0;
+    border-radius: 10px;
     border: none;
-    color: #d3cfb4;
-    text-align: center;
-    text-decoration: none;
-    font-size: 12px;
-    margin: 4px 2px;
-    transition-duration: 0.4s;
-    cursor: pointer;
-
-    width: 80px;
-    height: 30px;
-}
-
-.button1 {
     background-color: white;
     color: black;
-    border: 2px solid #4CAF50;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    height: 40px;
 }
 
-.button1:hover {
-    background-color: #4CAF50;
-    color: white;
+.prev-week {
+    font-family: 'Tomorrow', sans-serif;
+    font-size: 36px;
+    margin-left: 20px;
+    width: 40px;
 }
+
+.next-week {
+    font-family: 'Tomorrow', sans-serif;
+    font-size: 36px;
+    margin-left: 10px;
+    width: 40px;
+}
+
+.this-week {
+    margin-left: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    width: 100px;
+}
+
+.hamburger {
+    margin-top: -10px;
+    margin-right: -10px;
+    padding: 0;
+    width: 60px;
+    height: 60px;
+}
+
+.menu {
+    background-color: transparent;
+    border: none;
+}
+
+.create {
+    display: flex;
+    font-family: 'Inter', sans-serif;
+    width: 120px;
+    font-size: 18px;
+    margin-right: 10px;
+}
+
+.plus {
+    padding-left: 5px;
+    padding-top: 7px;
+    width: 25px;
+    height: 25px;
+}
+
+.create-text {
+    padding-left: 22px;
+    padding-top: 10px;
+}
+
+.progress {
+    display: flex;
+    font-family: 'Inter', sans-serif;
+    width: 120px;
+    font-size: 18px;
+    margin-right: 10px;
+}
+
+.bars {
+    padding-left: 16px;
+    padding-top: 15px;
+    padding-right: 10px;
+    width: 20px;
+    height: 18px;
+    transform: rotate(90deg);
+}
+
+.progress-text {
+    margin-left: -9px;
+    padding-top: 10px;
+}
+

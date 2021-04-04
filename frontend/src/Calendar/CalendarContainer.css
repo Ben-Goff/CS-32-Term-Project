@@ -18,17 +18,10 @@
     overflow: hidden;
 }
 
-.HourLabels {
-    grid-area: hourlabels;
-    display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: repeat(24, 60px);
-    align-content: flex-start;
-    text-align: right;
-}
-
 .DayLabel {
-    border-bottom: 1px solid black;
+    font-family: 'Inter', sans-serif;
+    font-weight: lighter;
+    border-bottom: 1px solid #DCDCDC;
     margin-right: 0px;
 }
 

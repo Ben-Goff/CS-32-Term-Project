@@ -6,9 +6,13 @@ function Block(props) {
     return (
         <div className="Block" style={
             {"height": props.durationMinutes + 'px',
-                "top": props.startMinutes + 'px',
+                "top": (props.startMinutes - 2) + 'px',
                 "background": props.color}
-        }>{props.text}</div>
+        }>
+            <div className="contents">
+                {props.text}
+            </div>
+        </div>
     );
 }
 
