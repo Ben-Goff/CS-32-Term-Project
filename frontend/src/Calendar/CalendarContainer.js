@@ -2,9 +2,13 @@ import './CalendarContainer.css';
 import '../App.css';
 import Calendar from "./Calendar";
 import {getMonday} from "../WeekliHelpers";
+import React, {useEffect} from "react";
 
 function CalendarContainer(props) {
 
+    useEffect(() => {
+        document.getElementById("calendar-scroll").scrollTop = 7 * 60 + 20;
+    }, [])
 
     let dayNames = ["M", "T", "W", "Th", "F", "S", "Su"];
     let dayNumbers = [];
@@ -36,7 +40,7 @@ function CalendarContainer(props) {
             <div className="DayLabels">
                 {dayLabels}
             </div>
-            <div className="scrollable">
+            <div id="calendar-scroll" className="scrollable">
                 <Calendar/>
             </div>
         </div>

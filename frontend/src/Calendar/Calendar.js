@@ -37,21 +37,24 @@ function Calendar() {
     days.push(<Day blocks={[]}/>);
     days.push(<Day blocks={[]}/>);
 
-    const block1 = <Block durationMinutes={120} startMinutes={120} color={"red"} text={"SAMPLE"}/>;
-    const block11 = <Block durationMinutes={60} startMinutes={360} color={"blue"} text={"SAMPLE"}/>;
-    const block2 = <Block durationMinutes={60} startMinutes={120} color={"blue"} text={"SAMPLE"}/>;
-    const block21 = <Block durationMinutes={120} startMinutes={240} color={"orange"} text={"SAMPLE"}/>;
-    const block3 = <Block durationMinutes={240} startMinutes={240} color={"red"} text={"SAMPLE"}/>;
-    const block4 = <Block durationMinutes={120} startMinutes={360} color={"orange"} text={"SAMPLE"}/>;
-    const block5 = <Block durationMinutes={120} startMinutes={480} color={"orange"} text={"SAMPLE"}/>;
-    const block6 = <Block durationMinutes={60} startMinutes={600} color={"blue"} text={"SAMPLE"}/>;
-    const block7 = <Block durationMinutes={240} startMinutes={720} color={"red"} text={"SAMPLE"}/>;
+    const block1 = <Block durationMinutes={60} startMinutes={60 * 8.5} color={"red"} text={"Breakfast"}/>;
+    const block11 = <Block durationMinutes={60 * 1.5} startMinutes={60 * 14} color={"orange"} text={"Math Lecture"}/>;
+    const block2 = <Block durationMinutes={30} startMinutes={60 * 9} color={"red"} text={"Shower"}/>;
+    const block21 = <Block durationMinutes={60 * 4} startMinutes={60 * 10} color={"orange"} text={"Midterm Cramming"}/>;
+    const block3 = <Block durationMinutes={60 * 3} startMinutes={60 * 9.5} color={"blue"} text={"Therapy Session"}/>;
+    const block31 = <Block durationMinutes={60} startMinutes={60 * 13} color={"red"} text={"Lunch"}/>;
+    const block4 = <Block durationMinutes={60 * 2} startMinutes={60 * 15} color={"orange"} text={"Term Project Group Meeting"}/>;
+    const block5 = <Block durationMinutes={60 * 3} startMinutes={60 * 8.5} color={"blue"} text={"More Therapy"}/>;
+    const block6 = <Block durationMinutes={60 * 2} startMinutes={60 * 10} color={"orange"} text={"CS32" +
+    " Term Project"}/>;
+    const block7 = <Block durationMinutes={60 * 1.5} startMinutes={60 * 17} color={"red"} text={"Dinner"}/>;
 
     days[0].props.blocks.push(block1);
     days[0].props.blocks.push(block11);
     days[1].props.blocks.push(block2);
     days[1].props.blocks.push(block21);
     days[2].props.blocks.push(block3);
+    days[2].props.blocks.push(block31);
     days[3].props.blocks.push(block4);
     days[4].props.blocks.push(block5);
     days[5].props.blocks.push(block6);
