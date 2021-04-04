@@ -34,8 +34,9 @@
 
 .date-label {
     font-size: 24px;
-    margin-top: 15px;
+    margin-top: 14px;
     white-space: nowrap;
+    width: 250px;
 }
 
 .navbar-main {
@@ -75,25 +76,11 @@
     width: 100px;
 }
 
-.hamburger {
-    margin-top: -10px;
-    margin-right: -10px;
-    padding: 0;
-    width: 60px;
-    height: 60px;
-}
-
-.menu {
-    background-color: transparent;
-    border: none;
-}
-
 .create {
     display: flex;
     font-family: 'Inter', sans-serif;
     width: 120px;
     font-size: 18px;
-    margin-right: 10px;
 }
 
 .plus {
@@ -113,7 +100,7 @@
     font-family: 'Inter', sans-serif;
     width: 120px;
     font-size: 18px;
-    margin-right: 10px;
+    margin-left: 10px;
 }
 
 .bars {
@@ -128,5 +115,19 @@
 .progress-text {
     margin-left: -9px;
     padding-top: 10px;
+}
+
+.menu {
+    margin-left: 10px;
+    background-color: transparent;
+    border: none;
+}
+
+.hamburger {
+    margin-top: -10px;
+    margin-right: -10px;
+    padding: 0;
+    width: 60px;
+    height: 60px;
 }
 

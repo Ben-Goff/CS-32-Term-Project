@@ -14,7 +14,7 @@
 
 .HourLabel {
     text-align: center;
-    height: 60px;
+    height: 59px;
     border: 1px solid transparent;
     margin-bottom: -1px;
     font-family: 'Inter', sans-serif;
@@ -22,5 +22,5 @@
 }
 
 .HourLabelCol {
-    margin-top: -56px;
+    margin-top: -55px;
 }
