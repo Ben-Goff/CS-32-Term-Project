@@ -27,3 +27,30 @@
     grid-area: navbarmain;
     /*border: 5px solid black;*/
 }
+
+/*Taken from https://www.w3schools.com/css/tryit.asp?filename=trycss_buttons_hover*/
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: #d3cfb4;
+    text-align: center;
+    text-decoration: none;
+    font-size: 12px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+
+    width: 80px;
+    height: 30px;
+}
+
+.button1 {
+    background-color: white;
+    color: black;
+    border: 2px solid #4CAF50;
+}
+
+.button1:hover {
+    background-color: #4CAF50;
+    color: white;
+}

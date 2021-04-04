@@ -1,19 +1,14 @@
 import './CalendarContainer.css';
 import '../App.css';
 import Calendar from "./Calendar";
+import {getMonday} from "../WeekliHelpers";
 
-function CalendarContainer() {
-    // Credit: https://stackoverflow.com/questions/4156434/javascript-get-the-first-day-of-the-week-from-current-date
-    function getMonday(d) {
-        d = new Date(d);
-        let day = d.getDay(),
-            diff = d.getDate() - day + (day == 0 ? -6:1); // adjust when day is sunday
-        return new Date(d.setDate(diff));
-    }
+function CalendarContainer(props) {
+
 
     let dayNames = ["M", "T", "W", "Th", "F", "S", "Su"];
     let dayNumbers = [];
-    const monday = getMonday(new Date());
+    const monday = props.getDisplayMonday();
 
     let curDay = monday;
     for (let i = 0; i < 7; i++) {
@@ -28,9 +23,13 @@ function CalendarContainer() {
     })
 
     let d = new Date();
-    let circlePosition = (d.getDay() - 1) % 6; // modulo is to convert to monday-start
-    dayLabels[circlePosition] = <div className="circled">{dayLabels[circlePosition]}</div>
-    console.log(circlePosition)
+
+    if (getMonday(d).getDate() === props.getDisplayMonday().getDate()  &&
+        getMonday(d).getMonth() === props.getDisplayMonday().getMonth()){
+        let circlePosition = (d.getDay() - 1) % 6; // modulo is to convert to monday-start
+        dayLabels[circlePosition] = <div className="circled">{dayLabels[circlePosition]}</div>
+        //console.log(circlePosition)
+    }
 
     return (
         <div className="CalendarContainer">
