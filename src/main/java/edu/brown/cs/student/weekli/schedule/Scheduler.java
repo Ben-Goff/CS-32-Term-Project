@@ -28,7 +28,11 @@ public class Scheduler {
   public List<Block> schedule() {
     this.globalStartTime = (new Date()).getTime();
     List<Long> endTimes = this.tasks.stream().map(Task::getEndDate).sorted().collect(Collectors.toList());
-    this.tasksEndTime = endTimes.get(endTimes.size() - 1);
+    if (endTimes.size() > 0) {
+      this.tasksEndTime = endTimes.get(endTimes.size() - 1);
+    } else {
+      this.tasksEndTime = globalStartTime;
+    }
     this.commitmentBlocks = this.commitments.stream().map(Commitment::getBlocks).flatMap(Collection::stream).filter(b -> b.getStartTime() > globalStartTime).collect(Collectors.toList());
     buildBins();
     placeTasks();
@@ -44,17 +48,18 @@ public class Scheduler {
     Block nextCommitment;
     if (commitmentBlocks.isEmpty()) {
       this.bins.add(new TimeBin(globalStartTime, tasksEndTime));
-    }
-    this.bins.add(new TimeBin(globalStartTime, commitmentBlocks.get(0).getStartTime()));
-    for (int i = 0; i < commitmentBlocks.size() - 1; i++) {
-      currentCommitment = commitmentBlocks.get(i);
-      nextCommitment = commitmentBlocks.get(i + 1);
-      validCommitments = currentCommitment.getEndTime() < nextCommitment.getStartTime();
-      if (!validCommitments) {
-        //commitments are overlapping, schedule can't be made
-        throw new RuntimeException("Commitments are overlapping");
+    } else {
+      this.bins.add(new TimeBin(globalStartTime, commitmentBlocks.get(0).getStartTime()));
+      for (int i = 0; i < commitmentBlocks.size() - 1; i++) {
+        currentCommitment = commitmentBlocks.get(i);
+        nextCommitment = commitmentBlocks.get(i + 1);
+        validCommitments = currentCommitment.getEndTime() < nextCommitment.getStartTime();
+        if (!validCommitments) {
+          //commitments are overlapping, schedule can't be made
+          throw new RuntimeException("Commitments are overlapping");
+        }
+        this.bins.add(new TimeBin(currentCommitment.getEndTime(), nextCommitment.getStartTime()));
       }
-      this.bins.add(new TimeBin(currentCommitment.getEndTime(), nextCommitment.getStartTime()));
     }
   }
 
@@ -68,6 +73,7 @@ public class Scheduler {
       index = -1;
       sessionsLeft = t.sessions();
       possibleBins = this.bins.stream().filter(b -> taskFitsInBin(t, b)).collect(Collectors.toList());
+
       binCount = possibleBins.size();
       while(sessionsLeft > 0) {
         index = (index + 1) % binCount;
