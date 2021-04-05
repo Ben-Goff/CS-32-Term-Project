@@ -141,7 +141,7 @@ public void setProgress(double prog) {
   }
 
   public int sessions() {
-    return (int) Math.ceil(this.estTime / this.sessionTime);
+    return (int) Math.floor(this.estTime / this.sessionTime);
   }
 
 }
