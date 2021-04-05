@@ -13,6 +13,7 @@ public class Scheduler {
   STEP 4: BUILD SCHEDULE BLOCK BY BLOCK, CHECKING LAMBDAS
    */
   private long globalStartTime;
+  private long tasksEndTime;
   private List<Commitment> commitments;
   private List<Block> commitmentBlocks;
   private NavigableSet<Task> tasks;
@@ -26,6 +27,8 @@ public class Scheduler {
 
   public List<Block> schedule() {
     this.globalStartTime = (new Date()).getTime();
+    List<Long> endTimes = this.tasks.stream().map(Task::getEndDate).sorted().collect(Collectors.toList());
+    this.tasksEndTime = endTimes.get(endTimes.size() - 1);
     this.commitmentBlocks = this.commitments.stream().map(Commitment::getBlocks).flatMap(Collection::stream).filter(b -> b.getStartTime() > globalStartTime).collect(Collectors.toList());
     buildBins();
     placeTasks();
@@ -39,6 +42,9 @@ public class Scheduler {
     boolean validCommitments;
     Block currentCommitment;
     Block nextCommitment;
+    if (commitmentBlocks.isEmpty()) {
+      this.bins.add(new TimeBin(globalStartTime, tasksEndTime));
+    }
     this.bins.add(new TimeBin(globalStartTime, commitmentBlocks.get(0).getStartTime()));
     for (int i = 0; i < commitmentBlocks.size() - 1; i++) {
       currentCommitment = commitmentBlocks.get(i);
