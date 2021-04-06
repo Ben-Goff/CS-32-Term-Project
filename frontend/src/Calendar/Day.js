@@ -10,6 +10,10 @@ function Day(props) {
 
     return (
         <div className="Day">
+            <hr className="timeIndicator" style={
+                {"height": 4 + 'px',
+                    "top": 2 + 'px'}
+            }/>
             <div className="block-container">
                 {props.blocks}
             </div>

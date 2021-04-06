@@ -14,5 +14,12 @@
 }
 
 .Day {
+    position: relative;
     width: inherit;
+}
+
+.timeIndicator{
+    position: absolute;
+    border: 1px dashed #000;
+    width: max-content;
 }

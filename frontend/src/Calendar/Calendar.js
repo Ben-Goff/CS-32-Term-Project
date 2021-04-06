@@ -37,6 +37,7 @@ function Calendar(props) {
         displayWeek.push(newDate)
     }
 
+    //DUMMY EXAMPLE HARD CODED BLOCKS
     const block1 = <Block start={new Date(2021, 3, 5, 9, 30, 0, 0)}
                           end={new Date(2021, 3, 4, 10, 30, 0, 0)}
                           color={"red"} text={"Breakfast"}/>;
