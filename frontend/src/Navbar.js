@@ -3,8 +3,6 @@ import './App.css';
 import React, {useState, useEffect} from "react";
 import {getMonday} from "./WeekliHelpers";
 import { Link } from "react-router-dom";
-import Dropdown from "bootstrap/js/src/dropdown";
-import DropdownButton from 'react-bootstrap/DropdownButton';
 
 function Navbar(props) {
     let monthList = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
@@ -111,20 +109,9 @@ function Navbar(props) {
                                 </button>
                             </Link>
 
-                            <DropdownButton
-                                menuAlign="right"
-                                title={<img src="Hamburger_icon.png" className="hamburger"/>}
-                                id="dropdown-menu-align-right"
-                            >
-                                <Dropdown.Item eventKey="1">Action</Dropdown.Item>
-                                <Dropdown.Item eventKey="2">Another action</Dropdown.Item>
-                                <Dropdown.Item eventKey="3">Something else here</Dropdown.Item>
-                                <Dropdown.Divider />
-                                <Dropdown.Item eventKey="4">Separated link</Dropdown.Item>
-                            </DropdownButton>
-
-                            {/*<button className="menu">*/}
-                            {/*</button>*/}
+                            <button className="menu">
+                                <img src="Hamburger_icon.png" className="hamburger"/>
+                            </button>
                         </div>
                     </div>
                 </div>
