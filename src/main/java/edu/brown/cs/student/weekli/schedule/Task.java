@@ -39,6 +39,31 @@ public class Task {
     this.sessionTime = sessionTime;
   }
 
+  public Task(long start,
+              long end,
+              long estTime,
+              String name,
+              String description,
+              double progress,
+              UUID id,
+              long sessionTime,
+              UUID projectiD) throws NumberFormatException {
+    if (estTime < 0) {
+      throw new NumberFormatException("ERROR: Duration of event is negative.");
+    } else {
+      this.estTime = estTime;
+    }
+    this.progress = progress;
+    this.startDate = start;
+    this.endDate = end;
+    this.name = name;
+    this.description = description;
+    this.projectiD = projectiD;
+    this.iD = id;
+    this.sessionTime = sessionTime;
+  }
+
+
   /**
    * Get the start date of the event.
    *
@@ -138,6 +163,10 @@ public void setProgress(double prog) {
 
   public void addProjectID(UUID projID) {
     this.projectiD = projID;
+  }
+
+  public UUID getProjectID() {
+    return projectiD;
   }
 
   public int sessions() {

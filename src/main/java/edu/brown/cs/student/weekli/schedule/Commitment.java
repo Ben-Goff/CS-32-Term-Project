@@ -42,6 +42,23 @@ public class Commitment {
     this.commitBlock = new Block(this.startDate, this.endDate, this.iD);
   }
 
+  public Commitment(long start, long end, String name, String description, UUID id, Optional<Long> repeating) throws NumberFormatException {
+    this.iD = id;
+    this.startDate = start;
+    this.endDate = end;
+    long time = endDate - startDate;
+    if (time < 0) {
+      throw new NumberFormatException("ERROR: Duration of event is negative.");
+    } else {
+      this.estTime = time;
+    }
+    this.name = name;
+    this.repeating = repeating;
+    this.description = description;
+    this.commitBlock = new Block(this.startDate, this.endDate, this.iD);
+  }
+
+
   /**
    * Get the start date of the event.
    *
@@ -102,6 +119,10 @@ public class Commitment {
    */
   public UUID getID() {
     return this.iD;
+  }
+
+  public Optional<Long> getRepeating() {
+    return repeating;
   }
 
   /**

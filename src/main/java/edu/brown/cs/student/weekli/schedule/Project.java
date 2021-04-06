@@ -1,5 +1,6 @@
 package edu.brown.cs.student.weekli.schedule;
 
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -8,36 +9,30 @@ public class Project {
 
   private String name;
   private String description;
-  private double progress;
-  private List<Task> checkpoints;
   private UUID iD;
 
   public Project(String name, String description) {
-    this.checkpoints = new ArrayList<>();
     this.iD = UUID.randomUUID();
     this.name = name;
     this.description = description;
-    double total = 0;
-    for (Task c : checkpoints) {
-      total += c.getProgress();
-    }
-    this.progress = total / this.checkpoints.size();
   }
 
   public String getName() {
     return name;
   }
 
-  public void updateProgress() {
+  public double getProgress() throws ClassNotFoundException, SQLException {
+    Class.forName("org.sqlite.JDBC");
+    String urlToDB = "jdbc:sqlite:data/weekli/tasks.sqlite3";
+    Connection conn = DriverManager.getConnection(urlToDB);
+    PreparedStatement prep = conn.prepareStatement("SELECT tasks.progress FROM tasks WHERE tasks.id = " + this.iD.toString() + ");");
+    ResultSet rs = prep.executeQuery();
     double total = 0;
-    for (Task c : this.checkpoints) {
-      total += c.getProgress();
+    int size = rs.getFetchSize();
+    while (rs.next()) {
+      total += rs.getFloat(1);
     }
-    this.progress = total / this.checkpoints.size();
-  }
-
-  public double getProgress() {
-    return progress;
+    return total / size;
   }
 
   public String getDescription() {
@@ -46,14 +41,5 @@ public class Project {
 
   public UUID getiD() {
     return iD;
-  }
-
-  public List<Task> getCheckpoints() {
-    return checkpoints;
-  }
-
-  public void addCheckpoint(Task checkpoint) {
-    checkpoint.addProjectID(this.iD);
-    this.checkpoints.add(checkpoint);
   }
 }

@@ -8,7 +8,6 @@ public class Block {
   private final long startTime;
   private final long endTime;
   private final UUID iD;
-  private UUID projectID = null;
 
   public Block(long startTime, long endTime, UUID iD) {
     this.startTime = startTime;
@@ -29,7 +28,4 @@ public class Block {
     return endTime;
   }
 
-  public void makePartOfProject(UUID piD, int priority) {
-    this.projectID = piD;
-  }
 }
