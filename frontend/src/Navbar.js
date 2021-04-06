@@ -2,6 +2,7 @@ import './Navbar.css';
 import './App.css';
 import React, {useState, useEffect} from "react";
 import {getMonday} from "./WeekliHelpers";
+import { Link } from "react-router-dom";
 
 function Navbar(props) {
     let monthList = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
@@ -63,6 +64,8 @@ function Navbar(props) {
     }
 
 
+
+
     return (
         <div className="Navbar">
             <div className="navbar-body">
@@ -100,10 +103,12 @@ function Navbar(props) {
 
                             </button>
 
-                            <button className="button progress">
-                                <img src="bars.png" className="bars"/> <div className="progress-text">Progress</div>
-                            </button>
-
+                            <Link to="/progress">
+                                <button className="button progress">
+                                    <img src="bars.png" className="bars"/> <div className="progress-text">Progress</div>
+                                </button>
+                            </Link>
+                            
                             <button className="menu">
                                 <img src="Hamburger_icon.png" className="hamburger"/>
                             </button>

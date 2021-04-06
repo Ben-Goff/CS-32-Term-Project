@@ -1,11 +1,23 @@
 import './App.css';
 import MainContainer from "./MainContainer";
+import Progress from "./Progress";
+import { Switch, Route } from 'react-router-dom';
+
+{/*Routing Help from https://stackoverflow.com/questions/41956465/how-to-create-multiple-page-app-using-react*/}
+const Router = () => {
+    return (
+        <Switch> {/* The Switch decides which component to show based on the current URL.*/}
+            <Route exact path='/' component={MainContainer}></Route>
+            <Route exact path='/progress' component={Progress}></Route>
+        </Switch>
+    );
+}
 
 function App() {
   return (
     <div className="App">
         <div className="AppContent">
-            <MainContainer/>
+            <Router/>
         </div>
     </div>
   );
