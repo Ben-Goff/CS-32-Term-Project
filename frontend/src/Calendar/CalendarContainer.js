@@ -41,7 +41,7 @@ function CalendarContainer(props) {
                 {dayLabels}
             </div>
             <div id="calendar-scroll" className="scrollable">
-                <Calendar/>
+                <Calendar getDisplayMonday={props.getDisplayMonday}/>
             </div>
         </div>
     );
