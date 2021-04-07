@@ -2,59 +2,24 @@ import './Taskbar.css';
 import './App.css';
 
 
-function Taskbar() {
+function Taskbar(props) {
+    let taskBlocks = props.taskBlocks;
+    let monthNames = ["Jan", "Feb", "Mar", "Apr", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
     return (
         <div className="Taskbar">
             <div className="space-filler"/>
             <div className="taskbar-contents">
-                <div className="task-box">
-                    <div className="contents">
-                        Wake Up
+                {taskBlocks.map(row => {
+                    let attrs = row.props;
+                    return <div className="task-box" style={{"background-color": attrs.color}}>
+                        <div className="contents">
+                            {monthNames[attrs.start.getMonth()] + " " + attrs.start.getDate() + " "}
+                            {attrs.start.getHours() + ":" + attrs.start.getMinutes() + "-" + attrs.end.getHours() + ":" + attrs.end.getMinutes()}<br/>
+                            {attrs.text}
+                        </div>
                     </div>
-                </div>
-
-                <div className="task-box">
-                    <div className="contents">
-                        Take Shower
-                    </div>
-                </div>
-
-                <div className="task-box">
-                    <div className="contents">
-                        Brush Teeth
-                    </div>
-                </div>
-
-                <div className="task-box">
-                    <div className="contents">
-                    Eat Breakfast
-                    </div>
-                </div>
-
-                <div className="task-box">
-                    <div className="contents">
-                        Eat Lunch
-                    </div>
-                </div>
-
-                <div className="task-box">
-                    <div className="contents">
-                        Eat Dinner
-                    </div>
-                </div>
-
-                <div className="task-box">
-                    <div className="contents">
-                        Ponder the Meaninglessness of Life
-                    </div>
-                </div>
-
-                <div className="task-box">
-                    <div className="contents">
-                        Sleep
-                    </div>
-                </div>
-
+                })}
             </div>
         </div>
     );

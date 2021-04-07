@@ -3,8 +3,19 @@ import '../App.css';
 import Block from "./Block";
 import Day from "./Day";
 import {getMonday} from "../WeekliHelpers";
+import React, {useState, useEffect} from 'react'
 
 function Calendar(props) {
+    const [blocksGrid, setBlocksGrid] = useState([[], [], [], [], [], [], []])
+    const [days, setDays] = useState([]);
+
+    useEffect(() => {
+        getBlocks();
+    }, [props.displayMonday]);
+
+    useEffect(() => {
+        setDays(prepareBlocks());
+    }, [blocksGrid]);
 
     let hourLabels = [];
     for (let i = 0; i < 24; i++) {
@@ -29,83 +40,100 @@ function Calendar(props) {
         </div>
     );
 
-
     let displayWeek = [];
 
     for (let i = 0; i < 7; i++) {
-        let newDate = new Date(props.getDisplayMonday());
+        let newDate = new Date(props.displayMonday);
         newDate.setDate(newDate.getDate() + i);
         displayWeek.push(newDate)
     }
 
-    //DUMMY EXAMPLE HARD CODED BLOCKS
-    const block1 = <Block start={new Date(2021, 3, 5, 9, 30, 0, 0)}
-                          end={new Date(2021, 3, 4, 10, 30, 0, 0)}
-                          color={"red"} text={"Breakfast"}/>;
+    const prepareBlocks = () => {
+        let days = [];
 
-    const block11 = <Block start={new Date(2021, 3, 5, 14, 0, 0, 0)}
-                           end={new Date(2021, 3, 4, 16, 0, 0, 0)}
-                           color={"orange"} text={"Math Lecture"}/>;
+        let currentDate = new Date()
+        let currentMonday = getMonday(currentDate)
 
-    const block2 = <Block start={new Date(2021, 3, 5, 9, 0, 0, 0)}
-                          end={new Date(2021, 3, 4, 9, 30, 0, 0)}
-                          color={"red"} text={"Shower"}/>;
+        //If display week is current week, add height of 3 to respective day
+        if (currentMonday.getFullYear() === props.displayMonday.getFullYear() &&
+            currentMonday.getMonth() === props.displayMonday.getMonth() &&
+            currentMonday.getDate() === props.displayMonday.getDate()) {
+            for (let i = 0; i < 7; i++) {
 
-    let blocks = [
-        { year: 2021, month: 3, date: 5, blockComponent: block1},
-        { year: 2021, month: 3, date: 5, blockComponent: block11},
-        { year: 2021, month: 3, date: 6, blockComponent: block2}
-    ]
-
-
-    // const block21 = <Block start={60 * 4} end={60 * 10} color={"orange"} text={"Midterm Cramming"}/>;
-    // const block3 = <Block start={60 * 3} end={60 * 9.5} color={"blue"} text={"Therapy Session"}/>;
-    // const block31 = <Block start={60} end={60 * 13} color={"red"} text={"Lunch"}/>;
-    // const block4 = <Block start={60 * 2} end={60 * 15} color={"orange"} text={"Term Project Group Meeting"}/>;
-    // const block5 = <Block start={60 * 3} end={60 * 8.5} color={"blue"} text={"More Therapy"}/>;
-    // const block6 = <Block start={60 * 2} end={60 * 10} color={"orange"} text={"CS32" +
-    // " Term Project"}/>;
-    // const block7 = <Block start={60 * 1.5} end={60 * 17} color={"red"} text={"Dinner"}/>;
-
-    let days = [];
-
-    let currentDate = new Date()
-    let currentMonday = getMonday(currentDate)
-
-    //If display week is current week, add height of 3 to respective day
-    if (currentMonday.getFullYear() === props.getDisplayMonday().getFullYear() &&
-        currentMonday.getMonth() === props.getDisplayMonday().getMonth() &&
-        currentMonday.getDate() === props.getDisplayMonday().getDate()) {
-        for (let i = 0; i < 7; i++) {
-
-            console.log((i + 1) % 7)
-            if (currentDate.getDay() === (i + 1) % 7) {
-                days[i] = <Day blocks={[]} height={3}/>;
-            } else {
-                days[i] = <Day blocks={[]} height={0}/>;
+                if (currentDate.getDay() === (i + 1) % 7) {
+                    days[i] = <Day blocks={blocksGrid[i]} height={3}/>;
+                } else {
+                    days[i] = <Day blocks={blocksGrid[i]} height={0}/>;
+                }
+            }
+        } else {
+            for (let i = 0; i < 7; i++) {
+                days.push(<Day blocks={blocksGrid[i]} height={0}/>);
             }
         }
-    } else {
-        for (let i = 0; i < 7; i++) {
-            days.push(<Day blocks={[]} height={0}/>);
-        }
+
+    return days
     }
 
-    console.log(days)
 
+    const getBlocks = () => {
+        //DUMMY EXAMPLE HARD CODED BLOCKS
+        const block1 = <Block start={new Date(2021, 3, 5, 9, 30, 0, 0)}
+                              end={new Date(2021, 3, 5, 10, 30, 0, 0)}
+                              color={"red"} text={"Breakfast"}/>;
 
-    //Goes through each day of the display week and adds appropriate blocks
-    for (let i = 0; i < 7; i++) {
+        const block11 = <Block start={new Date(2021, 3, 5, 14, 0, 0, 0)}
+                               end={new Date(2021, 3, 5, 16, 0, 0, 0)}
+                               color={"green"} text={"Math Lecture"}/>;
 
-        let month = displayWeek[i].getMonth()
-        let date = displayWeek[i].getDate()
-        let year = displayWeek[i].getFullYear()
+        const block2 = <Block start={new Date(2021, 3, 6, 9, 0, 0, 0)}
+                              end={new Date(2021, 3, 6, 9, 30, 0, 0)}
+                              color={"blue"} text={"Shower"}/>;
 
-        for (let block of blocks) {
-            if (block.month === month && block.date === date && block.year === year) {
-                days[i].props.blocks.push(block.blockComponent)
+        const block3 = <Block start={new Date(2021, 3, 7, 10, 0, 0, 0)}
+                              end={new Date(2021, 3, 7, 12, 30, 0, 0)}
+                              color={"orange"} text={"Literally just vibe"}/>;
+
+        const block31 = <Block start={new Date(2021, 3, 13, 9, 30, 0, 0)}
+                               end={new Date(2021, 3, 13, 12, 0, 0, 0)}
+                               color={"green"} text={"This is to make sure the calendar works" +
+        " across multiple weeks"}/>;
+
+        const block8 = <Block start={new Date(2021, 7, 20, 11, 0, 0, 0)}
+                              end={new Date(2021, 7, 20, 12, 30, 0, 0)}
+                              color={"purple"} text={"Easter egg: this is my birthday lol"}/>;
+
+        let blocks = [
+            { year: 2021, month: 3, date: 5, blockComponent: block1},
+            { year: 2021, month: 3, date: 5, blockComponent: block11},
+            { year: 2021, month: 3, date: 6, blockComponent: block2},
+            { year: 2021, month: 3, date: 7, blockComponent: block3},
+            { year: 2021, month: 3, date: 13, blockComponent: block31},
+            { year: 2021, month: 7, date: 20, blockComponent: block8}
+        ]
+
+        let blockAcc = [];
+
+        //Goes through each day of the display week and adds appropriate blocks
+
+        let curBlocksGrid = [...blocksGrid];
+        for (let i = 0; i < 7; i++) {
+
+            let month = displayWeek[i].getMonth();
+            let date = displayWeek[i].getDate();
+            let year = displayWeek[i].getFullYear();
+            //console.log(month);
+
+            curBlocksGrid[i] = [];
+            for (let block of blocks) {
+                if (block.month === month && block.date === date && block.year === year) {
+                    curBlocksGrid[i].push(block.blockComponent);
+                    blockAcc.push(block.blockComponent);
+                }
             }
         }
+        props.setTaskBlocks(blockAcc);
+        setBlocksGrid(curBlocksGrid);
     }
 
 

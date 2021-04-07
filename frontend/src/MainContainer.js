@@ -11,20 +11,15 @@ function MainContainer() {
 
     //A date on the display week's Monday
     const [displayMonday, setDisplayMonday] = useState(getMonday(new Date()));
-
-    /**
-     * Getter for Monday
-     */
-    function getDisplayMonday() {
-        return displayMonday;
-    }
+    const [taskBlocks, setTaskBlocks] = useState([]);
 
     return (
         <div className="MainContainer">
             <div className="main-grid">
-                <Navbar getDisplayMonday={getDisplayMonday} setMonday={setDisplayMonday}/>
-                <Taskbar/>
-                <CalendarContainer getDisplayMonday={getDisplayMonday} setMonday={setDisplayMonday}/>
+                <Navbar displayMonday={displayMonday} setDisplayMonday={setDisplayMonday}/>
+                <Taskbar taskBlocks={taskBlocks} setTaskBlocks={setTaskBlocks}/>
+                <CalendarContainer displayMonday={displayMonday} setDisplayMonday={setDisplayMonday}
+                                   setTaskBlocks={setTaskBlocks}/>
             </div>
         </div>
     );
