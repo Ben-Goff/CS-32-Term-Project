@@ -60,7 +60,7 @@ function Navbar(props) {
     }
 
     const createTask = () => {
-        //MAKE A POPUP
+        props.setShowPopup(true);
     }
 
     return (
@@ -95,9 +95,8 @@ function Navbar(props) {
 
                         <div className="flexbox-section">
 
-                            <button className="button create">
+                            <button className="button create" onClick={createTask}>
                                 <img src="plus.png" className="plus"/> <div className="create-text">Create</div>
-
                             </button>
 
                             <Link to="/progress">

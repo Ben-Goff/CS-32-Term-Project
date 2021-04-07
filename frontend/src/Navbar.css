@@ -77,6 +77,7 @@
 }
 
 .create {
+    margin-left: 10px;
     display: flex;
     font-family: 'Inter', sans-serif;
     width: 120px;
@@ -115,6 +116,7 @@
 .progress-text {
     margin-left: -9px;
     padding-top: 10px;
+    text-decoration: none;
 }
 
 .menu {
