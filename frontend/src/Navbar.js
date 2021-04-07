@@ -63,6 +63,11 @@ function Navbar(props) {
         props.setShowPopup(true);
     }
 
+    let dropdownValue = "0"
+    function onDropDownClick() {
+
+    }
+
     return (
         <div className="Navbar">
             <div className="navbar-body">
@@ -105,9 +110,24 @@ function Navbar(props) {
                                 </button>
                             </Link>
 
-                            <button className="menu">
-                                <img src="Hamburger_icon.png" className="hamburger"/>
-                            </button>
+                            {/*Hamburger menu css/html code TAKEN FROM: https://codepen.io/erikterwan/pen/EVzeRP*/}
+                            <nav role="navigation">
+                                <div id="menuToggle">
+
+                                    <input type="checkbox" />
+
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+
+                                    <ul id="menu">
+                                        <a href="#"><li>Home</li></a>
+                                        <a href="#"><li>About</li></a>
+                                        <a href="#"><li>Info</li></a>
+                                        <a href="#"><li>Contact</li></a>
+                                    </ul>
+                                </div>
+                            </nav>
 
                         </div>
                     </div>
