@@ -17,6 +17,12 @@ public class Project {
     this.description = description;
   }
 
+  public Project(UUID iD, String name, String description) {
+    this.iD = iD;
+    this.name = name;
+    this.description = description;
+  }
+
   public String getName() {
     return name;
   }
@@ -32,6 +38,8 @@ public class Project {
     while (rs.next()) {
       total += rs.getFloat(1);
     }
+    prep.close();
+    rs.close();
     return total / size;
   }
 

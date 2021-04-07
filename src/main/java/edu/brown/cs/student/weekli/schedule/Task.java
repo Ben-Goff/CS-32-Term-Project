@@ -170,7 +170,12 @@ public void setProgress(double prog) {
   }
 
   public int sessions() {
-    return (int) Math.floor(this.estTime / this.sessionTime);
+    return (int) Math.floor((double) this.estTime / this.sessionTime);
+  }
+
+  public void blockComplete() {
+    double progToAdd = this.sessionTime / (getEstimatedTime() / (1.0 - this.progress));
+    setProgress(progress + progToAdd);
   }
 
 }
