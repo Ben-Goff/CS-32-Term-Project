@@ -20,6 +20,9 @@
 
 .timeIndicator{
     position: absolute;
-    border: 1px dashed #000;
-    width: max-content;
+
+    background: black;
+
+
+    width: 100%;
 }

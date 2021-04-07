@@ -2,6 +2,7 @@ import './Calendar.css';
 import '../App.css';
 import Block from "./Block";
 import Day from "./Day";
+import {getMonday} from "../WeekliHelpers";
 
 function Calendar(props) {
 
@@ -68,13 +69,29 @@ function Calendar(props) {
 
     let days = [];
 
-    days.push(<Day blocks={[]}/>);
-    days.push(<Day blocks={[]}/>);
-    days.push(<Day blocks={[]}/>);
-    days.push(<Day blocks={[]}/>);
-    days.push(<Day blocks={[]}/>);
-    days.push(<Day blocks={[]}/>);
-    days.push(<Day blocks={[]}/>);
+    let currentDate = new Date()
+    let currentMonday = getMonday(currentDate)
+
+    //If display week is current week, add height of 3 to respective day
+    if (currentMonday.getFullYear() === props.getDisplayMonday().getFullYear() &&
+        currentMonday.getMonth() === props.getDisplayMonday().getMonth() &&
+        currentMonday.getDate() === props.getDisplayMonday().getDate()) {
+        for (let i = 0; i < 7; i++) {
+
+            console.log((i + 1) % 7)
+            if (currentDate.getDay() === (i + 1) % 7) {
+                days[i] = <Day blocks={[]} height={3}/>;
+            } else {
+                days[i] = <Day blocks={[]} height={0}/>;
+            }
+        }
+    } else {
+        for (let i = 0; i < 7; i++) {
+            days.push(<Day blocks={[]} height={0}/>);
+        }
+    }
+
+    console.log(days)
 
 
     //Goes through each day of the display week and adds appropriate blocks

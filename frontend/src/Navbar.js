@@ -112,6 +112,7 @@ function Navbar(props) {
                             <button className="menu">
                                 <img src="Hamburger_icon.png" className="hamburger"/>
                             </button>
+
                         </div>
                     </div>
                 </div>
