@@ -3,6 +3,7 @@ import '../App.css';
 import Calendar from "./Calendar";
 import {getMonday} from "../WeekliHelpers";
 import React, {useEffect} from "react";
+import Taskbar from "../Taskbar";
 
 function CalendarContainer(props) {
 
@@ -12,7 +13,7 @@ function CalendarContainer(props) {
 
     let dayNames = ["M", "T", "W", "Th", "F", "S", "Su"];
     let dayNumbers = [];
-    const monday = props.getDisplayMonday();
+    const monday = props.displayMonday;
 
     let curDay = monday;
     for (let i = 0; i < 7; i++) {
@@ -28,8 +29,8 @@ function CalendarContainer(props) {
 
     let d = new Date();
 
-    if (getMonday(d).getDate() === props.getDisplayMonday().getDate()  &&
-        getMonday(d).getMonth() === props.getDisplayMonday().getMonth()){
+    if (getMonday(d).getDate() === props.displayMonday.getDate()  &&
+        getMonday(d).getMonth() === props.displayMonday.getMonth()){
         let circlePosition = (d.getDay() - 1) % 6; // modulo is to convert to monday-start
         dayLabels[circlePosition] = <div className="circled">{dayLabels[circlePosition]}</div>
         //console.log(circlePosition)
@@ -41,7 +42,8 @@ function CalendarContainer(props) {
                 {dayLabels}
             </div>
             <div id="calendar-scroll" className="scrollable">
-                <Calendar getDisplayMonday={props.getDisplayMonday}/>
+                <Calendar displayMonday={props.displayMonday}
+                          setTaskBlocks={props.setTaskBlocks}/>
             </div>
         </div>
     );

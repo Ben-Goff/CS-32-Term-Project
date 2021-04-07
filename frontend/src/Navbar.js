@@ -19,9 +19,9 @@ function Navbar(props) {
     }, [])
 
     const prevWeek = () => {
-        let lastMonday = new Date(props.getDisplayMonday());
+        let lastMonday = new Date(props.displayMonday);
         lastMonday.setDate(lastMonday.getDate() - 7);
-        props.setMonday(lastMonday)
+        props.setDisplayMonday(lastMonday)
         setMonth(monthList[lastMonday.getMonth()]);
         setDay(lastMonday.getDate());
 
@@ -34,7 +34,7 @@ function Navbar(props) {
 
     const thisWeek = () => {
         let thisMonday = new Date(getMonday(new Date()));
-        props.setMonday(thisMonday);
+        props.setDisplayMonday(thisMonday);
         setMonth(monthList[thisMonday.getMonth()]);
         setDay(thisMonday.getDate());
 
@@ -46,9 +46,9 @@ function Navbar(props) {
     }
 
     const nextWeek = () => {
-        let nextMonday = new Date(props.getDisplayMonday());
+        let nextMonday = new Date(props.displayMonday);
         nextMonday.setDate(nextMonday.getDate() + 7);
-        props.setMonday(nextMonday);
+        props.setDisplayMonday(nextMonday);
         setMonth(monthList[nextMonday.getMonth()]);
         setDay(nextMonday.getDate());
 
@@ -62,9 +62,6 @@ function Navbar(props) {
     const createTask = () => {
         //MAKE A POPUP
     }
-
-
-
 
     return (
         <div className="Navbar">
