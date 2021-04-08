@@ -29,8 +29,8 @@ function CalendarContainer(props) {
 
     let d = new Date();
 
-    if (getMonday(d).getDate() === props.displayMonday.getDate()  &&
-        getMonday(d).getMonth() === props.displayMonday.getMonth()){
+    if (getMonday(d).getDate() === props.displayMonday.getDate() &&
+        getMonday(d).getMonth() === props.displayMonday.getMonth()) {
         let circlePosition = (d.getDay() - 1) % 6; // modulo is to convert to monday-start
         dayLabels[circlePosition] = <div className="circled">{dayLabels[circlePosition]}</div>
         //console.log(circlePosition)
@@ -43,7 +43,10 @@ function CalendarContainer(props) {
             </div>
             <div id="calendar-scroll" className="scrollable">
                 <Calendar displayMonday={props.displayMonday}
-                          setTaskBlocks={props.setTaskBlocks}/>
+                          setTaskBlocks={props.setTaskBlocks}
+                          setClickedBlock={props.setClickedBLock}
+                          setClickedX={props.setClickedX}
+                          setClickedY={props.setClickedY}/>
             </div>
         </div>
     );

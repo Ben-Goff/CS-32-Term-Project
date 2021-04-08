@@ -9,13 +9,13 @@ function Block(props) {
     let durationMinutes = endMinutes - startMinutes;
 
     return (
-        <div className="Block" style={
+        <div className="Block" onClick={props.onClick} style={
             {"height": (durationMinutes) + 'px',
                 "top": (startMinutes) + 'px',
                 "background": props.color}
         }>
             <div className="contents">
-                {props.text}
+                {props.title}
             </div>
         </div>
     );

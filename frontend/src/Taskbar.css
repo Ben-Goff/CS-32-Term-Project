@@ -12,13 +12,19 @@
     overflow: scroll;
     height: inherit;
 }
-
 .task-box {
     border-radius: 10px;
     /*border: 5px solid black;*/
     height: 150px;
     margin: 10px;
 }
+
+.task-box-desc {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    height: 45px;
+}
+
 
 .contents {
     color: white;
