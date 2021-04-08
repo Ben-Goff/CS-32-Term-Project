@@ -9,7 +9,7 @@
     grid-area: sidebar;
     background-color: #fff;
     /*border: 5px solid black;*/
-    overflow: scroll;
+    overflow-y: scroll;
     height: inherit;
 }
 .task-box {
