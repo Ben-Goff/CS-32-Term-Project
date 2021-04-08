@@ -1,0 +1,26 @@
+.Calendar {
+    width: inherit;
+}
+
+.CalendarContents {
+    padding: 20px;
+    position: relative;
+    display: grid;
+    grid-template-columns: 50px repeat(7, minmax(75px, 1fr));
+    grid-template-rows: auto;
+    align-content: center;
+    grid-area: calendar;
+}
+
+.HourLabel {
+    text-align: center;
+    height: 59px;
+    border: 1px solid transparent;
+    margin-bottom: -1px;
+    font-family: 'Inter', sans-serif;
+    font-weight: lighter;
+}
+
+.HourLabelCol {
+    margin-top: -55px;
+}

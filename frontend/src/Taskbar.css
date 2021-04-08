@@ -1,0 +1,26 @@
+.Taskbar {
+    height: inherit;
+    border-radius: 20px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+.taskbar-contents {
+    grid-area: sidebar;
+    background-color: #fff;
+    /*border: 5px solid black;*/
+    overflow: scroll;
+    height: inherit;
+}
+
+.task-box {
+    border-radius: 10px;
+    /*border: 5px solid black;*/
+    height: 150px;
+    margin: 10px;
+}
+
+.contents {
+    color: white;
+    padding: 10px;
+}

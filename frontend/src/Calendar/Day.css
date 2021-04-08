@@ -1,0 +1,28 @@
+.Hour {
+    margin-top: -1px;
+    margin-right: -1px;
+    height: 59px;
+    border-bottom: 1px solid #DCDCDC;
+    border-left: 1px solid #DCDCDC;
+    border-right: 1px solid #DCDCDC;
+    border-top: 1px solid #DCDCDC;
+}
+
+.block-container {
+    position: relative;
+    width: inherit;
+}
+
+.Day {
+    position: relative;
+    width: inherit;
+}
+
+.timeIndicator{
+    position: absolute;
+
+    background: black;
+
+
+    width: 100%;
+}

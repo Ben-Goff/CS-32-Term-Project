@@ -1,0 +1,12 @@
+.Block {
+    position: absolute;
+    z-index: 999;
+    border-radius: 10px;
+    left: 4px;
+    right: 4px;
+}
+
+.contents {
+    padding: 10px;
+    color: white;
+}

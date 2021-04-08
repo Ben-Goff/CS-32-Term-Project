@@ -1,0 +1,45 @@
+.scrollable {
+    overflow: scroll;
+    width: inherit;
+    flex-grow: 1;
+    position: relative;
+}
+
+.CalendarContainer {
+    display: flex; flex-direction: column;
+    position: relative;
+    background-color: #fff;
+    border-radius: 20px;
+    /*border: 5px solid black;*/
+    height: inherit;
+    width: inherit;
+    margin-left: 10px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+.DayLabel {
+    font-family: 'Inter', sans-serif;
+    font-weight: lighter;
+    border-bottom: 1px solid #DCDCDC;
+    margin-right: 0px;
+}
+
+.DayLabels {
+    position: relative;
+    grid-area: daylabels;
+    width: inherit;
+    display: grid;
+    padding-left: 70px;
+    padding-right: 33px;
+    grid-template-columns: repeat(7, minmax(75px, 1fr));
+    align-content: end;
+    text-align: center;
+    font-weight: bold;
+}
+
+.circled {
+    background: #389ec1;
+    border-radius: 10px;
+    color: white;
+}
