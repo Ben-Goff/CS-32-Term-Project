@@ -1,0 +1,26 @@
+.Form {
+    margin-top: 20px;
+}
+
+input {
+    margin-bottom: 10px;
+}
+
+#add-checkpoint {
+    border: none;
+    background: none;
+    color: blue;
+    font-size: 16px;
+    margin-top: 5px;
+    margin-left: -5px;
+}
+
+#submit {
+    border: none;
+    background: none;
+    color: blue;
+    font-size: 16px;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}

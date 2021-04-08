@@ -2,42 +2,24 @@ import './Taskbar.css';
 import './App.css';
 
 
-function Taskbar() {
+function Taskbar(props) {
+    let taskBlocks = props.taskBlocks;
+    let monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
     return (
         <div className="Taskbar">
+            <div className="space-filler"/>
             <div className="taskbar-contents">
-                <div className="task-box">
-                    Wake Up
-                </div>
-
-                <div className="task-box">
-                    Take Shower
-                </div>
-
-                <div className="task-box">
-                    Brush Teeth
-                </div>
-
-                <div className="task-box">
-                    Eat Breakfast
-                </div>
-
-                <div className="task-box">
-                    Eat Lunch
-                </div>
-
-                <div className="task-box">
-                    Eat Dinner
-                </div>
-
-                <div className="task-box">
-                    Ponder the Meaninglessness of Life
-                </div>
-
-                <div className="task-box">
-                    Sleep
-                </div>
-
+                {taskBlocks.map(row => {
+                    let attrs = row.props;
+                    return <div className="task-box" style={{"background-color": attrs.color}}>
+                        <div className="contents">
+                            {monthNames[attrs.start.getMonth()] + " " + attrs.start.getDate() + " "}
+                            {attrs.start.getHours() + ":" + attrs.start.getMinutes() + "-" + attrs.end.getHours() + ":" + attrs.end.getMinutes()}<br/>
+                            {attrs.text}
+                        </div>
+                    </div>
+                })}
             </div>
         </div>
     );
