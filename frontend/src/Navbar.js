@@ -124,7 +124,7 @@ function Navbar(props) {
                                         <a href="#"><li>Home</li></a>
                                         <a href="#"><li>About</li></a>
                                         <a href="#"><li>Info</li></a>
-                                        <a href="#"><li>Contact</li></a>
+                                        <Link to="/login"><li>Log Out</li></Link>
                                     </ul>
                                 </div>
                             </nav>
