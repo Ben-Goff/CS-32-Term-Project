@@ -1,6 +1,6 @@
 import './App.css';
 import MainContainer from "./MainContainer";
-import Progress from "./Progress";
+import Progress from "./Progress/Progress";
 import Login from "./UserLogin/Login";
 import Signup from "./UserLogin/Signup";
 import { Switch, Route } from 'react-router-dom';
