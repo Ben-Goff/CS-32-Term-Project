@@ -99,12 +99,12 @@ function Navbar(props) {
                         </div>
 
                         <div className="flexbox-section">
-                            <button className="button shuffle">
-                                <img src="shuffle.png" className="shuffle-icon"/> <div className="shuffle-text">Shuffle</div>
-                            </button>
-
                             <button className="button create" onClick={createTask}>
                                 <img src="plus.png" className="plus-icon"/> <div className="create-text">Create</div>
+                            </button>
+
+                            <button className="button shuffle">
+                                <img src="shuffle.png" className="shuffle-icon"/> <div className="shuffle-text">Shuffle</div>
                             </button>
 
                             <Link to="/progress" style={{ textDecoration: 'none' }}>
@@ -124,10 +124,9 @@ function Navbar(props) {
                                     <span></span>
 
                                     <ul id="menu">
-                                        <a href="#"><li>Home</li></a>
-                                        <a href="#"><li>About</li></a>
-                                        <a href="#"><li>Info</li></a>
                                         <Link to="/login"><li>Log Out</li></Link>
+                                        <a href="#"><li>Manage Data</li></a>
+                                        <a href="#"><li style={{"color": "red"}}>Clear Schedule</li></a>
                                     </ul>
                                 </div>
                             </nav>
