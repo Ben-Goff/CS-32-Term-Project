@@ -4,7 +4,7 @@ import './App.css';
 
 function Taskbar(props) {
     let taskBlocks = props.taskBlocks;
-    let monthNames = ["Jan", "Feb", "Mar", "Apr", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    let monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
     return (
         <div className="Taskbar">
