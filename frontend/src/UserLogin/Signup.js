@@ -1,6 +1,6 @@
 import '../App.css';
 import './UserLogin.css';
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {useState} from "react";
 
 function Signup() {
@@ -10,9 +10,20 @@ function Signup() {
     let confirm = ""
 
     const [showError, setShowError] = useState(false)
+    let history = useHistory();
 
-    function submitSignIn() {
+    function SubmitSignIn() {
         console.log("user: " + username + " pass: " + password + " confirm: " + confirm)
+        
+        if (password === confirm) {
+            //POST REQUEST HERE
+
+            //Sends the user to the main page.
+            history.push('/');
+            setShowError(false)
+        } else {
+            setShowError(true)
+        }
     }
 
     function changeUsername(event) {
@@ -21,20 +32,10 @@ function Signup() {
 
     function changePassword(event) {
         password = event.target.value;
-        if (password !== confirm) {
-            setShowError(true)
-        } else {
-            setShowError(false)
-        }
     }
 
     function changeConfirm(event) {
         confirm = event.target.value;
-        if (password !== confirm) {
-            setShowError(true)
-        } else {
-            setShowError(false)
-        }
     }
 
     return (
@@ -51,22 +52,12 @@ function Signup() {
                 <label htmlFor="confirm">Confirm Password</label><br/>
                 <input type="text" id="confirm" name="confirm" onChange={changeConfirm}/><br/>
 
-                {/*Links to main page only if there is no error*/}
-                {showError &&
-                    <div>
-                        <button onClick={submitSignIn}>Sign Up</button>
-                        <h2>
-                            Error, password does not match confirm password.
-                        </h2>
-                    </div>
-                }
+                <button onClick={SubmitSignIn}>Sign Up</button>
 
-                {!showError &&
-                <div>
-                    <Link to="/">
-                        <button onClick={submitSignIn}>Sign Up</button>
-                    </Link>
-                </div>
+                {showError &&
+                <h2>
+                    Error, password does not match confirm password.
+                </h2>
                 }
 
 

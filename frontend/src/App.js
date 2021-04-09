@@ -5,6 +5,10 @@ import Login from "./UserLogin/Login";
 import Signup from "./UserLogin/Signup";
 import { Switch, Route } from 'react-router-dom';
 
+/**
+ * User and task information is kept here, as it's needed across multiple pages.
+ */
+
 {/*Routing Help from https://stackoverflow.com/questions/41956465/how-to-create-multiple-page-app-using-react*/}
 const Router = () => {
     return (
