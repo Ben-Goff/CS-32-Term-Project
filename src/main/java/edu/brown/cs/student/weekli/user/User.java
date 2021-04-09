@@ -17,29 +17,21 @@ import java.util.stream.Collectors;
 public class User {
 
     private String iD;
-    private String password;
     private List<Commitment> commitments;
     private List<Task> tasks;
     private List<Project> projects;
     private List<Block> schedule;
 
-    public User(String iD, String pw) throws ClassNotFoundException, SQLException {
+    public User(String iD) throws ClassNotFoundException, SQLException {
         this.schedule = new ArrayList<>();
         this.iD = iD;
-        this.password = pw;
         this.commitments = new ArrayList<>();
         this.tasks = new ArrayList<>();
         this.projects = new ArrayList<>();
         Class.forName("org.sqlite.JDBC");
-        String urlToDB = "jdbc:sqlite:data/weekli/users.sqlite3";
+        String urlToDB = "jdbc:sqlite:data/weekli/tasks.sqlite3";
         Connection conn = DriverManager.getConnection(urlToDB);
-        PreparedStatement prep = conn.prepareStatement("CREATE TABLE IF NOT EXISTS users ("
-                + "id TEXT,"
-                + "password TEXT);");
-        prep.executeUpdate();
-        urlToDB = "jdbc:sqlite:data/weekli/tasks.sqlite3";
-        conn = DriverManager.getConnection(urlToDB);
-        prep = conn.prepareStatement("CREATE TABLE IF NOT EXISTS tasks ("
+        PreparedStatement prep = conn.prepareStatement("CREATE TABLE IF NOT EXISTS tasks ("
                 + "id TEXT,"
                 + "user TEXT,"
                 + "startTime INTEGER,"
@@ -90,7 +82,7 @@ public class User {
         String urlToDB = "jdbc:sqlite:data/weekli/tasks.sqlite3";
         Connection conn = DriverManager.getConnection(urlToDB);
         PreparedStatement prep = conn.prepareStatement("INSERT INTO tasks (id, user, startTime, endTime, estTime, name, description, progress, sessionTime, project)"
-                + "VALUES ("+update.getID().toString()+", "+ this.iD +", "+update.getStartDate()+", "+update.getEndDate()+", "+update.getEstimatedTime()+", "+update.getName()+", "+update.getDescription()+", "+update.getProgress()+", "+update.getSessionTime()+", "+update.getProjectID().toString()+");");
+                + " VALUES ("+update.getID().toString()+", "+ this.iD +", "+update.getStartDate()+", "+update.getEndDate()+", "+update.getEstimatedTime()+", "+update.getName()+", "+update.getDescription()+", "+update.getProgress()+", "+update.getSessionTime()+", "+update.getProjectID().toString()+");");
         prep.executeUpdate();
         prep.close();
     }
@@ -102,7 +94,7 @@ public class User {
         String urlToDB = "jdbc:sqlite:data/weekli/tasks.sqlite3";
         Connection conn = DriverManager.getConnection(urlToDB);
         PreparedStatement prep = conn.prepareStatement("INSERT INTO tasks (id, user, startTime, endTime, estTime, name, description, progress, sessionTime, project)"
-                + "VALUES ("+add.getID().toString()+", "+ this.iD +", "+add.getStartDate()+", "+add.getEndDate()+", "+add.getEstimatedTime()+", "+add.getName()+", "+add.getDescription()+", "+add.getProgress()+", "+add.getSessionTime()+", "+add.getProjectID().toString()+");");
+                + " VALUES ("+add.getID().toString()+", "+ this.iD +", "+add.getStartDate()+", "+add.getEndDate()+", "+add.getEstimatedTime()+", "+add.getName()+", "+add.getDescription()+", "+add.getProgress()+", "+add.getSessionTime()+", "+add.getProjectID().toString()+");");
         prep.executeUpdate();
         prep.close();
     }
@@ -118,10 +110,10 @@ public class User {
         PreparedStatement prep;
         if (rep.isPresent()) {
             prep = conn.prepareStatement("INSERT INTO commitments (id, user, startTime, endTime, name, description, repeating)"
-                    + "VALUES (" + add.getID().toString() + ", " + this.iD + ", " + add.getStartDate() + ", " + add.getEndDate() + ", " + add.getName() + ", " + add.getDescription() + ",  " + add.getRepeating().get() +");");
+                    + " VALUES (" + add.getID().toString() + ", " + this.iD + ", " + add.getStartDate() + ", " + add.getEndDate() + ", " + add.getName() + ", " + add.getDescription() + ",  " + add.getRepeating().get() +");");
         } else {
             prep = conn.prepareStatement("INSERT INTO commitments (id, user, startTime, endTime, name, description)"
-                    + "VALUES (" + add.getID().toString() + ", " + this.iD + ", " + add.getStartDate() + ", " + add.getEndDate() + ", " + add.getName() + ", " + add.getDescription() +");");
+                    + " VALUES (" + add.getID().toString() + ", " + this.iD + ", " + add.getStartDate() + ", " + add.getEndDate() + ", " + add.getName() + ", " + add.getDescription() +");");
         }
         prep.executeUpdate();
         prep.close();
@@ -141,7 +133,7 @@ public class User {
         String urlToDB = "jdbc:sqlite:data/weekli/projects.sqlite3";
         Connection conn = DriverManager.getConnection(urlToDB);
         PreparedStatement prep = conn.prepareStatement("INSERT INTO projects (id, user, name, description)"
-                + "VALUES ("+add.getiD().toString()+", "+ this.iD +", "+add.getName()+", "+add.getDescription()+");");
+                + " VALUES ("+add.getiD().toString()+", "+ this.iD +", "+add.getName()+", "+add.getDescription()+");");
         prep.executeUpdate();
         prep.close();
         this.projects.add(add);
@@ -154,7 +146,7 @@ public class User {
         PreparedStatement prep = null;
         for (Block b: schedule) {
             prep = conn.prepareStatement("INSERT INTO schedules (user, id, startTime, endTime)"
-                    + "VALUES ("+this.iD+","+b.getiD().toString()+","+b.getStartTime()+","+b.getEndTime()+");");
+                    + " VALUES ("+this.iD+","+b.getiD().toString()+","+b.getStartTime()+","+b.getEndTime()+");");
             prep.executeUpdate();
         }
         if (prep != null){
@@ -288,5 +280,15 @@ public class User {
       }
     }
 
+    public List<Block> getSchedule() {
+      return schedule;
+    }
 
+    public List<Commitment> getCommitments() {
+      return commitments;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
 }
