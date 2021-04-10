@@ -63,10 +63,11 @@ public class Handlers {
             JSONObject data = new JSONObject(request.body());
             String username = data.getString("username");
             String password = data.getString("password");
-            System.out.println(username + password);
             Map<String, Object> variables;
             String message = "";
-            User loggingIn = db.signIn(username, password);
+            System.out.println("b4");
+            User loggingIn = db.signIn(username, password); //TODO: NOTHING RUNS AFTER THIS WHEN USER IS NOT WORKING
+            System.out.println("after");
             if(loggingIn == null) {
                 message = "login failed";
                 variables = ImmutableMap.of("message", message);
