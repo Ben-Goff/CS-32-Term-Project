@@ -1,16 +1,15 @@
 import '../App.css';
 import './UserLogin.css';
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {useState} from "react";
 
 function Login() {
-
-    //TODO: error handling when login is not valid.
 
     let username = ""
     let password = ""
 
     const [showError, setShowError] = useState(false)
+    let history = useHistory();
 
     function changeUsername(event) {
         username = event.target.value;
@@ -20,8 +19,17 @@ function Login() {
         password = event.target.value;
     }
 
-    function submitSignIn() {
+    function SubmitLogin() {
         console.log("user: " + username + " pass: " + password)
+
+        //POST REQUEST HERE
+        if (true) {
+             //Sends the user to the main page.
+            history.push('/');
+            setShowError(false)
+        } else {
+            setShowError(true)
+        }
     }
 
     return (
@@ -36,24 +44,12 @@ function Login() {
                 <label htmlFor="password">Password</label><br/>
                 <input type="text" id="password" name="password" onChange={changePassword}/><br/>
 
-                {/*Links to main page only if there is no error*/}
+
+                <button onClick={SubmitLogin}>Login</button>
+
                 {showError &&
-                <div>
-                    <button onClick={submitSignIn}>Login</button>
-                    <h2>
-                        ERROR
-                    </h2>
-                </div>
+                <p>LOGIN ERROR</p>
                 }
-
-                {!showError &&
-                <div>
-                    <Link to="/">
-                        <button onClick={submitSignIn}>Login</button>
-                    </Link>
-                </div>
-                }
-
 
             </div>
 
