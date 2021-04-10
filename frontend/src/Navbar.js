@@ -103,9 +103,9 @@ function Navbar(props) {
                                 <img src="plus.png" className="plus-icon"/> <div className="create-text">Create</div>
                             </button>
 
-                            <button className="button shuffle">
-                                <img src="shuffle.png" className="shuffle-icon"/> <div className="shuffle-text">Shuffle</div>
-                            </button>
+                            {/*<button className="button shuffle">*/}
+                            {/*    <img src="shuffle.png" className="shuffle-icon"/> <div className="shuffle-text">Shuffle</div>*/}
+                            {/*</button>*/}
 
                             <Link to="/progress" style={{ textDecoration: 'none' }}>
                                 <button className="button progress">
