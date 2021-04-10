@@ -14,7 +14,7 @@ function Signup() {
 
     function SubmitSignIn() {
         console.log("user: " + username + " pass: " + password + " confirm: " + confirm)
-        
+
         if (password === confirm) {
             //POST REQUEST HERE
 
