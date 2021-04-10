@@ -17,16 +17,19 @@ function ProjectForm() {
                     <label htmlFor={checkpointID + "-description"}>Description</label><br/>
                     <input type="text" id={checkpointID + "-description"} name={checkpointID + "-description"}/><br/>
                     <label htmlFor={checkpointID + "-due-date"}>Due Date</label><br/>
-                    <input type="date" id={checkpointID + "-due-date"} name={checkpointID + "-due-date"} placeholder={"mm-dd-yyyy"}/><br/>
-                    <label htmlFor="due-time">Due Time</label><br/>
-                    <input type="time" id="due-time" name="due-time" placeholder={"__:__ AM/PM"}/><br/>
+                    <input type="date" id={checkpointID + "-due-date"} name={checkpointID + "-due-date"} placeholder={"mm-dd-yyyy"}/>
+                    <label htmlFor={checkpointID + "-due-time"} style={{"display": "none"}}>Due" +
+                        " Time</label>
+                    <input type="time" id={checkpointID + "-due-time"} name={checkpointID + "-due-time"} placeholder={"__:__ AM/PM"}/><br/>
                     <label htmlFor={checkpointID + "-estimated-effort"}>Estimated Effort (hrs)</label><br/>
                     <input type="number" id={checkpointID + "-estimated-effort"} name={checkpointID + "-estimated-effort"}/><br/>
+                    <label htmlFor="session-length">Max Session Length (hrs)</label><br/>
+                    <input type="number" id="session-length" name="session-length"/><br/>
                 </div>
             );
         }
         setCheckpointForms(formsList);
-    }, [numCheckpoints])
+    }, [numCheckpoints]);
 
     return (
         <div className="Form ProjectForm">

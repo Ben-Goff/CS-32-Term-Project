@@ -86,11 +86,11 @@ function Navbar(props) {
                             </div>
 
                             <button className="button prev-week" onClick={prevWeek}>
-                                {"<"}
+                                <div className="week-icon">{"<"}</div>
                             </button>
 
                             <button className="button next-week" onClick={nextWeek}>
-                                {">"}
+                                <div className="week-icon">{">"}</div>
                             </button>
 
                             <button className="button this-week" onClick={thisWeek}>
@@ -125,7 +125,6 @@ function Navbar(props) {
 
                                     <ul id="menu">
                                         <Link to="/login"><li>Log Out</li></Link>
-                                        <Link to="/schedule"><li>Edit Schedule</li></Link>
                                         <a href="#"><li>Manage Data</li></a>
                                         <a href="#"><li style={{"color": "red"}}>Clear Schedule</li></a>
                                     </ul>
