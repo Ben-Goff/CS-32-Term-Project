@@ -1,8 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: edu.brown.cs.student.scheduler.SchedulerTest
 -------------------------------------------------------------------------------
-Tests run: 3, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.519 s <<< FAILURE! - in edu.brown.cs.student.scheduler.SchedulerTest
-edu.brown.cs.student.scheduler.SchedulerTest.testOneTask  Time elapsed: 0.189 s  <<< ERROR!
-java.lang.ArithmeticException: / by zero
-	at edu.brown.cs.student.scheduler.SchedulerTest.testOneTask(SchedulerTest.java:34)
-
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.263 s - in edu.brown.cs.student.scheduler.SchedulerTest
