@@ -18,6 +18,33 @@ import java.util.stream.Collectors;
 
 public class Handlers {
 
+  // CreateCommitment Send Order:
+  //  1) name
+  //  2) description
+  //  3) startTime -- explicitly given
+  //  4) endTime -- Calculated in front based on duration (not explicit)
+  //  5) periodOfRepitition -- if non repeating, empty string
+  //
+  // CreateTask Send Order:
+  //  1) name -- (this is Title)
+  //  2) description
+  //  3) startTime -- time of creation
+  //  4) endTime -- combo of date and time
+  //  5) estTime -- this is estimated effort in milliseconds
+  //  6) sessionTime -- in milliseconds
+  //
+  // CreateProject Send Order:
+  //  1) name
+  //  2) description
+  //  3) checkpoints -- 2D String array (inner arrays are all Strings arrays with same order as normal task)
+  //
+  // UpdateProgress Send Order:
+  //  1) id -- id of task/checkpoint to be updated (can be taken from block or list of tasks)
+  //  2) progress -- new progress
+  //  *** If both fields are empty, we will assume an auto update
+  //
+  ///
+
     private static Database db;
     private static final Gson GSON = new Gson();
 
@@ -95,4 +122,10 @@ public class Handlers {
             return GSON.toJson(variables);
         }
     }
+
+
+//    //TODO: - 3 Create Handlers
+//            - 3 Delete Handlers
+//            - 3 Get Handelrs
+//            - Update Progress
 }
