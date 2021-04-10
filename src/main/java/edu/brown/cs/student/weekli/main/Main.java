@@ -85,7 +85,10 @@ public class Main {
         Spark.before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
 
         // Setup Spark Routes
-        Spark.post("/login", new Handlers.LoginHandler(), freeMarker);
+        Spark.post("/login", new Handlers.LoginHandler());
+        Spark.post("/signup", new Handlers.SignUpHandler());
+        Spark.post("/schedule", new Handlers.GetScheduleHandler());
+
     }
 
 
