@@ -20,9 +20,6 @@
 
 .timeIndicator{
     position: absolute;
-
-    background: black;
-
-
+    background: red;
     width: 100%;
 }

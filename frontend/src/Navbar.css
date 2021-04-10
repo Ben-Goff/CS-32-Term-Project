@@ -77,22 +77,22 @@
 }
 
 .create {
-    margin-left: 10px;
     display: flex;
     font-family: 'Inter', sans-serif;
     width: 120px;
     font-size: 18px;
+    margin-left: 10px;
 }
 
-.plus {
-    padding-left: 5px;
-    padding-top: 7px;
-    width: 25px;
-    height: 25px;
+.plus-icon {
+    padding-left: 7px;
+    padding-top: 5px;
+    width: 30px;
+    height: 30px;
 }
 
 .create-text {
-    padding-left: 22px;
+    padding-left: 18px;
     padding-top: 10px;
 }
 
@@ -105,7 +105,7 @@
     margin-right: 10px;
 }
 
-.bars {
+.bars-icon {
     padding-left: 16px;
     padding-top: 15px;
     padding-right: 10px;
@@ -118,6 +118,27 @@
     margin-left: -9px;
     padding-top: 10px;
     text-decoration: none;
+}
+
+.shuffle {
+    display: flex;
+    font-family: 'Inter', sans-serif;
+    width: 120px;
+    font-size: 18px;
+    margin-left: 10px;
+}
+
+.shuffle-text {
+    margin-left: 15px;
+    padding-top: 10px;
+    text-decoration: none;
+}
+
+.shuffle-icon {
+    width: 25px;
+    height: 30px;
+    margin-left: 10px;
+    padding-top: 5px;
 }
 
 .menu {
@@ -140,7 +161,7 @@ body
     display: block;
     position: relative;
 
-    z-index: 1;
+    z-index: 10000;
 
     -webkit-user-select: none;
     user-select: none;
@@ -156,15 +177,15 @@ body
 
 #menuToggle a:hover
 {
-    color: tomato;
+    color: blue;
 }
 
 
 #menuToggle input
 {
     display: block;
-    width: 40px;
-    height: 32px;
+    width: 50px;
+    height: 50px;
     position: absolute;
     top: 10px;
     left: -5px;
@@ -182,11 +203,12 @@ body
  */
 #menuToggle span
 {
-    top: 12px;
+    top: 5px;
+    margin-left: 5px;
     display: block;
-    width: 33px;
-    height: 4px;
-    margin-bottom: 5px;
+    width: 45px;
+    height: 5px;
+    margin-bottom: 8px;
     position: relative;
 
     background: #151515;
@@ -246,12 +268,14 @@ body
 #menu
 {
     position: absolute;
-    width: 200px;
-    margin: -50px 0 0 -100px;
-    padding: 100px 50px 50px 0px;
+    width: 250px;
+    margin: -50px 0 0px -150px;
+    padding: 100px 50px 25px 40px;
 
 
-    background: #ededed;
+    background: #fefefe;
+    border-radius: 20px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     list-style-type: none;
     -webkit-font-smoothing: antialiased;
     /* to stop flickering of text in safari */
@@ -264,9 +288,10 @@ body
 
 #menu li
 {
-    width: 120px;
+    width: 150px;
     padding: 5px 0px 10px 0px;
-    font-size: 22px;
+    font-size: 18px;
+    font-family: 'Inter', sans-serif;
     text-align: right;
 }
 

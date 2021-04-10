@@ -16,7 +16,8 @@ function Taskbar(props) {
                         <div className="contents">
                             {monthNames[attrs.start.getMonth()] + " " + attrs.start.getDate() + " "}
                             {attrs.start.getHours() + ":" + attrs.start.getMinutes() + "-" + attrs.end.getHours() + ":" + attrs.end.getMinutes()}<br/>
-                            {attrs.text}
+                            {attrs.title}<br/><br/>
+                            <div className="task-box-desc">{attrs.desc}</div>
                         </div>
                     </div>
                 })}

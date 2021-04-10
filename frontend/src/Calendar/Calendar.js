@@ -33,9 +33,10 @@ function Calendar(props) {
         <div className="HourLabelCol">
             <br/><br/>
             <div>
-            {hourLabels.map(row => {
-                return <div className="HourLabel" key={row}>{row}</div>})
-            }
+                {hourLabels.map(row => {
+                    return <div className="HourLabel" key={row}>{row}</div>
+                })
+                }
             </div>
         </div>
     );
@@ -72,44 +73,60 @@ function Calendar(props) {
             }
         }
 
-    return days
+        return days
     }
 
+    const blockRegisterClick = (event, block) => {
+        props.setClickedBlock(block);
+        props.setClickedX(event.clientX);
+        props.setClickedY(event.clientY);
+    }
 
     const getBlocks = () => {
         //DUMMY EXAMPLE HARD CODED BLOCKS
         const block1 = <Block start={new Date(2021, 3, 5, 9, 30, 0, 0)}
                               end={new Date(2021, 3, 5, 10, 30, 0, 0)}
-                              color={"red"} text={"Breakfast"}/>;
+                              color={"red"} title={"Breakfast"} desc={"Make some sunny side up"
+                                + " eggs and then eat them. Maybe some sausages would be good"
+                                + " too. And before I forget, orange juice is a must."}
+                              onClick={(e) => blockRegisterClick(e, block1)}/>;
 
         const block11 = <Block start={new Date(2021, 3, 5, 14, 0, 0, 0)}
                                end={new Date(2021, 3, 5, 16, 0, 0, 0)}
-                               color={"green"} text={"Math Lecture"}/>;
+                               color={"green"} title={"Math Lecture"} desc={"Zoom link:"
+                                + " https://thisisafakelinklol.org"}
+                               onClick={(e) => blockRegisterClick(e, block11)}/>;
 
         const block2 = <Block start={new Date(2021, 3, 6, 9, 0, 0, 0)}
                               end={new Date(2021, 3, 6, 9, 30, 0, 0)}
-                              color={"blue"} text={"Shower"}/>;
+                              color={"blue"} title={"Shower"} desc={"Take a shower, don't forget"
+                                + " to wash the ears."}
+                              onClick={(e) => blockRegisterClick(e, block2)}/>;
 
-        const block3 = <Block start={new Date(2021, 3, 7, 10, 0, 0, 0)}
-                              end={new Date(2021, 3, 7, 12, 30, 0, 0)}
-                              color={"orange"} text={"Literally just vibe"}/>;
+        const block3 = <Block start={new Date(2021, 3, 11, 10, 0, 0, 0)}
+                              end={new Date(2021, 3, 11, 12, 30, 0, 0)}
+                              color={"orange"} title={"Literally just vibe"} desc={"Nothing hits"
+                                + " the spot like a good vibe."}
+                              onClick={(e) => blockRegisterClick(e, block3)}/>;
 
         const block31 = <Block start={new Date(2021, 3, 13, 9, 30, 0, 0)}
                                end={new Date(2021, 3, 13, 12, 0, 0, 0)}
-                               color={"green"} text={"This is to make sure the calendar works" +
-        " across multiple weeks"}/>;
+                               color={"green"} title={"Test"} desc={"This is to make sure the calendar works"
+                                + " across multiple weeks"}
+                               onClick={(e) => blockRegisterClick(e, block31)}/>;
 
         const block8 = <Block start={new Date(2021, 7, 20, 11, 0, 0, 0)}
                               end={new Date(2021, 7, 20, 12, 30, 0, 0)}
-                              color={"purple"} text={"Easter egg: this is my birthday lol"}/>;
+                              color={"purple"} title={"Dustin's Birthday"} desc={"Easter egg: this is my birthday lol"}
+                              onClick={(e) => blockRegisterClick(e, block8)}/>;
 
         let blocks = [
-            { year: 2021, month: 3, date: 5, blockComponent: block1},
-            { year: 2021, month: 3, date: 5, blockComponent: block11},
-            { year: 2021, month: 3, date: 6, blockComponent: block2},
-            { year: 2021, month: 3, date: 7, blockComponent: block3},
-            { year: 2021, month: 3, date: 13, blockComponent: block31},
-            { year: 2021, month: 7, date: 20, blockComponent: block8}
+            {year: 2021, month: 3, date: 5, blockComponent: block1},
+            {year: 2021, month: 3, date: 5, blockComponent: block11},
+            {year: 2021, month: 3, date: 6, blockComponent: block2},
+            {year: 2021, month: 3, date: 11, blockComponent: block3},
+            {year: 2021, month: 3, date: 13, blockComponent: block31},
+            {year: 2021, month: 7, date: 20, blockComponent: block8}
         ]
 
         let blockAcc = [];

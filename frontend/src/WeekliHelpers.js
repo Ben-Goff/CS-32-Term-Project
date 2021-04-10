@@ -8,7 +8,7 @@ import {useEffect, useRef} from "react";
 export function getMonday(d) {
     d = new Date(d);
     let day = d.getDay(),
-        diff = d.getDate() - day + (day == 0 ? -6:1); // adjust when day is sunday
+        diff = d.getDate() - day + (day === 0 ? -6:1); // adjust when day is sunday
     return new Date(d.setDate(diff));
 }
 

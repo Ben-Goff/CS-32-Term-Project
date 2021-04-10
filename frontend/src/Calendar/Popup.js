@@ -60,15 +60,16 @@ function Popup(props) {
                 <div className="Popup-title">New Event</div>
                 <button className="close" onClick={() => props.setShowPopup(false)}/>
             </div>
-            <div className="Popup-buttons">
-                <button className={commitmentSelected ? "selected" : null} onClick={selectCommitment}>Commitment</button>
-                <button className={taskSelected ? "selected" : null} onClick={selectTask}>Task</button>
-                <button className={projectSelected ? "selected" : null} onClick={selectProject}>Project</button>
+            <div className="Popup-content">
+                <div className="Popup-buttons">
+                    <button className={commitmentSelected ? "selected" : null} onClick={selectCommitment}>Commitment</button>
+                    <button className={taskSelected ? "selected" : null} onClick={selectTask}>Task</button>
+                    <button className={projectSelected ? "selected" : null} onClick={selectProject}>Project</button>
+                </div>
+                <div className="Popup-body">
+                    {popupBody}
+                </div>
             </div>
-            <div className="Popup-body">
-                {popupBody}
-            </div>
-
         </div>
     );
 }
