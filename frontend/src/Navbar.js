@@ -125,6 +125,7 @@ function Navbar(props) {
 
                                     <ul id="menu">
                                         <Link to="/login"><li>Log Out</li></Link>
+                                        <Link to="/schedule"><li>Edit Schedule</li></Link>
                                         <a href="#"><li>Manage Data</li></a>
                                         <a href="#"><li style={{"color": "red"}}>Clear Schedule</li></a>
                                     </ul>

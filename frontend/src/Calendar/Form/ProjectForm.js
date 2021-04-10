@@ -14,6 +14,8 @@ function ProjectForm() {
                 <div>
                     <label htmlFor={checkpointID + "-title"}>Checkpoint {i + 1} Title</label><br/>
                     <input type="text" id={checkpointID + "-title"} name={checkpointID + "-title"}/><br/>
+                    <label htmlFor={checkpointID + "-description"}>Checkpoint {i + 1} Title</label><br/>
+                    <input type="text" id={checkpointID + "-description"} name={checkpointID + "-description"}/><br/>
                     <label htmlFor={checkpointID + "-due-date"}>Due Date</label><br/>
                     <input type="date" id={checkpointID + "-due-date"} name={checkpointID + "-due-date"} placeholder={"mm-dd-yyyy"}/><br/>
                     <label htmlFor="due-time">Due Time</label><br/>

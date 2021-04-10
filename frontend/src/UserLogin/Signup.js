@@ -38,7 +38,7 @@ function Signup() {
     }
 
     return (
-        <div>
+        <div className="top-bar">
             <img src="WeekliLogo.png" className="logo"/>
             <h1>Welcome to Weekli</h1>
 
