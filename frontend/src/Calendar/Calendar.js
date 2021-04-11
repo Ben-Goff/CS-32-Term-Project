@@ -127,7 +127,7 @@ function Calendar(props) {
                 }
             }
         }
-        // TODO: replace this var
+
         props.setTaskBlocks(blockAcc);
         setBlocksGrid(curBlocksGrid);
     }

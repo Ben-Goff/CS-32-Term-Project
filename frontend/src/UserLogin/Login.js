@@ -27,7 +27,7 @@ function Login(props) {
 
         props.setBlocks()
 
-        if (false) {
+        if (true) {
              //Sends the user to the main page.
 
 

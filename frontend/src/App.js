@@ -11,13 +11,13 @@ import {useState} from "react";
 const Router = (blocks, setBlocks) => {
     return (
         <Switch> {/* The Switch decides which component to show based on the current URL.*/}
+            <Route exact path='/login' render={() => (
+                <Login setBlocks={setBlocks} isAuthed={true}/>
+            )}/>
             <Route exact path='/' render={() => (
                 <MainContainer blocks={blocks} setBlocks={setBlocks} isAuthed={true}/>
             )}/>
             <Route exact path='/progress' component={Progress}></Route>
-            <Route exact path='/login' render={() => (
-                <Login setBlocks={setBlocks} isAuthed={true}/>
-            )}/>
             <Route exact path='/signup' component={Signup}></Route>
         </Switch>
     );

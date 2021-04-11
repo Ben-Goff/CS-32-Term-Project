@@ -9,19 +9,19 @@ function Popup(props) {
     const commitmentBody = (
         <div>
             <div>Commitment - An event where task/project work is to be made off-limits.</div>
-            <CommitmentForm/>
+            <CommitmentForm setShowPopup={props.setShowPopup}/>
         </div>
     );
     const taskBody = (
         <div>
             <div>Task - An objective to complete during spare time by a certain due date.</div>
-            <TaskForm/>
+            <TaskForm setShowPopup={props.setShowPopup}/>
         </div>
     );
     const projectBody = (
         <div>
             <div>Project - A more ambitious Task with multiple checkpoints, each with their own due date.</div>
-            <ProjectForm/>
+            <ProjectForm setShowPopup={props.setShowPopup}/>
         </div>
     );
 
