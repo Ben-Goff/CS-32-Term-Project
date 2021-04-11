@@ -2,12 +2,18 @@ import './Calendar.css';
 import '../App.css';
 import Block from "./Block";
 import Day from "./Day";
-import {getMonday} from "../WeekliHelpers";
+import {getMonday, getSchedule} from "../WeekliHelpers";
 import React, {useState, useEffect} from 'react'
 
 function Calendar(props) {
     const [blocksGrid, setBlocksGrid] = useState([[], [], [], [], [], [], []])
     const [days, setDays] = useState([]);
+
+    // TODO: make this an actual axios request
+    const retrieveSchedule = () => {
+        console.log(getSchedule(props.displayMonday));
+        return getSchedule(props.displayMonday);
+    }
 
     useEffect(() => {
         getBlocks();
@@ -82,17 +88,8 @@ function Calendar(props) {
         props.setClickedY(event.clientY);
     }
 
-    // TODO: make this an actual axios request
-    const getSchedule = () => {
-        return [
-            // start end id name desc color
-            ["1618179162249", "1618183162249", "11", "Breakfast", "Eat Breakfast", "red"],
-            ["1618183162249", "1618187162249", "12", "Lunch", "Eat Lunch", "green"],
-            ["1618187162249", "1618191162249", "13", "Dinner", "Eat Dinner", "blue"]];
-    }
-
     const getBlocks = () => {
-        let schedule = getSchedule();
+        let schedule = retrieveSchedule();
         let blocks = [];
 
         for (let i = 0; i < schedule.length; i++) {

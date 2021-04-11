@@ -4,19 +4,19 @@ import './App.css';
 import Navbar from "./Navbar";
 import Taskbar from "./Taskbar";
 import CalendarContainer from "./Calendar/CalendarContainer";
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {getMonday} from "./WeekliHelpers";
 import Popup from "./Calendar/Popup";
 import EventDialog from "./Calendar/EventDialog";
 
 function MainContainer(props) {
-
     //A date on the display week's Monday
     const [displayMonday, setDisplayMonday] = useState(getMonday(new Date()));
     const [showPopup, setShowPopup] = useState(false);
     const [clickedBlock, setClickedBlock] = useState(null);
     const [clickedX, setClickedX] = useState(0);
     const [clickedY, setClickedY] = useState(0);
+    const [blocks, setBlocks] = useState([]);
 
     return (
         <div className="MainContainer">
@@ -26,9 +26,9 @@ function MainContainer(props) {
             <div className="main-grid">
                 <Navbar displayMonday={displayMonday} setDisplayMonday={setDisplayMonday}
                         setShowPopup={setShowPopup}/>
-                <Taskbar taskBlocks={props.blocks} setTaskBlocks={props.setBlocks}/>
+                <Taskbar taskBlocks={blocks} setTaskBlocks={setBlocks}/>
                 <CalendarContainer displayMonday={displayMonday} setDisplayMonday={setDisplayMonday}
-                                   setTaskBlocks={props.setBlocks} setClickedBLock={setClickedBlock}
+                                   setTaskBlocks={setBlocks} setClickedBLock={setClickedBlock}
                                    setClickedX={setClickedX} setClickedY={setClickedY}/>
             </div>
         </div>

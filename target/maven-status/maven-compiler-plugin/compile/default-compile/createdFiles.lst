@@ -1,8 +1,13 @@
+edu/brown/cs/student/weekli/main/Handlers$UpdateProgressHandler.class
+edu/brown/cs/student/weekli/user/User.class
 edu/brown/cs/student/weekli/main/Main.class
+edu/brown/cs/student/weekli/main/Handlers$DeleteTaskHandler.class
 edu/brown/cs/student/weekli/main/Handlers$LoginHandler.class
 edu/brown/cs/student/weekli/main/Handlers$SignUpHandler.class
 edu/brown/cs/student/weekli/main/Handlers.class
-edu/brown/cs/student/weekli/main/Handlers$GetScheduleHandler.class
-edu/brown/cs/student/weekli/user/User.class
 edu/brown/cs/student/weekli/main/Main$ExceptionPrinter.class
+edu/brown/cs/student/weekli/main/Handlers$GetScheduleHandler.class
+edu/brown/cs/student/weekli/main/Handlers$DeleteCommitmentHandler.class
+edu/brown/cs/student/weekli/main/Handlers$CreateCommitmentHandler.class
+edu/brown/cs/student/weekli/main/Handlers$CreateTaskHandler.class
 edu/brown/cs/student/weekli/user/Database.class
