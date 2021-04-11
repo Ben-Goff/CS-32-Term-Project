@@ -9,11 +9,10 @@ import {getMonday} from "./WeekliHelpers";
 import Popup from "./Calendar/Popup";
 import EventDialog from "./Calendar/EventDialog";
 
-function MainContainer() {
+function MainContainer(props) {
 
     //A date on the display week's Monday
     const [displayMonday, setDisplayMonday] = useState(getMonday(new Date()));
-    const [taskBlocks, setTaskBlocks] = useState([]);
     const [showPopup, setShowPopup] = useState(false);
     const [clickedBlock, setClickedBlock] = useState(null);
     const [clickedX, setClickedX] = useState(0);
@@ -27,9 +26,9 @@ function MainContainer() {
             <div className="main-grid">
                 <Navbar displayMonday={displayMonday} setDisplayMonday={setDisplayMonday}
                         setShowPopup={setShowPopup}/>
-                <Taskbar taskBlocks={taskBlocks} setTaskBlocks={setTaskBlocks}/>
+                <Taskbar taskBlocks={props.blocks} setTaskBlocks={props.setBlocks}/>
                 <CalendarContainer displayMonday={displayMonday} setDisplayMonday={setDisplayMonday}
-                                   setTaskBlocks={setTaskBlocks} setClickedBLock={setClickedBlock}
+                                   setTaskBlocks={props.setBlocks} setClickedBLock={setClickedBlock}
                                    setClickedX={setClickedX} setClickedY={setClickedY}/>
             </div>
         </div>
