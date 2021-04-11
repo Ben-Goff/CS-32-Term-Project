@@ -82,52 +82,31 @@ function Calendar(props) {
         props.setClickedY(event.clientY);
     }
 
+    // TODO: make this an actual axios request
+    const getSchedule = () => {
+        return [
+            // start end id name desc color
+            ["1618179162249", "1618183162249", "11", "Breakfast", "Eat Breakfast", "red"],
+            ["1618183162249", "1618187162249", "12", "Lunch", "Eat Lunch", "green"],
+            ["1618187162249", "1618191162249", "13", "Dinner", "Eat Dinner", "blue"]];
+    }
+
     const getBlocks = () => {
-        //DUMMY EXAMPLE HARD CODED BLOCKS
-        const block1 = <Block start={new Date(2021, 3, 5, 9, 30, 0, 0)}
-                              end={new Date(2021, 3, 5, 10, 30, 0, 0)}
-                              color={"red"} title={"Breakfast"} desc={"Make some sunny side up"
-                                + " eggs and then eat them. Maybe some sausages would be good"
-                                + " too. And before I forget, orange juice is a must."}
-                              onClick={(e) => blockRegisterClick(e, block1)}/>;
+        let schedule = getSchedule();
+        let blocks = [];
 
-        const block11 = <Block start={new Date(2021, 3, 5, 14, 0, 0, 0)}
-                               end={new Date(2021, 3, 5, 16, 0, 0, 0)}
-                               color={"green"} title={"Math Lecture"} desc={"Zoom link:"
-                                + " https://thisisafakelinklol.org"}
-                               onClick={(e) => blockRegisterClick(e, block11)}/>;
+        for (let i = 0; i < schedule.length; i++) {
+            let blockData = schedule[i];
+            let startDate = new Date(parseInt(blockData[0]));
+            let endDate = new Date(parseInt(blockData[1]));
+            let identifier = blockData[2];
+            let title = blockData[3];
+            let description = blockData[4];
+            let color = blockData[5];
 
-        const block2 = <Block start={new Date(2021, 3, 6, 9, 0, 0, 0)}
-                              end={new Date(2021, 3, 6, 9, 30, 0, 0)}
-                              color={"blue"} title={"Shower"} desc={"Take a shower, don't forget"
-                                + " to wash the ears."}
-                              onClick={(e) => blockRegisterClick(e, block2)}/>;
-
-        const block3 = <Block start={new Date(2021, 3, 11, 10, 0, 0, 0)}
-                              end={new Date(2021, 3, 11, 12, 30, 0, 0)}
-                              color={"orange"} title={"Literally just vibe"} desc={"Nothing hits"
-                                + " the spot like a good vibe."}
-                              onClick={(e) => blockRegisterClick(e, block3)}/>;
-
-        const block31 = <Block start={new Date(2021, 3, 13, 9, 30, 0, 0)}
-                               end={new Date(2021, 3, 13, 12, 0, 0, 0)}
-                               color={"green"} title={"Test"} desc={"This is to make sure the calendar works"
-                                + " across multiple weeks"}
-                               onClick={(e) => blockRegisterClick(e, block31)}/>;
-
-        const block8 = <Block start={new Date(2021, 7, 20, 11, 0, 0, 0)}
-                              end={new Date(2021, 7, 20, 12, 30, 0, 0)}
-                              color={"purple"} title={"Dustin's Birthday"} desc={"Easter egg: this is my birthday lol"}
-                              onClick={(e) => blockRegisterClick(e, block8)}/>;
-
-        let blocks = [
-            {year: 2021, month: 3, date: 5, blockComponent: block1},
-            {year: 2021, month: 3, date: 5, blockComponent: block11},
-            {year: 2021, month: 3, date: 6, blockComponent: block2},
-            {year: 2021, month: 3, date: 11, blockComponent: block3},
-            {year: 2021, month: 3, date: 13, blockComponent: block31},
-            {year: 2021, month: 7, date: 20, blockComponent: block8}
-        ]
+            let block = <Block identifier={identifier} start={startDate} end={endDate} color={color} title={title} desc={description} onClick={(e) => blockRegisterClick(e, block)}/>
+            blocks.push({year: startDate.getFullYear(), month: startDate.getMonth(), date: startDate.getDate(), blockComponent: block});
+        }
 
         let blockAcc = [];
 
@@ -139,7 +118,6 @@ function Calendar(props) {
             let month = displayWeek[i].getMonth();
             let date = displayWeek[i].getDate();
             let year = displayWeek[i].getFullYear();
-            //console.log(month);
 
             curBlocksGrid[i] = [];
             for (let block of blocks) {
@@ -149,10 +127,10 @@ function Calendar(props) {
                 }
             }
         }
+        // TODO: replace this var
         props.setTaskBlocks(blockAcc);
         setBlocksGrid(curBlocksGrid);
     }
-
 
     return (
         <div className="Calendar">
