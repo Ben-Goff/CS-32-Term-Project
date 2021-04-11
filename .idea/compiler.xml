@@ -7,14 +7,17 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="term-project-bgoff1-cfiore-dwu44-myang36" />
+        <module name="Weekli" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="term-project-bgoff1-cfiore-dwu44-myang36" target="11" />
+      <module name="Weekli" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Weekli" options="-Xlint:all" />
       <module name="term-project-bgoff1-cfiore-dwu44-myang36" options="-Xlint:all" />
     </option>
   </component>
