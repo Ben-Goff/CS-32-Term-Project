@@ -54,7 +54,7 @@ public class User {
                 + "endTime INTEGER,"
                 + "name TEXT,"
                 + "description TEXT,"
-                + "repeating INTEGER"
+                + "repeating INTEGER,"
                 + "PRIMARY KEY (id));");
         prep.executeUpdate();
         urlToDB = "jdbc:sqlite:data/weekli/projects.sqlite3";
@@ -69,10 +69,10 @@ public class User {
         urlToDB = "jdbc:sqlite:data/weekli/schedules.sqlite3";
         conn = DriverManager.getConnection(urlToDB);
         prep = conn.prepareStatement("CREATE TABLE IF NOT EXISTS schedules ("
-                + "user TEXT"
-                + "id TEXT"
-                + "startTime INTEGER"
-                + "endTime INTEGER;");
+                + "user TEXT,"
+                + "id TEXT,"
+                + "startTime INTEGER,"
+                + "endTime INTEGER);");
         prep.executeUpdate();
         prep.close();
     }
