@@ -90,7 +90,11 @@ public class Main {
         Spark.post("/login", new Handlers.LoginHandler());
         Spark.post("/signup", new Handlers.SignUpHandler());
         Spark.post("/schedule", new Handlers.GetScheduleHandler());
-
+        Spark.post("/update", new Handlers.UpdateProgressHandler());
+        Spark.post("/createcommitment", new Handlers.CreateCommitmentHandler());
+        Spark.post("/createtask", new Handlers.CreateTaskHandler());
+        Spark.post("/deletecommitment", new Handlers.DeleteCommitmentHandler());
+        Spark.post("/deletetask", new Handlers.DeleteTaskHandler());
     }
 
 
