@@ -134,7 +134,7 @@ public class Handlers {
         }
     }
 
-    private static class UpdateProgressHandler implements Route {
+    protected static class UpdateProgressHandler implements Route {
       public Object handle(Request request, Response response) throws Exception {
         QueryParamsMap qm = request.queryMap();
         String id = qm.value("id");
@@ -164,7 +164,7 @@ public class Handlers {
       }
     }
 
-  private static class CreateTaskHandler implements Route {
+  protected static class CreateTaskHandler implements Route {
     public Object handle(Request request, Response response) throws Exception {
       QueryParamsMap qm = request.queryMap();
       String name = qm.value("name");
@@ -190,7 +190,7 @@ public class Handlers {
     }
   }
 
-    private static class CreateCommitmentHandler implements Route {
+    protected static class CreateCommitmentHandler implements Route {
       public Object handle(Request request, Response response) throws Exception {
         QueryParamsMap qm = request.queryMap();
         String name = qm.value("name");
@@ -216,7 +216,7 @@ public class Handlers {
       }
   }
 
-    private static class DeleteTaskHandler implements Route {
+    protected static class DeleteTaskHandler implements Route {
       public Object handle(Request request, Response response) throws Exception {
         QueryParamsMap qm = request.queryMap();
         String id = qm.value("id");
@@ -236,7 +236,7 @@ public class Handlers {
       }
     }
 
-      private static class DeleteCommitmentHandler implements Route {
+      protected static class DeleteCommitmentHandler implements Route {
         public Object handle(Request request, Response response) throws Exception {
           QueryParamsMap qm = request.queryMap();
           String id = qm.value("id");
