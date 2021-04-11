@@ -1,6 +1,7 @@
 import './Form.css';
 import '../../App.css';
 import React, {useState, useEffect} from "react";
+import axios from "axios";
 
 function CommitmentForm() {
     const [name, setName] = useState("");
@@ -28,12 +29,40 @@ function CommitmentForm() {
         let endMillisStr = endMillis.toString();
         let repeatTypeHours = repeatTypeDict[repeatType];
         let repeatPeriodMillisStr = repeats ? (repeatCount * repeatTypeHours * 60 * 60 * 1000).toString() : "";
+
         console.log("----Commitment----")
         console.log(name)
         console.log(description)
         console.log(startMillisStr)
         console.log(endMillisStr)
         console.log(repeatPeriodMillisStr)
+
+        // const toSend = {
+        //     name: name,
+        //     description: description,
+        //     startTime: startMillisStr,
+        //     endTime: endMillisStr,
+        //     periodOfRepitition: repeatPeriodMillisStr
+        // };
+        //
+        // let config = {
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //         'Access-Control-Allow-Origin': '*',
+        //     }
+        // }
+        //
+        // axios.post(
+        //     "http://localhost:4567/routelatlon",
+        //     toSend,
+        //     config
+        // )
+        //     .then(response => {
+        //
+        //     })
+        //     .catch(function (error) {
+        //         console.log(error);
+        //     });
     }
 
     const repeatsInputs = (

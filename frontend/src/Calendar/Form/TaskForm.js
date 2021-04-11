@@ -30,6 +30,34 @@ function TaskForm() {
         console.log(estimatedEffortMillisStr);
         console.log(sessionLengthMillisStr);
         console.log(color);
+
+        // const toSend = {
+        //     name: name,
+        //     description: description,
+        //     startTime: startMillisStr,
+        //     endTime: endMillisStr,
+        //     estTime: estimatedEffortMillisStr,
+        //     sessionTime: sessionLengthMillisStr
+        // };
+        //
+        // let config = {
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //         'Access-Control-Allow-Origin': '*',
+        //     }
+        // }
+        //
+        // axios.post(
+        //     "http://localhost:4567/routelatlon",
+        //     toSend,
+        //     config
+        // )
+        //     .then(response => {
+        //
+        //     })
+        //     .catch(function (error) {
+        //         console.log(error);
+        //     });
     }
 
     return (
