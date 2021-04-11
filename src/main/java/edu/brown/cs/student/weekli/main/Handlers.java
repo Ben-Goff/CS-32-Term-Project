@@ -146,8 +146,8 @@ public class Handlers {
         User loggedIn = (User) session.getAttribute("user");
         if (id.equals("") && progress.equals("")) {
           List<Task> c = loggedIn.updateSchedule();
-          complete = c.stream().map(t -> new String[]{t.getName(), t.getDescription(), t.getID().toString(), Long.toString(t.getProgress())}).collect(Collectors.toList());
-          tasks = loggedIn.getTasks().stream().map(t -> new String[]{t.getName(), t.getDescription(), t.getID().toString(), Long.toString(t.getProgress())}).collect(Collectors.toList());
+          complete = c.stream().map(t -> new String[]{t.getName(), t.getDescription(), t.getID().toString(), Long.toString(t.getProgress()), t.getColor()}).collect(Collectors.toList());
+          tasks = loggedIn.getTasks().stream().map(t -> new String[]{t.getName(), t.getDescription(), t.getID().toString(), Long.toString(t.getProgress()), t.getColor()}).collect(Collectors.toList());
           // send back both completed tasks as well as all tasks
           variables = ImmutableMap.of("complete", complete, "tasks", tasks);
         } else {
@@ -156,7 +156,7 @@ public class Handlers {
           Task toUpdate = loggedIn.belongsToTask(ID);
           toUpdate.setProgress(prog);
           loggedIn.updateTaskInDB(toUpdate);
-          String[] task = new String[]{toUpdate.getName(), toUpdate.getDescription(), toUpdate.getID().toString(), Long.toString(toUpdate.getProgress())};
+          String[] task = new String[]{toUpdate.getName(), toUpdate.getDescription(), toUpdate.getID().toString(), Long.toString(toUpdate.getProgress()), toUpdate.getColor()};
           // send back updated task
           variables = ImmutableMap.of("updated", task);
         }
@@ -258,8 +258,8 @@ public class Handlers {
 
 //    //TODO: - 3 Create Handlers
 //            - 3 Delete Handlers
-//            - 3 Get Handelrs -- decided that we only need to send Tasks for now so just make request
-  //            to getProgress with empty params
+//            - 3 Get Handelrs -- decided that we only need to send Tasks for now so just make reques
+//              to getProgress with empty params
 //
 //            - (Update Progress) -- Done
 }

@@ -56,7 +56,6 @@ public class User {
                 + "name TEXT, "
                 + "description TEXT, "
                 + "repeating INTEGER, "
-                + "color TEXT, "
                 + "PRIMARY KEY (id));");
         prep.executeUpdate();
         urlToDB = "jdbc:sqlite:data/weekli/projects.sqlite3";
