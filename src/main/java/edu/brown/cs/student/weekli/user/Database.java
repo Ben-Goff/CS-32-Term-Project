@@ -20,24 +20,32 @@ public class Database {
     }
 
     public User signIn(String id, String pw) throws SQLException, ClassNotFoundException {
+        System.out.println("ran-1");
         String hashid = BCrypt.hashpw(id, BCrypt.gensalt());
         String hashpw = BCrypt.hashpw(pw, BCrypt.gensalt());
+        System.out.println("ran0");
         PreparedStatement prep = this.connection.prepareStatement("SELECT * WHERE users.id = "+hashid+" AND users.password = "+hashpw+";");
+        System.out.println("ran1"); //TODO: THIS STATEMENT IS NOT REACHED
         ResultSet rs = prep.executeQuery();
         User loggingIn = null;
+        System.out.println("ran2");
         if (rs.next()) {
             loggingIn = new User(rs.getString(1));
         }
+        System.out.println("ran3");
         prep.close();
         rs.close();
         return loggingIn;
     }
 
     public User signUp(String id, String pw) throws SQLException, ClassNotFoundException {
+        System.out.println("ran-1");
         String hashid = BCrypt.hashpw(id, BCrypt.gensalt());
         String hashpw = BCrypt.hashpw(pw, BCrypt.gensalt());
+        System.out.println("ran0");
         PreparedStatement prep = this.connection.prepareStatement("SELECT * WHERE users.id = "+hashid+";");
-        ResultSet rs = prep.executeQuery();
+        ResultSet rs = prep.executeQuery(); //TODO: THIS QUERY DOESN'T EXECUTE
+        System.out.println("ran1");
         User loggingIn = null;
         if (!rs.next()) {
             prep = this.connection.prepareStatement("INSERT INTO users (id, password) VALUES ("+hashid+", "+hashpw+");");
@@ -46,6 +54,7 @@ public class Database {
         }
         prep.close();
         rs.close();
+        System.out.println("ran2");
         return loggingIn;
     }
 }

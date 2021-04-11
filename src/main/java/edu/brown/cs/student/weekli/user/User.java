@@ -21,6 +21,7 @@ public class User {
     private List<Task> tasks;
     private List<Project> projects;
     private List<Block> schedule;
+    private List<Block> pastBlocks = new ArrayList<>();
 
     public User(String iD) throws ClassNotFoundException, SQLException {
         this.schedule = new ArrayList<>();
@@ -122,7 +123,7 @@ public class User {
     public void addProject(String name, String description, List<UUID> checkpoints) throws ClassNotFoundException, SQLException {
         Project add = new Project(name, description);
         this.tasks.stream().filter(t -> checkpoints.contains(t.getID())).forEach(task -> {
-            task.addProjectID(add.getiD());
+            task.addProjectID(add.getID());
             try {
                 updateTaskInDB(task);
             } catch (ClassNotFoundException | SQLException e) {
@@ -133,7 +134,7 @@ public class User {
         String urlToDB = "jdbc:sqlite:data/weekli/projects.sqlite3";
         Connection conn = DriverManager.getConnection(urlToDB);
         PreparedStatement prep = conn.prepareStatement("INSERT INTO projects (id, user, name, description)"
-                + " VALUES ("+add.getiD().toString()+", "+ this.iD +", "+add.getName()+", "+add.getDescription()+");");
+                + " VALUES ("+add.getID().toString()+", "+ this.iD +", "+add.getName()+", "+add.getDescription()+");");
         prep.executeUpdate();
         prep.close();
         this.projects.add(add);
@@ -144,6 +145,8 @@ public class User {
         String urlToDB = "jdbc:sqlite:data/weekli/schedules.sqlite3";
         Connection conn = DriverManager.getConnection(urlToDB);
         PreparedStatement prep = null;
+        prep = conn.prepareStatement("DELETE FROM schedules WHERE schedules.user = " + iD + ";");
+        prep.executeUpdate();
         for (Block b: schedule) {
             prep = conn.prepareStatement("INSERT INTO schedules (user, id, startTime, endTime)"
                     + " VALUES ("+this.iD+","+b.getiD().toString()+","+b.getStartTime()+","+b.getEndTime()+");");
@@ -226,6 +229,37 @@ public class User {
       rs.close();
     }
 
+    public void deleteCommitment(String id) throws ClassNotFoundException, SQLException {
+      Class.forName("org.sqlite.JDBC");
+      String urlToDB = "jdbc:sqlite:data/weekli/commitments.sqlite3";
+      Connection conn = DriverManager.getConnection(urlToDB);
+      PreparedStatement prep = conn.prepareStatement("DELETE FROM commitments WHERE commitments.id = " + id + ";");
+      prep.executeUpdate();
+      commitments = commitments.stream().filter(c -> !c.getID().toString().equals(id)).collect(Collectors.toList());
+    }
+
+    public void deleteTask(String id) throws ClassNotFoundException, SQLException {
+      Class.forName("org.sqlite.JDBC");
+      String urlToDB = "jdbc:sqlite:data/weekli/tasks.sqlite3";
+      Connection conn = DriverManager.getConnection(urlToDB);
+      PreparedStatement prep = conn.prepareStatement("DELETE FROM tasks WHERE tasks.id = " + id + ";");
+      prep.executeUpdate();
+      tasks = tasks.stream().filter(c -> !c.getID().toString().equals(id)).collect(Collectors.toList());
+    }
+
+//    public void deleteProject(String id) throws ClassNotFoundException, SQLException {
+//      Class.forName("org.sqlite.JDBC");
+//      String urlToDB = "jdbc:sqlite:data/weekli/projects.sqlite3";
+//      Connection conn = DriverManager.getConnection(urlToDB);
+//      PreparedStatement prep = conn.prepareStatement("DELETE FROM projects WHERE projects.id = " + id + ";");
+//      prep.executeUpdate();
+//      prep = conn.prepareStatement("DELETE FROM tasks WHERE tasks.project = " + id + ";")
+//      prep.executeUpdate();
+//
+//      tasks = tasks.stream().filter(c -> c.getProjectID != null && !c.getProjectID().toString().equals(id)).collect(Collectors.toList());
+//      projects = projects.stream().filter(c -> !c.getID().toString().equals(id)).collect(Collectors.toList());
+//    }
+
     public void loadSchedule() throws ClassNotFoundException, SQLException {
       Class.forName("org.sqlite.JDBC");
       String urlToDB = "jdbc:sqlite:data/weekli/projects.sqlite3";
@@ -247,12 +281,12 @@ public class User {
    * Updates task progress, removes passed blocks, return list of tasks who have full progress
    * @return
    */
-  public List<Task> updateSchedule() {
+  public List<Task> updateSchedule() throws SQLException, ClassNotFoundException {
       long rightNow = (new Date()).getTime();
       List<Task> complete = new ArrayList<>();
       List<Block> toDelete = schedule.stream().filter(b -> b.getEndTime() < rightNow).collect(Collectors.toList());
       toDelete.forEach(block -> {
-        Task t = belongsTo(block.getiD());
+        Task t = belongsToTask(block.getiD());
         if (t != null) {
           t.blockComplete();
           if (t.getEstimatedTime() < t.getSessionTime()) {
@@ -265,11 +299,13 @@ public class User {
           }
         }
       });
+      pastBlocks.addAll(toDelete);
       this.schedule.removeAll(toDelete);
+      storeSchedule();
       return complete;
     }
 
-    public Task belongsTo(UUID id) {
+    public Task belongsToTask(UUID id) {
       List<Task> t = tasks.stream().filter(task -> task.getID() == id).collect(Collectors.toList());
       if (t.isEmpty()) {
         return null;
@@ -279,6 +315,19 @@ public class User {
         throw new RuntimeException("Multiple tasks with same id.");
       }
     }
+
+  public Commitment belongsToCommitment(UUID id) {
+    List<Commitment> c = commitments.stream().filter(task -> task.getID() == id).collect(Collectors.toList());
+    if (c.isEmpty()) {
+      return null;
+    } else if (c.size() == 1) {
+      return c.get(0);
+    } else {
+      throw new RuntimeException("Multiple tasks with same id.");
+    }
+  }
+
+
 
     public List<Block> getSchedule() {
       return schedule;
@@ -290,5 +339,9 @@ public class User {
 
     public List<Task> getTasks() {
         return tasks;
+    }
+
+    public List<Block> getPastBlocks() {
+        return pastBlocks;
     }
 }

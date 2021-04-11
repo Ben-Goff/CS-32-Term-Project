@@ -1,6 +1,8 @@
 package edu.brown.cs.student.weekli.schedule;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * Represents a commitment in the schedule.
@@ -129,15 +131,12 @@ public class Commitment {
    * Gets the blocks
    * @return
    */
-  public List<Block> getBlocks() {
+  public List<Block> getBlocks(long startTime, long endTime) {
     List<Block> blocks = new ArrayList<>();
     if (this.repeating.isPresent()) {
-      final long weekMillis = 604800000L * 5;
-      final int repetitions = (int) Math.ceil(weekMillis / this.repeating.get());
-      for (int i = 0; i < repetitions; i++) {
-        long start = this.startDate + i*repeating.get();
-        blocks.add(new Block(start, start + this.estTime, this.iD));
-      }
+      final int repetitions = (int) Math.floor((endTime - startTime) / (double) repeating.get());
+      int startIndex = (int) Math.floor((startTime - this.startDate) / (double) repeating.get());
+      blocks = IntStream.range(startIndex, startIndex + repetitions).mapToObj(i -> new Block(this.startDate + i*repeating.get(), this.startDate + i*repeating.get() + this.estTime, this.iD)).collect(Collectors.toList());
     } else {
       blocks = Collections.singletonList(this.commitBlock);
     }

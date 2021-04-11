@@ -23,7 +23,7 @@ public class Scheduler {
     this.commitments = commitments;
   }
 
-  public List<Block> schedule(List<Task> tasksToSchedule) {
+  public List<Block> schedule(List<Task> tasksToSchedule, long start, long end) {
     this.globalStartTime = (new Date()).getTime();
     List<Long> endTimes = tasksToSchedule.stream().map(Task::getEndDate).sorted().collect(Collectors.toList());
     if (endTimes.size() > 0) {
@@ -31,7 +31,7 @@ public class Scheduler {
     } else {
       this.tasksEndTime = globalStartTime;
     }
-    this.commitmentBlocks = this.commitments.stream().map(Commitment::getBlocks).flatMap(Collection::stream).filter(b -> b.getStartTime() > globalStartTime).collect(Collectors.toList());
+    this.commitmentBlocks = this.commitments.stream().map(c -> c.getBlocks(start, end)).flatMap(Collection::stream).filter(b -> b.getStartTime() > globalStartTime).collect(Collectors.toList());
     this.tasks = new TreeSet<>(new TaskComparator());
     this.tasks.addAll(tasksToSchedule);
     buildBins();
