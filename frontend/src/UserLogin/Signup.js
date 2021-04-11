@@ -2,6 +2,7 @@ import '../App.css';
 import './UserLogin.css';
 import { Link, useHistory } from "react-router-dom";
 import {useState} from "react";
+import axios from "axios";
 
 function Signup() {
 
@@ -17,7 +18,7 @@ function Signup() {
 
         if (password === confirm) {
             //POST REQUEST HERE
-
+            requestSignup()
             //Sends the user to the main page.
             history.push('/');
             setShowError(false)
@@ -36,6 +37,37 @@ function Signup() {
 
     function changeConfirm(event) {
         confirm = event.target.value;
+    }
+
+    /**
+     * Makes an axios request to sign up.
+     */
+    const requestSignup = () => {
+        const toSend = {
+            username: username,
+            password: password,
+        };
+
+        let config = {
+            headers: {
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Origin': '*',
+            }
+        }
+
+        axios.post(
+            "http://localhost:4567/signup",
+            toSend,
+            config
+        )
+            .then(response => {
+                console.log(response.data);
+            })
+
+            .catch(function (error) {
+                console.log(error);
+            });
+
     }
 
     return (
