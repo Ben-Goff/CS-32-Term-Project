@@ -156,7 +156,7 @@ public class User {
         String urlToDB = "jdbc:sqlite:data/weekli/schedules.sqlite3";
         Connection conn = DriverManager.getConnection(urlToDB);
         PreparedStatement prep = null;
-        prep = conn.prepareStatement("DELETE FROM schedules WHERE schedules.user = " + iD + ";");
+        prep = conn.prepareStatement("DELETE FROM schedules WHERE schedules.user = '" + iD + "';");
         prep.executeUpdate();
         for (Block b: schedule) {
             prep = conn.prepareStatement("INSERT INTO schedules (user, id, startTime, endTime, name, description, color)"
@@ -170,7 +170,7 @@ public class User {
       Class.forName("org.sqlite.JDBC");
       String urlToDB = "jdbc:sqlite:data/weekli/tasks.sqlite3";
       Connection conn = DriverManager.getConnection(urlToDB);
-      PreparedStatement prep = conn.prepareStatement("SELECT * FROM tasks WHERE tasks.user = " + this.iD);
+      PreparedStatement prep = conn.prepareStatement("SELECT * FROM tasks WHERE tasks.user = '" + this.iD + "';");
       ResultSet rs = prep.executeQuery();
       tasks.clear();
       while (rs.next()) {
@@ -200,7 +200,7 @@ public class User {
       Class.forName("org.sqlite.JDBC");
       String urlToDB = "jdbc:sqlite:data/weekli/commitments.sqlite3";
       Connection conn = DriverManager.getConnection(urlToDB);
-      PreparedStatement prep = conn.prepareStatement("SELECT * FROM commitments WHERE commitments.user = " + this.iD);
+      PreparedStatement prep = conn.prepareStatement("SELECT * FROM commitments WHERE commitments.user = '" + this.iD + "';");
       ResultSet rs = prep.executeQuery();
       commitments.clear();
       while (rs.next()) {
@@ -226,7 +226,7 @@ public class User {
       Class.forName("org.sqlite.JDBC");
       String urlToDB = "jdbc:sqlite:data/weekli/projects.sqlite3";
       Connection conn = DriverManager.getConnection(urlToDB);
-      PreparedStatement prep = conn.prepareStatement("SELECT * FROM projects WHERE projects.user = " + this.iD);
+      PreparedStatement prep = conn.prepareStatement("SELECT * FROM projects WHERE projects.user = '" + this.iD + "';");
       ResultSet rs = prep.executeQuery();
       projects.clear();
       while (rs.next()) {
@@ -243,7 +243,7 @@ public class User {
       Class.forName("org.sqlite.JDBC");
       String urlToDB = "jdbc:sqlite:data/weekli/commitments.sqlite3";
       Connection conn = DriverManager.getConnection(urlToDB);
-      PreparedStatement prep = conn.prepareStatement("DELETE FROM commitments WHERE commitments.id = " + id + ";");
+      PreparedStatement prep = conn.prepareStatement("DELETE FROM commitments WHERE commitments.id = '" + id + "';");
       prep.executeUpdate();
       commitments = commitments.stream().filter(c -> !c.getID().toString().equals(id)).collect(Collectors.toList());
     }
@@ -252,7 +252,7 @@ public class User {
       Class.forName("org.sqlite.JDBC");
       String urlToDB = "jdbc:sqlite:data/weekli/tasks.sqlite3";
       Connection conn = DriverManager.getConnection(urlToDB);
-      PreparedStatement prep = conn.prepareStatement("DELETE FROM tasks WHERE tasks.id = " + id + ";");
+      PreparedStatement prep = conn.prepareStatement("DELETE FROM tasks WHERE tasks.id = '" + id + "';");
       prep.executeUpdate();
       tasks = tasks.stream().filter(c -> !c.getID().toString().equals(id)).collect(Collectors.toList());
     }
@@ -274,7 +274,7 @@ public class User {
       Class.forName("org.sqlite.JDBC");
       String urlToDB = "jdbc:sqlite:data/weekli/projects.sqlite3";
       Connection conn = DriverManager.getConnection(urlToDB);
-      PreparedStatement prep = conn.prepareStatement("SELECT * FROM schedules WHERE schedules.user = " + this.iD);
+      PreparedStatement prep = conn.prepareStatement("SELECT * FROM schedules WHERE schedules.user = '" + this.iD + "';");
       ResultSet rs = prep.executeQuery();
       schedule.clear();
       while (rs.next()) {
