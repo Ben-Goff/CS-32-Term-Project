@@ -8,6 +8,7 @@ import edu.brown.cs.student.weekli.schedule.Task;
 import edu.brown.cs.student.weekli.user.Database;
 import edu.brown.cs.student.weekli.user.User;
 import spark.*;
+import org.json.JSONObject;
 
 import javax.servlet.http.HttpSession;
 import java.sql.*;
@@ -66,12 +67,14 @@ public class Handlers {
     protected static class LoginHandler implements Route {
         @Override
         public Object handle(Request request, Response response) throws Exception {
-            QueryParamsMap qm = request.queryMap();
-            String username = qm.value("username");
-            String password = qm.value("password");
+            JSONObject data = new JSONObject(request.body());
+            String username = data.getString("username");
+            String password = data.getString("password");
             Map<String, Object> variables;
             String message = "";
-            User loggingIn = db.signIn(username, password);
+            System.out.println("b4");
+            User loggingIn = db.signIn(username, password); //TODO: NOTHING RUNS AFTER THIS WHEN USER IS NOT WORKING
+            System.out.println("after");
             if(loggingIn == null) {
                 message = "login failed";
                 variables = ImmutableMap.of("message", message);

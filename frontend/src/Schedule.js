@@ -28,7 +28,7 @@ function Schedule() {
                         <input type="text" id="description" name="description" value={descs[i]}/><br/>
                         <label htmlFor="start-time">Start Time</label><br/>
                         <input type="time" id="start-time" name="start-time" value={startTimes[i]}/><br/>
-                        <label htmlFor="end-time">Start Time</label><br/>
+                        <label htmlFor="end-time">End Time</label><br/>
                         <input type="time" id="end-time" name="end-time" value={endTimes[i]}/><br/>
                         <label htmlFor="repeat-count">Repeat every</label>
                         <input type="number" id="repeat-count" name="repeat-count" value={repeatCounts[i]}/>

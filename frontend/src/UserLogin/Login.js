@@ -2,6 +2,7 @@ import '../App.css';
 import './UserLogin.css';
 import { Link, useHistory } from "react-router-dom";
 import {useState} from "react";
+import axios from "axios";
 
 function Login() {
 
@@ -20,16 +21,50 @@ function Login() {
     }
 
     function SubmitLogin() {
-        console.log("user: " + username + " pass: " + password)
 
-        //POST REQUEST HERE
-        if (true) {
+
+        requestLogin()
+
+        if (false) {
              //Sends the user to the main page.
             history.push('/');
             setShowError(false)
         } else {
             setShowError(true)
         }
+    }
+
+    /**
+     * Makes an axios request to login.
+     */
+    const requestLogin = () => {
+        console.log("user: " + username + " pass: " + password)
+
+        const toSend = {
+            username: username,
+            password: password,
+        };
+
+        let config = {
+            headers: {
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Origin': '*',
+            }
+        }
+
+        axios.post(
+            "http://localhost:4567/login",
+            toSend,
+            config
+        )
+            .then(response => {
+                console.log(response.data);
+            })
+
+            .catch(function (error) {
+                console.log(error);
+            });
+
     }
 
     return (

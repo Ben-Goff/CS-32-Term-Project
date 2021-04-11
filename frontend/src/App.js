@@ -3,7 +3,6 @@ import MainContainer from "./MainContainer";
 import Progress from "./Progress/Progress";
 import Login from "./UserLogin/Login";
 import Signup from "./UserLogin/Signup";
-import Schedule from "./Schedule";
 
 import { Switch, Route } from 'react-router-dom';
 
@@ -19,7 +18,6 @@ const Router = () => {
             <Route exact path='/progress' component={Progress}></Route>
             <Route exact path='/login' component={Login}></Route>
             <Route exact path='/signup' component={Signup}></Route>
-            <Route exact path='/schedule' component={Schedule}></Route>
         </Switch>
     );
 }

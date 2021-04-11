@@ -20,14 +20,19 @@ public class Database {
     }
 
     public User signIn(String id, String pw) throws SQLException, ClassNotFoundException {
+        System.out.println("ran-1");
         String hashid = BCrypt.hashpw(id, BCrypt.gensalt());
         String hashpw = BCrypt.hashpw(pw, BCrypt.gensalt());
+        System.out.println("ran0");
         PreparedStatement prep = this.connection.prepareStatement("SELECT * WHERE users.id = "+hashid+" AND users.password = "+hashpw+";");
+        System.out.println("ran1");
         ResultSet rs = prep.executeQuery();
         User loggingIn = null;
+        System.out.println("ran2");
         if (rs.next()) {
             loggingIn = new User(rs.getString(1));
         }
+        System.out.println("ran3");
         prep.close();
         rs.close();
         return loggingIn;

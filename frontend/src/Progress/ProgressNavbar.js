@@ -4,11 +4,9 @@ import React, {useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 
 function ProgressNavbar(props) {
-
-
     return (
         <div className="Navbar">
-            <div className="navbar-body">
+            <div className="navbar-body" style={{"margin-top": "20px"}}>
                 <div className="logo-area">
                     <img src="WeekliLogo.png" className="logo"/>
                     <div className="logo-text">
@@ -19,16 +17,13 @@ function ProgressNavbar(props) {
                 <div className="navbar-main">
                     <div className="flexbox-section">
                         <div className="flexbox-section">
-
+                        </div>
+                        <div className="flexbox-section">
                             <Link to="/">
-                                <button className="button">
-                                    &lt; Back To Calendar
+                                <button className="button back-button">
+                                    <span className="back-icon">&lt;</span> <span className="back-text">Back To Calendar</span>
                                 </button>
                             </Link>
-                        </div>
-
-                        <div className="flexbox-section">
-
                             {/*Hamburger menu css/html code TAKEN FROM: https://codepen.io/erikterwan/pen/EVzeRP*/}
                             <nav role="navigation">
                                 <div id="menuToggle">
@@ -46,7 +41,6 @@ function ProgressNavbar(props) {
                                     </ul>
                                 </div>
                             </nav>
-
                         </div>
                     </div>
                 </div>
