@@ -24,7 +24,8 @@ public class Database {
         String hashpw = BCrypt.hashpw(pw, BCrypt.gensalt());
 
 
-        String statement = "SELECT * FROM users WHERE users.id = \"hashid\" AND users.password = \"hashpw\";";
+        String statement = "SELECT * FROM users WHERE users.id = \"" + hashid + "\" AND users.password = \""
+                + hashpw + "\";";
         PreparedStatement prep = this.connection.prepareStatement(statement);
         ResultSet rs = prep.executeQuery();
         User loggingIn = null;
@@ -39,13 +40,15 @@ public class Database {
     public User signUp(String id, String pw) throws SQLException, ClassNotFoundException {
         String hashid = BCrypt.hashpw(id, BCrypt.gensalt());
         String hashpw = BCrypt.hashpw(pw, BCrypt.gensalt());
-        PreparedStatement prep = this.connection.prepareStatement("SELECT * FROM users WHERE users.id = \"hashid\";");
+        PreparedStatement prep = this.connection.prepareStatement("SELECT * FROM users WHERE users.id = \"" +
+                hashid +"\";");
         ResultSet rs = prep.executeQuery();
         User loggingIn = null;
         if (!rs.next()) {
-            prep = this.connection.prepareStatement("INSERT INTO users (id, password) VALUES (\"hashid\", \"hashpw\");");
+            prep = this.connection.prepareStatement("INSERT INTO users (id, password) VALUES (\"" + hashid + "\"," +
+                    "\"" + hashpw + "\");");
             prep.executeUpdate();
-            loggingIn = new User(rs.getString(1));
+            loggingIn = new User(hashid);
         }
         prep.close();
         rs.close();
