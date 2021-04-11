@@ -33,28 +33,30 @@ public class User {
         String urlToDB = "jdbc:sqlite:data/weekli/tasks.sqlite3";
         Connection conn = DriverManager.getConnection(urlToDB);
         PreparedStatement prep = conn.prepareStatement("CREATE TABLE IF NOT EXISTS tasks ("
-                + "id TEXT,"
-                + "user TEXT,"
-                + "startTime INTEGER,"
-                + "endTime INTEGER,"
-                + "estTime INTEGER,"
-                + "name TEXT,"
-                + "description TEXT,"
-                + "progress FLOAT,"
-                + "sessionTime INTEGER,"
-                + "project TEXT,"
+                + "id TEXT, "
+                + "user TEXT, "
+                + "startTime INTEGER, "
+                + "endTime INTEGER, "
+                + "estTime INTEGER, "
+                + "name TEXT, "
+                + "description TEXT, "
+                + "progress FLOAT, "
+                + "sessionTime INTEGER, "
+                + "project TEXT, "
+                + "color TEXT, "
                 + "PRIMARY KEY (id));");
         prep.executeUpdate();
         urlToDB = "jdbc:sqlite:data/weekli/commitments.sqlite3";
         conn = DriverManager.getConnection(urlToDB);
         prep = conn.prepareStatement("CREATE TABLE IF NOT EXISTS commitments ("
-                + "id TEXT,"
-                + "user TEXT,"
-                + "startTime INTEGER,"
-                + "endTime INTEGER,"
-                + "name TEXT,"
-                + "description TEXT,"
-                + "repeating INTEGER,"
+                + "id TEXT, "
+                + "user TEXT, "
+                + "startTime INTEGER, "
+                + "endTime INTEGER, "
+                + "name TEXT, "
+                + "description TEXT, "
+                + "repeating INTEGER, "
+                + "color TEXT, "
                 + "PRIMARY KEY (id));");
         prep.executeUpdate();
         urlToDB = "jdbc:sqlite:data/weekli/projects.sqlite3";
@@ -72,30 +74,39 @@ public class User {
                 + "user TEXT,"
                 + "id TEXT,"
                 + "startTime INTEGER,"
-                + "endTime INTEGER);");
+                + "endTime INTEGER, "
+                + "name TEXT, "
+                + "description TEXT, "
+                + "color TEXT);");
         prep.executeUpdate();
         prep.close();
     }
 
     public void updateTaskInDB(Task update) throws ClassNotFoundException, SQLException {
-//        this.tasks.add(add);
+        String projID;
+        if (update.getProjectID() == null) {
+          projID = "";
+        } else {
+          projID = update.getProjectID().toString();
+        }
         Class.forName("org.sqlite.JDBC");
         String urlToDB = "jdbc:sqlite:data/weekli/tasks.sqlite3";
         Connection conn = DriverManager.getConnection(urlToDB);
-        PreparedStatement prep = conn.prepareStatement("INSERT INTO tasks (id, user, startTime, endTime, estTime, name, description, progress, sessionTime, project)"
-                + " VALUES ("+update.getID().toString()+", "+ this.iD +", "+update.getStartDate()+", "+update.getEndDate()+", "+update.getEstimatedTime()+", "+update.getName()+", "+update.getDescription()+", "+update.getProgress()+", "+update.getSessionTime()+", "+update.getProjectID().toString()+");");
+        PreparedStatement prep = conn.prepareStatement("INSERT INTO tasks (id, user, startTime, endTime, estTime, name, description, progress, sessionTime, project, color)"
+                + " VALUES ("+update.getID().toString()+", "+ this.iD +", "+update.getStartDate()+", "+update.getEndDate()+", "+update.getEstimatedTime()+", "+update.getName()+", "+update.getDescription()+", "+update.getProgress()+", "+update.getSessionTime()+", "+projID+", "+update.getColor()+");");
         prep.executeUpdate();
         prep.close();
     }
 
-    public void addTask(long start, long end, long estTime, String name, String description, long sessionTime) throws ClassNotFoundException, SQLException {
-        Task add = new Task(start, end, estTime, name, description, sessionTime);
+    public void addTask(long start, long end, long estTime, String name, String description, long sessionTime, String color, String projID) throws ClassNotFoundException, SQLException {
+        Task add = new Task(start, end, estTime, name, description, sessionTime, color);
+        add.addProjectID(UUID.fromString(projID));
         this.tasks.add(add);
         Class.forName("org.sqlite.JDBC");
         String urlToDB = "jdbc:sqlite:data/weekli/tasks.sqlite3";
         Connection conn = DriverManager.getConnection(urlToDB);
-        PreparedStatement prep = conn.prepareStatement("INSERT INTO tasks (id, user, startTime, endTime, estTime, name, description, progress, sessionTime, project)"
-                + " VALUES ("+add.getID().toString()+", "+ this.iD +", "+add.getStartDate()+", "+add.getEndDate()+", "+add.getEstimatedTime()+", "+add.getName()+", "+add.getDescription()+", "+add.getProgress()+", "+add.getSessionTime()+", "+add.getProjectID().toString()+");");
+        PreparedStatement prep = conn.prepareStatement("INSERT INTO tasks (id, user, startTime, endTime, estTime, name, description, progress, sessionTime, project, color)"
+                + " VALUES ("+add.getID().toString()+", "+ this.iD +", "+add.getStartDate()+", "+add.getEndDate()+", "+add.getEstimatedTime()+", "+add.getName()+", "+add.getDescription()+", "+add.getProgress()+", "+add.getSessionTime()+", "+projID+", "+add.getColor()+");");
         prep.executeUpdate();
         prep.close();
     }
@@ -148,13 +159,11 @@ public class User {
         prep = conn.prepareStatement("DELETE FROM schedules WHERE schedules.user = " + iD + ";");
         prep.executeUpdate();
         for (Block b: schedule) {
-            prep = conn.prepareStatement("INSERT INTO schedules (user, id, startTime, endTime)"
-                    + " VALUES ("+this.iD+","+b.getiD().toString()+","+b.getStartTime()+","+b.getEndTime()+");");
+            prep = conn.prepareStatement("INSERT INTO schedules (user, id, startTime, endTime, name, description, color)"
+                    + " VALUES ("+this.iD+","+b.getiD().toString()+", "+b.getStartTime()+", "+b.getEndTime()+", "+b.getName()+", "+b.getDescription()+", "+b.getColor()+");");
             prep.executeUpdate();
         }
-        if (prep != null){
-            prep.close();
-        }
+        prep.close();
     }
 
     public void loadTasks() throws ClassNotFoundException, SQLException {
@@ -180,7 +189,8 @@ public class User {
         } else {
           project = UUID.fromString(projString);
         }
-        this.tasks.add(new Task(startTime, endTime, estTime, name, description, progress, id, sessionTime, project));
+        String color = rs.getString(11);
+        this.tasks.add(new Task(startTime, endTime, estTime, name, description, progress, id, sessionTime, project, color));
       }
       prep.close();
       rs.close();
@@ -271,7 +281,10 @@ public class User {
         UUID id = UUID.fromString(rs.getString(2));
         long startTime = rs.getLong(3);
         long endTime = rs.getLong(4);
-        this.schedule.add(new Block(startTime, endTime, id));
+        String name = rs.getString(5);
+        String desc = rs.getString(6);
+        String color = rs.getString(7);
+        this.schedule.add(new Block(startTime, endTime, id, name, desc, color));
       }
       prep.close();
       rs.close();

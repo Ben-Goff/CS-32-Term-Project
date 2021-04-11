@@ -31,7 +31,8 @@ public class Handlers {
   //  4) endTime -- combo of date and time
   //  5) estTime -- this is estimated effort in milliseconds
   //  6) sessionTime -- in milliseconds
-  //  7) color
+  //
+  //  7) color -- String
   //
   // CreateProject Send Order:
   //  1) name
@@ -127,7 +128,7 @@ public class Handlers {
             List<List<Block>> toReturn = new ArrayList<>();
             toReturn.add(loggedIn.getPastBlocks().stream().filter(b -> b.getEndTime() >= Long.parseLong(start) && b.getStartTime() <= Long.parseLong(end)).collect(Collectors.toList()));
             toReturn.add(blocks.stream().filter(b -> b.getEndTime() >= Long.parseLong(start) && b.getStartTime() <= Long.parseLong(end)).collect(Collectors.toList()));
-            List<String[]> schedule = toReturn.stream().flatMap(Collection::stream).map(b -> new String[]{""+b.getStartTime(), ""+b.getEndTime(), b.getiD().toString()}).collect(Collectors.toList());
+            List<String[]> schedule = toReturn.stream().flatMap(Collection::stream).map(b -> new String[]{""+b.getStartTime(), ""+b.getEndTime(), b.getiD().toString(), b.getName(), b.getDescription(), b.getColor()}).collect(Collectors.toList());
             variables = ImmutableMap.of("schedule", schedule);
             return GSON.toJson(variables);
         }
@@ -172,10 +173,11 @@ public class Handlers {
       long endTime = Long.parseLong(qm.value("endTime"));
       long estTime = Long.parseLong(qm.value("estTime"));
       long sessionTime = Long.parseLong(qm.value("sessionTime"));
+      String color = qm.value("color");
       Map<String, Object> variables = ImmutableMap.of();
       HttpSession session = request.session().raw();
       User loggedIn = (User) session.getAttribute("user");
-      loggedIn.addTask(startTime, endTime, estTime, name, description, sessionTime);
+      loggedIn.addTask(startTime, endTime, estTime, name, description, sessionTime, color, "");
 
       //  1) name -- (this is Title)
       //  2) description

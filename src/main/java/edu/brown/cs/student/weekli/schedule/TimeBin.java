@@ -24,8 +24,11 @@ public class TimeBin {
       long tDur = t.getSessionTime();
       long tStart = Math.max(startTime, t.getStartDate());
       long tEnd = Math.min(endTime, t.getEndDate());
+      String tName = t.getName();
+      String tDesc = t.getDescription();
+      String tColor = t.getColor();
       long tMean = (tEnd - tStart) / 2;
-      Block toAdd = addLeftSide(blocks, t.getID(), tDur, tStart, tEnd);
+      Block toAdd = addLeftSide(blocks, t.getID(), tDur, tStart, tEnd, tName, tDesc, tColor);
       if (toAdd != null) {
         blocks.add(toAdd);
         tasks.add(t);
@@ -37,9 +40,9 @@ public class TimeBin {
           long curEnd = Math.min(endTime, task.getEndDate());
           long curMean = (curEnd - curStart) / 2;
           if (curMean < tMean) {
-            toAdd = addLeftSide(attempt, task.getID(), curDur, curStart, curEnd);
+            toAdd = addLeftSide(attempt, task.getID(), curDur, curStart, curEnd, tName, tDesc, tColor);
           } else {
-            toAdd = addRightSide(attempt.descendingSet(), task.getID(), curDur, curStart, curEnd);
+            toAdd = addRightSide(attempt.descendingSet(), task.getID(), curDur, curStart, curEnd, tName, tDesc, tColor);
           }
           if(toAdd == null) {
             throw new RuntimeException("blocks did not refit");
@@ -47,7 +50,7 @@ public class TimeBin {
             attempt.add(toAdd);
           }
         }
-        toAdd = addLeftSide(attempt, t.getID(), tDur, tStart, tEnd);
+        toAdd = addLeftSide(attempt, t.getID(), tDur, tStart, tEnd, tName, tDesc, tColor);
         if (toAdd != null) {
           blocks = attempt;
           blocks.add(toAdd);
@@ -60,45 +63,45 @@ public class TimeBin {
     }
 
 
-    public Block addLeftSide(NavigableSet<Block> blocks, UUID id, long duration, long startSearch, long endSearch) {
+    public Block addLeftSide(NavigableSet<Block> blocks, UUID id, long duration, long startSearch, long endSearch, String name, String desc, String color) {
       if ((endSearch - startSearch) < duration) {
         return null;
       }
       for (Block b: blocks) {
         if (b.getEndTime() > startSearch) {
           if (b.getStartTime() < startSearch) {
-            return addLeftSide(blocks, id, duration, b.getEndTime(), endSearch);
+            return addLeftSide(blocks, id, duration, b.getEndTime(), endSearch, name, desc, color);
           } else {
             if ((b.getStartTime() - startSearch) >= duration) {
-              return new Block(startSearch, startSearch + duration, id);
+              return new Block(startSearch, startSearch + duration, id, name, desc, color);
             } else {
-              return addLeftSide(blocks, id, duration, b.getEndTime(), endSearch);
+              return addLeftSide(blocks, id, duration, b.getEndTime(), endSearch, name, desc, color);
             }
           }
         }
       }
-      return new Block(startSearch, startSearch + duration, id);
+      return new Block(startSearch, startSearch + duration, id, name, desc, color);
     }
 
 
-  public Block addRightSide(NavigableSet<Block> blocks, UUID id, long duration, long startSearch, long endSearch) {
+  public Block addRightSide(NavigableSet<Block> blocks, UUID id, long duration, long startSearch, long endSearch, String name, String desc, String color) {
     if ((endSearch - startSearch) < duration) {
       return null;
     }
     for (Block b: blocks) {
       if (b.getStartTime() < endSearch) {
         if (b.getEndTime() > endSearch) {
-          return addLeftSide(blocks, id, duration, startSearch, b.getStartTime());
+          return addLeftSide(blocks, id, duration, startSearch, b.getStartTime(), name, desc, color);
         } else {
           if ((endSearch - b.getEndTime()) >= duration) {
-            return new Block(endSearch - duration, endSearch, id);
+            return new Block(endSearch - duration, endSearch, id, name, desc, color);
           } else {
-            return addRightSide(blocks, id, duration, startSearch, b.getStartTime());
+            return addRightSide(blocks, id, duration, startSearch, b.getStartTime(), name, desc, color);
           }
         }
       }
     }
-    return new Block(endSearch - duration, endSearch, id);
+    return new Block(endSearch - duration, endSearch, id, name, desc, color);
   }
 
     public List<Task> getTasks() {

@@ -7,6 +7,7 @@ public class Task {
   private long startDate;
   private long endDate;
   private long estTime;
+  private String color;
   private String name;
   private String description;
   private double progress;
@@ -24,7 +25,7 @@ public class Task {
    * @param description the description
    * @throws NumberFormatException if estTime < 0
    */
-  public Task(long start, long end, long estTime, String name, String description, long sessionTime) throws NumberFormatException {
+  public Task(long start, long end, long estTime, String name, String description, long sessionTime, String color) throws NumberFormatException {
     if (estTime < 0) {
       throw new NumberFormatException("ERROR: Duration of event is negative.");
     } else {
@@ -33,6 +34,7 @@ public class Task {
     this.startDate = start;
     this.endDate = end;
     this.name = name;
+    this.color = color;
     this.description = description;
     this.progress = 0;
     this.iD = UUID.randomUUID();
@@ -47,7 +49,8 @@ public class Task {
               double progress,
               UUID id,
               long sessionTime,
-              UUID projectiD) throws NumberFormatException {
+              UUID projectiD,
+              String color) throws NumberFormatException {
     if (estTime < 0) {
       throw new NumberFormatException("ERROR: Duration of event is negative.");
     } else {
@@ -61,6 +64,7 @@ public class Task {
     this.projectiD = projectiD;
     this.iD = id;
     this.sessionTime = sessionTime;
+    this.color = color;
   }
 
 
@@ -167,6 +171,10 @@ public void setProgress(double prog) {
 
   public UUID getProjectID() {
     return projectiD;
+  }
+
+  public String getColor() {
+    return color;
   }
 
   public int sessions() {

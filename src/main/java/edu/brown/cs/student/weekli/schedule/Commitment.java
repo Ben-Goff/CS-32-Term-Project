@@ -14,6 +14,7 @@ public class Commitment {
   private long estTime;
   private String name;
   private String description;
+  private String color;
   private final UUID iD;
   private final static int category = 0;
   private final Block commitBlock;
@@ -41,13 +42,15 @@ public class Commitment {
     this.name = name;
     this.repeating = repeating;
     this.description = description;
-    this.commitBlock = new Block(this.startDate, this.endDate, this.iD);
+    this.color = "#696969";
+    this.commitBlock = new Block(this.startDate, this.endDate, this.iD, this.name, this.description, this.color);
   }
 
   public Commitment(long start, long end, String name, String description, UUID id, Optional<Long> repeating) throws NumberFormatException {
     this.iD = id;
     this.startDate = start;
     this.endDate = end;
+    this.color = "#696969";
     long time = endDate - startDate;
     if (time < 0) {
       throw new NumberFormatException("ERROR: Duration of event is negative.");
@@ -57,7 +60,7 @@ public class Commitment {
     this.name = name;
     this.repeating = repeating;
     this.description = description;
-    this.commitBlock = new Block(this.startDate, this.endDate, this.iD);
+    this.commitBlock = new Block(this.startDate, this.endDate, this.iD, this.name, this.description, this.color);
   }
 
 
@@ -127,16 +130,28 @@ public class Commitment {
     return repeating;
   }
 
+  public String getColor() {
+    return color;
+  }
+
   /**
    * Gets the blocks
    * @return
    */
   public List<Block> getBlocks(long startTime, long endTime) {
-    List<Block> blocks = new ArrayList<>();
+    List<Block> blocks;
     if (this.repeating.isPresent()) {
       final int repetitions = (int) Math.floor((endTime - startTime) / (double) repeating.get());
       int startIndex = (int) Math.floor((startTime - this.startDate) / (double) repeating.get());
-      blocks = IntStream.range(startIndex, startIndex + repetitions).mapToObj(i -> new Block(this.startDate + i*repeating.get(), this.startDate + i*repeating.get() + this.estTime, this.iD)).collect(Collectors.toList());
+      blocks = IntStream.range(
+        startIndex, startIndex + repetitions).mapToObj(
+          i -> new Block(
+            this.startDate + i*repeating.get(),
+            this.startDate + i*repeating.get() + this.estTime,
+            this.iD,
+            this.name,
+            this.description,
+            this.color)).collect(Collectors.toList());
     } else {
       blocks = Collections.singletonList(this.commitBlock);
     }
