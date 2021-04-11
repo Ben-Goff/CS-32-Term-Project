@@ -72,9 +72,7 @@ public class Handlers {
             String password = data.getString("password");
             Map<String, Object> variables;
             String message = "";
-            System.out.println("login b4");
-            User loggingIn = db.signIn(username, password); //TODO: NOTHING RUNS AFTER THIS WHEN USER IS NOT WORKING
-            System.out.println("login after");
+            User loggingIn = db.signIn(username, password);
             if(loggingIn == null) {
                 message = "login failed";
                 variables = ImmutableMap.of("message", message);
@@ -101,15 +99,12 @@ public class Handlers {
             String password = data.getString("password");
             Map<String, Object> variables;
             String message = "";
-            System.out.println("1");
             User loggingIn = db.signUp(username, password);
-            System.out.println("2");
             if(loggingIn == null) {
                 message = "user ID already exists";
                 variables = ImmutableMap.of("message", message);
                 return GSON.toJson(variables);
             }
-            System.out.println("3");
             HttpSession session = request.session().raw();
             session.setAttribute("user", loggingIn);
             message = "sign up successful";
