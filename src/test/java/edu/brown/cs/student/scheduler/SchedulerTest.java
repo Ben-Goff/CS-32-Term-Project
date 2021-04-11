@@ -43,7 +43,7 @@ public class SchedulerTest {
   @Test
   public void testEmptySchedule() {
     schedule = new Scheduler(Collections.emptyList());
-    assertEquals(schedule.schedule(Collections.emptyList()), Collections.emptyList());
+    assertEquals(schedule.schedule(Collections.emptyList(), 0, 0), Collections.emptyList());
   }
 
   /**
@@ -54,7 +54,7 @@ public class SchedulerTest {
     setUp();
     Task t = new Task(currentTime + 1000000, currentTime + 1100000, 20000, "task", "task", 5000);
     schedule = new Scheduler(Collections.emptyList());
-    List<Block> output = schedule.schedule(Collections.singletonList(t));
+    List<Block> output = schedule.schedule(Collections.singletonList(t), 0, 0);
     assertTrue(noBlocksOverlap(output));
     assertEquals(output.size(), 4);
     assertEquals(output.get(0).getEndTime() - output.get(0).getStartTime(), 5000);
@@ -75,7 +75,7 @@ public class SchedulerTest {
     setUp();
     Commitment c = new Commitment(currentTime + 1000000, currentTime + 1100000, "commitment", "commitment", Optional.empty());
     schedule = new Scheduler(Collections.singletonList(c));
-    List<Block> output = schedule.schedule(Collections.emptyList());
+    List<Block> output = schedule.schedule(Collections.emptyList(), 0, 0);
     assertTrue(noBlocksOverlap(output));
     assertEquals(output.size(), 1);
     assertEquals(output.get(0).getEndTime(), c.getEndDate());
@@ -88,7 +88,7 @@ public class SchedulerTest {
     Commitment c = new Commitment(currentTime + 1000000, currentTime + 1100000, "commitment", "commitment", Optional.empty());
     Task t = new Task(currentTime + 500000, currentTime + 1600000, 1000000, "task", "task", 50000);
     schedule = new Scheduler(Collections.singletonList(c));
-    List<Block> output = schedule.schedule(Collections.singletonList(t));
+    List<Block> output = schedule.schedule(Collections.singletonList(t), 0, 0);
     assertTrue(noBlocksOverlap(output));
     assertEquals(output.size(),21);
   }
@@ -103,7 +103,7 @@ public class SchedulerTest {
     List<Task> tList = new ArrayList<>();
     tList.add(t1);
     tList.add(t2);
-    List<Block> output = schedule.schedule(tList);
+    List<Block> output = schedule.schedule(tList, 0, 0);
     assertTrue(noBlocksOverlap(output));
     assertEquals(output.size(),21);
   }

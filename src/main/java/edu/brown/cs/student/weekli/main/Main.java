@@ -14,13 +14,15 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.sql.SQLException;
 
 public class Main {
 
     private static final int DEFAULT_PORT = 4567;
     private static final Gson GSON = new Gson();
 
-    /**
+
+  /**
      * The initial method called when execution begins.
      *
      * @param args An array of command line arguments

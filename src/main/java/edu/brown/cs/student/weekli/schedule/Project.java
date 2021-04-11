@@ -31,7 +31,7 @@ public class Project {
     Class.forName("org.sqlite.JDBC");
     String urlToDB = "jdbc:sqlite:data/weekli/tasks.sqlite3";
     Connection conn = DriverManager.getConnection(urlToDB);
-    PreparedStatement prep = conn.prepareStatement("SELECT tasks.progress FROM tasks WHERE tasks.id = " + this.iD.toString() + ");");
+    PreparedStatement prep = conn.prepareStatement("SELECT tasks.progress FROM tasks WHERE tasks.project = " + this.iD.toString() + ");");
     ResultSet rs = prep.executeQuery();
     double total = 0;
     int size = rs.getFetchSize();
@@ -47,7 +47,7 @@ public class Project {
     return description;
   }
 
-  public UUID getiD() {
+  public UUID getID() {
     return iD;
   }
 }
