@@ -30,6 +30,7 @@ public class Handlers {
   //  4) endTime -- combo of date and time
   //  5) estTime -- this is estimated effort in milliseconds
   //  6) sessionTime -- in milliseconds
+  //  7) color
   //
   // CreateProject Send Order:
   //  1) name
