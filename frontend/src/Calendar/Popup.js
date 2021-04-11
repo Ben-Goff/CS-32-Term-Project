@@ -8,13 +8,13 @@ import TaskForm from "./Form/TaskForm";
 function Popup(props) {
     const commitmentBody = (
         <div>
-            <div>Commitment - a one-time event that needs to be attended to throughout the entire duration.</div>
+            <div>Commitment - An event where task/project work is to be made off-limits.</div>
             <CommitmentForm/>
         </div>
     );
     const taskBody = (
         <div>
-            <div>Task - an objective to complete during spare time by a certain due date.</div>
+            <div>Task - An objective to complete during spare time by a certain due date.</div>
             <TaskForm/>
         </div>
     );

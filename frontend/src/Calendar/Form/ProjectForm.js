@@ -6,6 +6,26 @@ function ProjectForm() {
     const [numCheckpoints, setNumCheckpoints] = useState(0);
     const [checkpointForms, setCheckpointForms] = useState(null);
 
+    const [name, setName] = useState("");
+    const [description, setDescription] = useState("");
+    const [color, setColor] = useState("red")
+
+    const [nameDict, setNameDict] = useState({});
+    const [descriptionDict, setDescriptionDict] = useState({});
+    const [dueDateDict, setDueDateDict] = useState({});
+    const [dueTimeDict, setDueTimeDict] = useState({});
+    const [estimatedEffortDict, setEstimatedEffortDict] = useState({});
+    const [sessionLengthDict, setSessionLengthDict] = useState({});
+
+    const handleChange = (e, setter) => {
+        setter(e.target.value);
+    }
+
+    const handleCheckpointChange = (e, dict, i, setter) => {
+        dict[i] = e.target.value;
+        setter(dict);
+    }
+
     useEffect(() => {
         let formsList = [];
         for (let i = 0; i < numCheckpoints; i++) {
@@ -13,35 +33,70 @@ function ProjectForm() {
             formsList.push(
                 <div>
                     <label htmlFor={checkpointID + "-title"}>Checkpoint {i + 1} Title</label><br/>
-                    <input type="text" id={checkpointID + "-title"} name={checkpointID + "-title"}/><br/>
+                    <input type="text" id={checkpointID + "-title"} name={checkpointID + "-title"} onChange={(e) => handleCheckpointChange(e, nameDict, i, setNameDict)}/><br/>
                     <label htmlFor={checkpointID + "-description"}>Description</label><br/>
-                    <input type="text" id={checkpointID + "-description"} name={checkpointID + "-description"}/><br/>
+                    <input type="text" id={checkpointID + "-description"} name={checkpointID + "-description"} onChange={(e) => handleCheckpointChange(e, descriptionDict, i, setDescriptionDict)}/><br/>
                     <label htmlFor={checkpointID + "-due-date"}>Due Date</label><br/>
-                    <input type="date" id={checkpointID + "-due-date"} name={checkpointID + "-due-date"} placeholder={"mm-dd-yyyy"}/>
+                    <input type="date" id={checkpointID + "-due-date"} name={checkpointID + "-due-date"} placeholder={"mm-dd-yyyy"} onChange={(e) => handleCheckpointChange(e, dueDateDict, i, setDueDateDict)}/>
                     <label htmlFor={checkpointID + "-due-time"} style={{"display": "none"}}>Due" +
                         " Time</label>
-                    <input type="time" id={checkpointID + "-due-time"} name={checkpointID + "-due-time"} placeholder={"__:__ AM/PM"}/><br/>
+                    <input type="time" id={checkpointID + "-due-time"} name={checkpointID + "-due-time"} placeholder={"__:__ AM/PM"} onChange={(e) => handleCheckpointChange(e, dueTimeDict, i, setDueTimeDict)}/><br/>
                     <label htmlFor={checkpointID + "-estimated-effort"}>Estimated Effort (hrs)</label><br/>
-                    <input type="number" id={checkpointID + "-estimated-effort"} name={checkpointID + "-estimated-effort"}/><br/>
+                    <input type="number" step="0.01" id={checkpointID + "-estimated-effort"} name={checkpointID + "-estimated-effort"} onChange={(e) => handleCheckpointChange(e, estimatedEffortDict, i, setEstimatedEffortDict)}/><br/>
                     <label htmlFor="session-length">Max Session Length (hrs)</label><br/>
-                    <input type="number" id="session-length" name="session-length"/><br/>
+                    <input type="number" step="0.01" id="session-length" name="session-length" onChange={(e) => handleCheckpointChange(e, sessionLengthDict, i, setSessionLengthDict)}/><br/>
                 </div>
             );
         }
         setCheckpointForms(formsList);
     }, [numCheckpoints]);
 
+
+    const createProject = (e) => {
+        e.preventDefault();
+
+        let curTime = new Date().getTime();
+        let checkpoints = [];
+
+        for (let i = 0; i < numCheckpoints; i++) {
+            let startMillis = curTime;
+            let endMillis = Date.parse(dueDateDict[i] + " " + dueTimeDict[i]);
+            let startMillisStr = startMillis.toString();
+            let endMillisStr = endMillis.toString();
+            let estimatedEffortMillisStr = (estimatedEffortDict[i] * 60 * 60 * 1000).toString();
+            let sessionLengthMillisStr = (sessionLengthDict[i] * 60 * 60 * 1000).toString();
+            checkpoints.push([nameDict[i], descriptionDict[i], startMillisStr, endMillisStr, estimatedEffortMillisStr, sessionLengthMillisStr, color]);
+            curTime = endMillis;
+        }
+        console.log(name);
+        console.log(description);
+        console.log(checkpoints);
+    }
+
+
     return (
-        <div className="Form ProjectForm">
+        <div className="Form ProjectForm" onSubmit={createProject}>
             <form>
                 <label htmlFor="title">Title</label><br/>
-                <input type="text" id="title" name="title"/><br/>
+                <input type="text" id="title" name="title" onChange={(e) => handleChange(e, setName)}/><br/>
                 <label htmlFor="description">Description</label><br/>
-                <input type="text" id="description" name="description"/><br/>
+                <input type="text" id="description" name="description" onChange={(e) => handleChange(e, setDescription)}/><br/>
                 <label htmlFor="numCheckpoints">Number of Checkpoints</label><br/>
                 <input type="text" id="numCheckpoints" name="numCheckpoints" onChange={
-                    (e) => setNumCheckpoints(e.target.value)}/><br/>
+                    (e) => handleChange(e, setNumCheckpoints)}/><br/>
                 {checkpointForms}
+                <label htmlFor="color">Color</label><br/>
+                <div className="color-input">
+                    <div style={{"width": "20px", "height": "20px", "background-color": color}}/>
+                    <select id="color" name="color" onChange={(e) => handleChange(e, setColor)}>
+                        <option value="red">red</option>
+                        <option value="orange">orange</option>
+                        <option value="#FFCB0C">yellow</option>
+                        <option value="green">green</option>
+                        <option value="blue">blue</option>
+                        <option value="purple">purple</option>
+                    </select>
+                </div><br/>
                 <input id="submit" type="submit" value="Create"/>
             </form>
         </div>

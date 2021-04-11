@@ -1,23 +1,65 @@
 import './Form.css';
 import '../../App.css';
-import React from "react";
+import React, {useState} from "react";
 
 function TaskForm() {
+    const [name, setName] = useState("");
+    const [description, setDescription] = useState("");
+    const [dueDate, setDueDate] = useState("");
+    const [dueTime, setDueTime] = useState("");
+    const [estimatedEffort, setEstimatedEffort] = useState(0);
+    const [sessionLength, setSessionLength] = useState(0);
+    const [color, setColor] = useState("red");
+
+    const handleChange = (e, setter) => {
+        setter(e.target.value);
+    }
+
+    const createTask = (e) => {
+        e.preventDefault();
+        let startMillis = new Date().getTime();
+        let endMillis = Date.parse(dueDate + " " + dueTime);
+        let startMillisStr = startMillis.toString();
+        let endMillisStr = endMillis.toString();
+        let estimatedEffortMillisStr = (estimatedEffort * 60 * 60 * 1000).toString();
+        let sessionLengthMillisStr = (sessionLength * 60 * 60 * 1000).toString();
+        console.log(name);
+        console.log(description);
+        console.log(startMillisStr);
+        console.log(endMillisStr);
+        console.log(estimatedEffortMillisStr);
+        console.log(sessionLengthMillisStr);
+        console.log(color);
+    }
+
     return (
         <div className="Form TaskForm">
-            <form>
+            <form onSubmit={createTask}>
                 <label htmlFor="title">Title</label><br/>
-                <input type="text" id="title" name="title"/><br/>
+                <input type="text" id="title" name="title" onChange={(e) => handleChange(e, setName)}/><br/>
                 <label htmlFor="description">Description</label><br/>
-                <input type="text" id="description" name="description"/><br/>
+                <input type="text" id="description" name="description" onChange={(e) => handleChange(e, setDescription)}/><br/>
                 <label htmlFor="due-date">Due Date</label><br/>
-                <input type="date" id="due-date" name="due-date" placeholder={"mm-dd-yyyy"}/>
+                <input type="date" id="due-date" name="due-date" placeholder={"mm-dd-yyyy"} onChange={(e) => handleChange(e, setDueDate)}/>
                 <label htmlFor="due-time" style={{"display": "none"}}>Due Time</label>
-                <input type="time" id="due-time" name="due-time" placeholder={"__:__ AM/PM"}/><br/>
+                <input type="time" id="due-time" name="due-time" placeholder={"__:__ AM/PM"} onChange={(e) => handleChange(e, setDueTime)}/><br/>
                 <label htmlFor="estimated-effort">Estimated Effort (hrs)</label><br/>
-                <input type="number" id="estimated-effort" name="estimated-effort"/><br/>
+                <input type="number" step="0.01" id="estimated-effort" name="estimated-effort" onChange={(e) => handleChange(e, setEstimatedEffort)}/><br/>
                 <label htmlFor="session-length">Max Session Length (hrs)</label><br/>
-                <input type="number" id="session-length" name="session-length"/><br/>
+                <input type="number" step="0.01" id="session-length" name="session-length" onChange={(e) => handleChange(e, setSessionLength)}/><br/>
+                <label htmlFor="color">Color</label><br/>
+                <div className="color-input">
+                    <div style={{"width": "20px", "height": "20px", "background-color": color}}/>
+                    <select id="color" name="color" onChange={(e) => handleChange(e, setColor)}>
+                        <option value="red">red</option>
+                        <option value="orange">orange</option>
+                        <option value="#FFCB0C">yellow</option>
+                        <option value="green">green</option>
+                        <option value="blue">blue</option>
+                        <option value="purple">purple</option>
+                    </select>
+                </div>
+
                 <input id="submit" type="submit" value="Create"/>
             </form>
         </div>
