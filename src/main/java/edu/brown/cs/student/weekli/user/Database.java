@@ -47,7 +47,7 @@ public class Database {
             prep = this.connection.prepareStatement("INSERT INTO users (id, password) VALUES (\"" + hashid + "\"," +
                     "\"" + hashpw + "\");");
             prep.executeUpdate();
-            loggingIn = new User(id);
+            loggingIn = new User(hashid);
         }
         prep.close();
         rs.close();
