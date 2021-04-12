@@ -118,18 +118,26 @@ public class Handlers {
         @Override
         public Object handle(Request request, Response response) throws Exception {
             Map<String, Object> variables;
-            QueryParamsMap qm = request.queryMap();
-            String start = qm.value("start");
-            String end = qm.value("end");
+            JSONObject data = new JSONObject(request.body());
+
+            String start = data.getString("start");
+            String end = data.getString("end");
+
             HttpSession session = request.session().raw();
+            System.out.println("0: " + session);
             User loggedIn = (User) session.getAttribute("user");
+            System.out.println("1: " + loggedIn);
             Scheduler s = new Scheduler(loggedIn.getCommitments());
+            System.out.println("1.5");
             List<Block> blocks = s.schedule(loggedIn.getTasks(), Long.parseLong(start), Long.parseLong(end));
+            System.out.println("2");
             List<List<Block>> toReturn = new ArrayList<>();
             toReturn.add(loggedIn.getPastBlocks().stream().filter(b -> b.getEndTime() >= Long.parseLong(start) && b.getStartTime() <= Long.parseLong(end)).collect(Collectors.toList()));
             toReturn.add(blocks.stream().filter(b -> b.getEndTime() >= Long.parseLong(start) && b.getStartTime() <= Long.parseLong(end)).collect(Collectors.toList()));
+            System.out.println("3");
             List<String[]> schedule = toReturn.stream().flatMap(Collection::stream).map(b -> new String[]{""+b.getStartTime(), ""+b.getEndTime(), b.getiD().toString(), b.getName(), b.getDescription(), b.getColor()}).collect(Collectors.toList());
             variables = ImmutableMap.of("schedule", schedule);
+            System.out.println("4");
             return GSON.toJson(variables);
         }
     }

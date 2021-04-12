@@ -1,15 +1,17 @@
 import '../App.css';
 import './UserLogin.css';
 import { Link, useHistory } from "react-router-dom";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import axios from "axios";
 
-function Login(props) {
+function Login() {
 
     let username = ""
     let password = ""
 
     const [showError, setShowError] = useState(false)
+    const [message, setMessage] = useState("nothing happened")
+
     let history = useHistory();
 
     function changeUsername(event) {
@@ -20,23 +22,15 @@ function Login(props) {
         password = event.target.value;
     }
 
-    function SubmitLogin() {
-
-
-        requestLogin()
-
-        props.setBlocks()
-
-        if (true) {
-             //Sends the user to the main page.
-
-
+    useEffect(() => {
+        if (message === "login successful") {
+            //Sends the user to the main page.
             history.push('/');
             setShowError(false)
         } else {
             setShowError(true)
         }
-    }
+    }, [message]);
 
     /**
      * Makes an axios request to login.
@@ -63,6 +57,7 @@ function Login(props) {
         )
             .then(response => {
                 console.log(response.data);
+                setMessage(response.data["message"])
             })
 
             .catch(function (error) {
@@ -84,7 +79,7 @@ function Login(props) {
                 <input type="text" id="password" name="password" onChange={changePassword}/><br/>
 
 
-                <button onClick={SubmitLogin}>Login</button>
+                <button onClick={requestLogin}>Login</button>
 
                 {showError &&
                 <p>LOGIN ERROR</p>

@@ -11,8 +11,10 @@ function Calendar(props) {
 
     // TODO: make this an actual axios request
     const retrieveSchedule = () => {
-        console.log(getSchedule(props.displayMonday));
-        return getSchedule(props.displayMonday);
+        let schedule = getSchedule(props.displayMonday)
+        console.log(schedule)
+        //
+        return schedule;
     }
 
     useEffect(() => {

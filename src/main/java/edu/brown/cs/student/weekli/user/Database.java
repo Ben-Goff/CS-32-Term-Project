@@ -20,16 +20,16 @@ public class Database {
     }
 
     public User signIn(String id, String pw) throws SQLException, ClassNotFoundException {
-        String hashid = BCrypt.hashpw(id, BCrypt.gensalt());
-        String hashpw = BCrypt.hashpw(pw, BCrypt.gensalt());
+        String statement = "SELECT * FROM users WHERE users.id = \"" + id + "\";";
 
-        String statement = "SELECT * FROM users WHERE users.id = \"" + hashid + "\" AND users.password = \""
-                + hashpw + "\";";
         PreparedStatement prep = this.connection.prepareStatement(statement);
         ResultSet rs = prep.executeQuery();
         User loggingIn = null;
+
         if (rs.next()) {
-            loggingIn = new User(rs.getString(1));
+            if (BCrypt.checkpw(pw, rs.getString(2))) {
+                loggingIn = new User(rs.getString(1));
+            }
         }
         prep.close();
         rs.close();
@@ -41,16 +41,17 @@ public class Database {
         if (id.equals("") || pw.equals("")) {
             return loggingIn;
         }
-        String hashid = BCrypt.hashpw(id, BCrypt.gensalt());
+
         String hashpw = BCrypt.hashpw(pw, BCrypt.gensalt());
+
         PreparedStatement prep = this.connection.prepareStatement("SELECT * FROM users WHERE users.id = \"" +
-                hashid +"\";");
-        ResultSet rs = prep.executeQuery();
+                id +"\";");
+        ResultSet rs = prep.executeQuery();;
         if (!rs.next()) {
-            prep = this.connection.prepareStatement("INSERT INTO users (id, password) VALUES (\"" + hashid + "\"," +
+            prep = this.connection.prepareStatement("INSERT INTO users (id, password) VALUES (\"" + id + "\"," +
                     "\"" + hashpw + "\");");
             prep.executeUpdate();
-            loggingIn = new User(hashid);
+            loggingIn = new User(id);
         }
         prep.close();
         rs.close();

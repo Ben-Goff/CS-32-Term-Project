@@ -42,13 +42,13 @@ export function useInterval(callback, delay) {
 }
 
 export function getSchedule(displayMonday) {
-    let displaySunday = new Date(displayMonday);
-    displaySunday.setDate(displaySunday.getDate() + 7);
 
     const toSend = {
         start: displayMonday.getTime(),
-        end: displaySunday.getTime()
+        end: (displayMonday.getTime() + (86400000 * 7)) //Number of milliseconds in a week
     };
+
+    console.log(toSend)
 
     let config = {
         headers: {

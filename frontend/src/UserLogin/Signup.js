@@ -1,7 +1,7 @@
 import '../App.css';
 import './UserLogin.css';
 import { Link, useHistory } from "react-router-dom";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import axios from "axios";
 
 function Signup() {
@@ -11,26 +11,30 @@ function Signup() {
     let confirm = ""
 
     const [showError, setShowError] = useState(false)
+    const [message, setMessage] = useState("nothing happened")
+
     let history = useHistory();
 
     function SubmitSignIn() {
         console.log("user: " + username + " pass: " + password + " confirm: " + confirm)
 
-
-
         if (password === confirm) {
-            //POST REQUEST HERE
             requestSignup()
 
-            //Sends the user to the main page if the post request doesn't fail.
-            if(false) {
-                history.push('/');
-                setShowError(false)
-            }
         } else {
             setShowError(true)
         }
     }
+
+    useEffect(() => {
+        if (message === "sign up successful") {
+            //Sends the user to the main page.
+            history.push('/');
+            setShowError(false)
+        } else {
+            setShowError(true)
+        }
+    }, [message]);
 
     function changeUsername(event) {
         username = event.target.value;
@@ -67,6 +71,7 @@ function Signup() {
         )
             .then(response => {
                 console.log(response.data);
+                setMessage(response.data["message"])
             })
 
             .catch(function (error) {
