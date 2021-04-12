@@ -206,7 +206,7 @@ public class User {
       long endTime = rs.getLong(4);
       String name = rs.getString(5);
       String description = rs.getString(6);
-      Long rep = (Long) rs.getObject(7);
+      Long rep = rs.getLong(7);
       Optional<Long> repeating;
       if (rep == null) {
         repeating = Optional.empty();
