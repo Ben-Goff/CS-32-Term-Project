@@ -12,17 +12,15 @@ function Calendar(props) {
     const [schedule, setSchedule] = useState([]);
 
     useEffect(() => {
-        requestSchedule(props.displayMonday)
-        // console.log(schedule)
+        //requestSchedule(props.displayMonday)
     }, [])
 
     useEffect(() => {
         requestSchedule(props.displayMonday)
-        console.log(schedule)
     }, [props.displayMonday])
 
     const requestSchedule = (displayMonday) => {
-
+        console.log("requested schedule: " + displayMonday)
         const toSend = {
             start: displayMonday.getTime(),
             end: (displayMonday.getTime() + (86400000 * 7)) //Number of milliseconds in a week
@@ -53,7 +51,7 @@ function Calendar(props) {
 
     useEffect(() => {
         getBlocks();
-    }, [props.displayMonday]);
+    }, [schedule]);
 
     useEffect(() => {
         setDays(prepareBlocks());
