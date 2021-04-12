@@ -5,31 +5,37 @@ import Login from "./UserLogin/Login";
 import Signup from "./UserLogin/Signup";
 
 import { Switch, Route } from 'react-router-dom';
-
-/**
- * User and task information is kept here, as it's needed across multiple pages.
- */
+import {useState} from "react";
 
 {/*Routing Help from https://stackoverflow.com/questions/41956465/how-to-create-multiple-page-app-using-react*/}
 const Router = () => {
     return (
         <Switch> {/* The Switch decides which component to show based on the current URL.*/}
-            <Route exact path='/' component={MainContainer}></Route>
+            <Route exact path='/login' render={() => (
+                <Login isAuthed={true}/>
+            )}/>
+            <Route exact path='/' render={() => (
+                <MainContainer isAuthed={true}/>
+            )}/>
             <Route exact path='/progress' component={Progress}></Route>
-            <Route exact path='/login' component={Login}></Route>
             <Route exact path='/signup' component={Signup}></Route>
         </Switch>
     );
 }
 
 function App() {
-  return (
-    <div className="App">
-        <div className="AppContent">
-            <Router/>
+
+    /**
+     * Task/Block information is kept here, as it's needed across multiple pages.
+     */
+
+    return (
+        <div className="App">
+            <div className="AppContent">
+                {Router()}
+            </div>
         </div>
-    </div>
-  );
+    );
 }
 
 export default App;

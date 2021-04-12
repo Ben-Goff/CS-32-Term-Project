@@ -29,6 +29,7 @@ public class User {
         this.commitments = new ArrayList<>();
         this.tasks = new ArrayList<>();
         this.projects = new ArrayList<>();
+
         Class.forName("org.sqlite.JDBC");
         String urlToDB = "jdbc:sqlite:data/weekli/tasks.sqlite3";
         Connection conn = DriverManager.getConnection(urlToDB);
@@ -271,7 +272,7 @@ public class User {
 
     public void loadSchedule() throws ClassNotFoundException, SQLException {
       Class.forName("org.sqlite.JDBC");
-      String urlToDB = "jdbc:sqlite:data/weekli/projects.sqlite3";
+      String urlToDB = "jdbc:sqlite:data/weekli/schedules.sqlite3";
       Connection conn = DriverManager.getConnection(urlToDB);
       PreparedStatement prep = conn.prepareStatement("SELECT * FROM schedules WHERE schedules.user = '" + this.iD + "';");
       ResultSet rs = prep.executeQuery();

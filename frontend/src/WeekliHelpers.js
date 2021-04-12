@@ -1,4 +1,5 @@
 import {useEffect, useRef} from "react";
+import axios from "axios";
 
 /**
  * Helper function class for Weekli
@@ -38,4 +39,34 @@ export function useInterval(callback, delay) {
             return () => clearInterval(id);
         }
     }, [delay]);
+}
+
+export function getSchedule(displayMonday) {
+    let displaySunday = new Date(displayMonday);
+    displaySunday.setDate(displaySunday.getDate() + 7);
+
+    const toSend = {
+        start: displayMonday.getTime(),
+        end: displaySunday.getTime()
+    };
+
+    let config = {
+        headers: {
+            "Content-Type": "application/json",
+            'Access-Control-Allow-Origin': '*',
+        }
+    }
+
+    axios.post(
+        "http://localhost:4567/schedule",
+        toSend,
+        config
+    )
+        .then(response => {
+            console.log(response);
+            return response["schedule"];
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
 }

@@ -4,7 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import {useState} from "react";
 import axios from "axios";
 
-function Login() {
+function Login(props) {
 
     let username = ""
     let password = ""
@@ -25,8 +25,12 @@ function Login() {
 
         requestLogin()
 
-        if (false) {
+        props.setBlocks()
+
+        if (true) {
              //Sends the user to the main page.
+
+
             history.push('/');
             setShowError(false)
         } else {

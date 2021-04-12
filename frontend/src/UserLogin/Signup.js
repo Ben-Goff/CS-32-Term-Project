@@ -16,12 +16,17 @@ function Signup() {
     function SubmitSignIn() {
         console.log("user: " + username + " pass: " + password + " confirm: " + confirm)
 
+
+
         if (password === confirm) {
             //POST REQUEST HERE
             requestSignup()
-            //Sends the user to the main page.
-            history.push('/');
-            setShowError(false)
+
+            //Sends the user to the main page if the post request doesn't fail.
+            if(false) {
+                history.push('/');
+                setShowError(false)
+            }
         } else {
             setShowError(true)
         }

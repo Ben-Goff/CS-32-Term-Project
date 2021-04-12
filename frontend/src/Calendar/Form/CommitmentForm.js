@@ -3,7 +3,7 @@ import '../../App.css';
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 
-function CommitmentForm() {
+function CommitmentForm(props) {
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [startDate, setStartDate] = useState(0);
@@ -37,32 +37,33 @@ function CommitmentForm() {
         console.log(endMillisStr)
         console.log(repeatPeriodMillisStr)
 
-        // const toSend = {
-        //     name: name,
-        //     description: description,
-        //     startTime: startMillisStr,
-        //     endTime: endMillisStr,
-        //     periodOfRepitition: repeatPeriodMillisStr
-        // };
-        //
-        // let config = {
-        //     headers: {
-        //         "Content-Type": "application/json",
-        //         'Access-Control-Allow-Origin': '*',
-        //     }
-        // }
-        //
-        // axios.post(
-        //     "http://localhost:4567/routelatlon",
-        //     toSend,
-        //     config
-        // )
-        //     .then(response => {
-        //
-        //     })
-        //     .catch(function (error) {
-        //         console.log(error);
-        //     });
+        const toSend = {
+            name: name,
+            description: description,
+            startTime: startMillisStr,
+            endTime: endMillisStr,
+            periodOfRepitition: repeatPeriodMillisStr
+        };
+
+        let config = {
+            headers: {
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Origin': '*',
+            }
+        }
+
+        axios.post(
+            "http://localhost:4567/createcommitment",
+            toSend,
+            config
+        )
+            .then(response => {
+                props.setShowPopup(false);
+                console.log("SUCCESS");
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     const repeatsInputs = (
