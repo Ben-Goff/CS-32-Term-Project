@@ -29,7 +29,7 @@ function MainContainer(props) {
                 <Taskbar taskBlocks={blocks} setTaskBlocks={setBlocks}/>
                 <CalendarContainer displayMonday={displayMonday} setDisplayMonday={setDisplayMonday}
                                    setTaskBlocks={setBlocks} setClickedBLock={setClickedBlock}
-                                   setClickedX={setClickedX} setClickedY={setClickedY}/>
+                                   setClickedX={setClickedX} setClickedY={setClickedY} showPopup={showPopup}/>
             </div>
         </div>
     );

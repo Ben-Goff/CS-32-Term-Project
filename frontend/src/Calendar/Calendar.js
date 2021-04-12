@@ -17,7 +17,7 @@ function Calendar(props) {
 
     useEffect(() => {
         requestSchedule(props.displayMonday)
-    }, [props.displayMonday])
+    }, [props.displayMonday, props.showPopup])
 
     const requestSchedule = (displayMonday) => {
         console.log("requested schedule: " + displayMonday)

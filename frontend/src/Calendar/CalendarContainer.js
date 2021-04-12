@@ -46,7 +46,8 @@ function CalendarContainer(props) {
                           setTaskBlocks={props.setTaskBlocks}
                           setClickedBlock={props.setClickedBLock}
                           setClickedX={props.setClickedX}
-                          setClickedY={props.setClickedY}/>
+                          setClickedY={props.setClickedY}
+                          showPopup={props.showPopup}/>
             </div>
         </div>
     );
