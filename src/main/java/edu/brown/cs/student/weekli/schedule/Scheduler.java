@@ -27,11 +27,28 @@ public class Scheduler {
     this.globalStartTime = (new Date()).getTime();
     List<Long> endTimes = tasksToSchedule.stream().map(Task::getEndDate).sorted().collect(Collectors.toList());
     if (endTimes.size() > 0) {
-      this.tasksEndTime = endTimes.get(endTimes.size() - 1);
+      this.tasksEndTime = Math.max(endTimes.get(endTimes.size() - 1), end);
     } else {
-      this.tasksEndTime = globalStartTime;
+      this.tasksEndTime = end;
     }
-    this.commitmentBlocks = this.commitments.stream().map(c -> c.getBlocks(start, end)).flatMap(Collection::stream).filter(b -> b.getStartTime() > globalStartTime).collect(Collectors.toList());
+    this.commitmentBlocks = this.commitments.stream().map(c -> c.getBlocks(globalStartTime, tasksEndTime)).flatMap(Collection::stream).collect(Collectors.toList());
+    this.tasks = new TreeSet<>(new TaskComparator());
+    this.tasks.addAll(tasksToSchedule);
+    buildBins();
+    placeTasks();
+    List<Block> schedule = this.bins.stream().map(TimeBin::getBlocks).flatMap(Collection::stream).collect(Collectors.toList());
+    schedule.addAll(commitmentBlocks);
+    return schedule;
+  }
+
+  public List<Block> scheduleWithTime(List<Task> tasksToSchedule, long start, long end) {
+    List<Long> endTimes = tasksToSchedule.stream().map(Task::getEndDate).sorted().collect(Collectors.toList());
+    if (endTimes.size() > 0) {
+      this.tasksEndTime = Math.max(endTimes.get(endTimes.size() - 1), end);
+    } else {
+      this.tasksEndTime = end;
+    }
+    this.commitmentBlocks = this.commitments.stream().map(c -> c.getBlocks(start, tasksEndTime)).flatMap(Collection::stream).collect(Collectors.toList());
     this.tasks = new TreeSet<>(new TaskComparator());
     this.tasks.addAll(tasksToSchedule);
     buildBins();
@@ -121,6 +138,10 @@ public class Scheduler {
   public void setTasks(List<Task> t) {
     this.tasks.clear();
     this.tasks.addAll(t);
+  }
+
+  public void setGlobalStartTime(long startTime) {
+    globalStartTime = startTime;
   }
 
   public void addCommitment(Commitment c) {

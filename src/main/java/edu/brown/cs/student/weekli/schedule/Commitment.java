@@ -139,11 +139,11 @@ public class Commitment {
    * @return
    */
   public List<Block> getBlocks(long startTime, long endTime) {
-    List<Block> blocks;
+    List<Block> blocks = new ArrayList<>();
     if (this.repeating.isPresent()) {
-      final int repetitions = (int) Math.floor((endTime - startTime) / (double) repeating.get());
+      final int repetitions = (int) Math.floor((endTime - startTime - this.estTime) / (double) repeating.get());
       int startIndex = (int) Math.floor((startTime - this.startDate) / (double) repeating.get());
-      blocks = IntStream.range(
+      blocks = IntStream.rangeClosed(
         startIndex, startIndex + repetitions).mapToObj(
           i -> new Block(
             this.startDate + i*repeating.get(),
@@ -153,7 +153,9 @@ public class Commitment {
             this.description,
             this.color)).collect(Collectors.toList());
     } else {
-      blocks = Collections.singletonList(this.commitBlock);
+      if (this.startDate < endTime && this.endDate > startTime) {
+        blocks = Collections.singletonList(this.commitBlock);
+      }
     }
     return blocks;
   }
