@@ -1,4 +1,4 @@
-import {useEffect, useRef} from "react";
+import {useEffect, useRef, useState} from "react";
 import axios from "axios";
 
 /**
@@ -41,27 +41,44 @@ export function useInterval(callback, delay) {
     }, [delay]);
 }
 
-export const getSchedule = async(displayMonday) => {
-
-    const toSend = {
-        start: displayMonday.getTime(),
-        end: (displayMonday.getTime() + (86400000 * 7)) //Number of milliseconds in a week
-    };
-
-    // console.log(toSend)
-
-    let config = {
-        headers: {
-            "Content-Type": "application/json",
-            'Access-Control-Allow-Origin': '*',
-        }
-    };
-
-    let results = await axios.post(
-        "http://localhost:4567/schedule",
-        toSend,
-        config
-    );
-
-    return results;
-}
+// export function getSchedule(displayMonday) {
+//
+//     const toSend = {
+//         start: displayMonday.getTime(),
+//         end: (displayMonday.getTime() + (86400000 * 7)) //Number of milliseconds in a week
+//     };
+//
+//     // console.log(toSend)
+//
+//     let config = {
+//         headers: {
+//             "Content-Type": "application/json",
+//             'Access-Control-Allow-Origin': '*',
+//         }
+//     };
+//
+//     let schedule = []
+//
+//     axios.post(
+//         "http://localhost:4567/schedule",
+//         toSend,
+//         config
+//     )
+//         .then(response => {
+//             console.log(response.data);
+//             schedule = response.data["schedule"]
+//         })
+//
+//         .catch(function (error) {
+//             console.log(error);
+//         });
+//
+//     function ReturnSchedule() {
+//         return schedule;
+//     }
+//
+//     useEffect(() => {
+//         ReturnSchedule();
+//     }, [schedule]);
+//
+// }

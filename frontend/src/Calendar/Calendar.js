@@ -4,6 +4,7 @@ import Block from "./Block";
 import Day from "./Day";
 import {getMonday, getSchedule} from "../WeekliHelpers";
 import React, {useState, useEffect} from 'react'
+import axios from "axios";
 
 function Calendar(props) {
     const [blocksGrid, setBlocksGrid] = useState([[], [], [], [], [], [], []])
@@ -12,14 +13,42 @@ function Calendar(props) {
 
     // TODO: make this an actual axios request
     const retrieveSchedule = () => {
-        setSchedule(getSchedule(props.displayMonday));
+        requestSchedule(props.displayMonday)
         console.log(schedule)
-        //
-        // if (schedule === undefined) {
-        //     schedule = [];
-        // }
-        // return schedule;
+        return schedule;
+        //sdfd
     }
+
+
+    const requestSchedule = (displayMonday) => {
+
+        const toSend = {
+            start: displayMonday.getTime(),
+            end: (displayMonday.getTime() + (86400000 * 7)) //Number of milliseconds in a week
+        };
+
+        let config = {
+            headers: {
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Origin': '*',
+            }
+        }
+
+        axios.post(
+            "http://localhost:4567/schedule",
+            toSend,
+            config
+        )
+            .then(response => {
+                console.log(response.data);
+                setSchedule(response.data["schedule"])
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+    }
+
 
     useEffect(() => {
         getBlocks();
