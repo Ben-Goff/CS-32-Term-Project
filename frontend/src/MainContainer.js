@@ -17,19 +17,22 @@ function MainContainer(props) {
     const [clickedX, setClickedX] = useState(0);
     const [clickedY, setClickedY] = useState(0);
     const [blocks, setBlocks] = useState([]);
+    const [updateFlag, setUpdateFlag] = useState(false);
 
     return (
         <div className="MainContainer">
             <Popup showPopup={showPopup} setShowPopup={setShowPopup}/>
             <EventDialog clickedBlock={clickedBlock} setClickedBlock={setClickedBlock}
-                         clickedX={clickedX} clickedY={clickedY}/>
+                         clickedX={clickedX} clickedY={clickedY}
+                         updateFlag={updateFlag} setUpdateFlag={setUpdateFlag}/>
             <div className="main-grid">
                 <Navbar displayMonday={displayMonday} setDisplayMonday={setDisplayMonday}
                         setShowPopup={setShowPopup}/>
                 <Taskbar taskBlocks={blocks} setTaskBlocks={setBlocks}/>
                 <CalendarContainer displayMonday={displayMonday} setDisplayMonday={setDisplayMonday}
                                    setTaskBlocks={setBlocks} setClickedBLock={setClickedBlock}
-                                   setClickedX={setClickedX} setClickedY={setClickedY} showPopup={showPopup}/>
+                                   setClickedX={setClickedX} setClickedY={setClickedY}
+                                   showPopup={showPopup} updateFlag={updateFlag} setUpdateFlag={setUpdateFlag}/>
             </div>
         </div>
     );

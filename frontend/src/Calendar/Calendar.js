@@ -2,7 +2,7 @@ import './Calendar.css';
 import '../App.css';
 import Block from "./Block";
 import Day from "./Day";
-import {getMonday, getSchedule} from "../WeekliHelpers";
+import {getMonday} from "../WeekliHelpers";
 import React, {useState, useEffect} from 'react'
 import axios from "axios";
 
@@ -10,17 +10,19 @@ function Calendar(props) {
     const [blocksGrid, setBlocksGrid] = useState([[], [], [], [], [], [], []])
     const [days, setDays] = useState([]);
     const [schedule, setSchedule] = useState([]);
+    const [progressMap, setProgressMap] = useState({});
 
     useEffect(() => {
         //requestSchedule(props.displayMonday)
     }, [])
 
     useEffect(() => {
+        requestProgress()
         requestSchedule(props.displayMonday)
-    }, [props.displayMonday, props.showPopup])
+    }, [props.displayMonday, props.showPopup, props.updateFlag])
 
     const requestSchedule = (displayMonday) => {
-        console.log("requested schedule: " + displayMonday)
+        // console.log("requested schedule: " + displayMonday)
         const toSend = {
             start: displayMonday.getTime(),
             end: (displayMonday.getTime() + (86400000 * 7)) //Number of milliseconds in a week
@@ -45,7 +47,42 @@ function Calendar(props) {
             .catch(function (error) {
                 console.log(error.response);
             });
+    }
 
+    const requestProgress = () => {
+        const toSend = {
+            id: "",
+            progress: ""
+        };
+
+        let config = {
+            headers: {
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Origin': '*',
+            }
+        }
+
+        axios.post(
+            "http://localhost:4567/update",
+            toSend,
+            config
+        )
+            .then(response => {
+                let newProgressMap = {};
+                let progressInfo = response.data["tasks"];
+                // console.log(progressInfo[0])
+                for (let i = 0; i < progressInfo.length; i++) {
+                    let blockInfo = progressInfo[i];
+                    let blockID = blockInfo[2];
+                    let blockProgress = blockInfo[3];
+                    newProgressMap[blockID] = blockProgress;
+                }
+                setProgressMap(newProgressMap);
+                console.log(progressMap)
+            })
+            .catch(function (error) {
+                console.log(error.response);
+            });
     }
 
 
@@ -125,19 +162,22 @@ function Calendar(props) {
     const getBlocks = () => {
         let blocks = [];
         // console.log("hello is anyone out there im so alone")
-        console.log(schedule)
+        // console.log(schedule)
         for (let i = 0; i < schedule.length; i++) {
             // console.log(schedule[i]);
             let blockData = schedule[i];
             let startDate = new Date(parseFloat(blockData[0]));
-            console.log("startDate: " + startDate);
+            // console.log("startDate: " + startDate);
             let endDate = new Date(parseFloat(blockData[1]));
             let identifier = blockData[2];
             let title = blockData[3];
             let description = blockData[4];
             let color = blockData[5];
+            let isCommitment = !(identifier in progressMap)
+            let progress = progressMap[identifier];
+            // console.log(progress)
 
-            let block = <Block identifier={identifier} start={startDate} end={endDate} color={color} title={title} desc={description} onClick={(e) => blockRegisterClick(e, block)}/>
+            let block = <Block identifier={identifier} isCommitment={isCommitment} start={startDate} end={endDate} color={color} title={title} desc={description} progress={progress} onClick={(e) => blockRegisterClick(e, block)}/>
             blocks.push({year: startDate.getFullYear(), month: startDate.getMonth(), date: startDate.getDate(), blockComponent: block});
         }
 

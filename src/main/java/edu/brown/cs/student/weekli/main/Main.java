@@ -153,13 +153,11 @@ public class Main {
             current.loadTasks();
             current.loadProjects();
             current.loadSchedule();
-            System.out.println("mamma mia");
 //            HttpSession session = request.session(false).raw();
 //            session.setAttribute("user", current);
             List<String> complete = current.updateSchedule().stream().map(t -> t.getID().toString()).collect(Collectors.toList());
             message = "login successful";
             variables = ImmutableMap.of("message", message, "complete", complete);
-            System.out.println("YAY WE DID IT");
             return GSON.toJson(variables);
         }
     }
@@ -234,7 +232,7 @@ public class Main {
             Map<String, Object> variables;
             List<String[]> complete;
             List<String[]> tasks;
-            HttpSession session = request.session().raw();
+            // HttpSession session = request.session().raw();
             if (id.equals("") && progress.equals("")) {
                 List<Task> c = current.updateSchedule();
                 complete = c.stream().map(t -> new String[]{t.getName(), t.getDescription(), t.getID().toString(), Long.toString(t.getProgress()), t.getColor()}).collect(Collectors.toList());
@@ -332,7 +330,7 @@ public class Main {
             JSONObject data = new JSONObject(request.body());
             String id = data.getString("id");
             Map<String, Object> variables = ImmutableMap.of();
-            HttpSession session = request.session().raw();
+            // HttpSession session = request.session().raw();
             current.deleteCommitment(id);
 
             //  1) name
