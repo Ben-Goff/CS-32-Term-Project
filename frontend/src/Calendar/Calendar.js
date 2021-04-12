@@ -8,16 +8,17 @@ import React, {useState, useEffect} from 'react'
 function Calendar(props) {
     const [blocksGrid, setBlocksGrid] = useState([[], [], [], [], [], [], []])
     const [days, setDays] = useState([]);
+    const [schedule, setSchedule] = useState([]);
 
     // TODO: make this an actual axios request
     const retrieveSchedule = () => {
-        let schedule = getSchedule(props.displayMonday)
+        setSchedule(getSchedule(props.displayMonday));
         console.log(schedule)
         //
-        if (schedule === undefined) {
-            schedule = [];
-        }
-        return schedule;
+        // if (schedule === undefined) {
+        //     schedule = [];
+        // }
+        // return schedule;
     }
 
     useEffect(() => {
@@ -94,13 +95,15 @@ function Calendar(props) {
     }
 
     const getBlocks = () => {
-        let schedule = retrieveSchedule();
+        retrieveSchedule();
         let blocks = [];
-
+        console.log("hello is anyone out there im so alone")
         for (let i = 0; i < schedule.length; i++) {
+            // console.log(schedule[i]);
             let blockData = schedule[i];
-            let startDate = new Date(parseInt(blockData[0]));
-            let endDate = new Date(parseInt(blockData[1]));
+            let startDate = new Date(parseFloat(blockData[0]));
+            console.log("startDate: " + startDate);
+            let endDate = new Date(parseFloat(blockData[1]));
             let identifier = blockData[2];
             let title = blockData[3];
             let description = blockData[4];

@@ -41,32 +41,27 @@ export function useInterval(callback, delay) {
     }, [delay]);
 }
 
-export function getSchedule(displayMonday) {
+export const getSchedule = async(displayMonday) => {
 
     const toSend = {
         start: displayMonday.getTime(),
         end: (displayMonday.getTime() + (86400000 * 7)) //Number of milliseconds in a week
     };
 
-    console.log(toSend)
+    // console.log(toSend)
 
     let config = {
         headers: {
             "Content-Type": "application/json",
             'Access-Control-Allow-Origin': '*',
         }
-    }
+    };
 
-    axios.post(
+    let results = await axios.post(
         "http://localhost:4567/schedule",
         toSend,
         config
-    )
-        .then(response => {
-            console.log(response);
-            return response["schedule"];
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
+    );
+
+    return results;
 }

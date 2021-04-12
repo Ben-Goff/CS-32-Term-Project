@@ -141,7 +141,9 @@ public class Main {
             String password = data.getString("password");
             Map<String, Object> variables;
             String message = "";
+            System.out.println(username + "   " + password);
             current = db.signIn(username, password);
+            System.out.println("current: " + current);
             if (current == null) {
                 message = "login failed";
                 variables = ImmutableMap.of("message", message);
@@ -151,13 +153,13 @@ public class Main {
             current.loadTasks();
             current.loadProjects();
             current.loadSchedule();
-            System.out.println(request.session(false));
-            HttpSession session = request.session(false).raw();
-            System.out.println(session);
-            session.setAttribute("user", current);
+            System.out.println("mamma mia");
+//            HttpSession session = request.session(false).raw();
+//            session.setAttribute("user", current);
             List<String> complete = current.updateSchedule().stream().map(t -> t.getID().toString()).collect(Collectors.toList());
             message = "login successful";
             variables = ImmutableMap.of("message", message, "complete", complete);
+            System.out.println("YAY WE DID IT");
             return GSON.toJson(variables);
         }
     }
@@ -274,12 +276,15 @@ public class Main {
             long endTime = Long.parseLong(data.getString("endTime"));
             String periodOfRepitition = data.getString("periodOfRepitition");
             Map<String, Object> variables = ImmutableMap.of();
-            HttpSession session = request.session().raw();
+            // HttpSession session = request.session().raw();
             if (!periodOfRepitition.equals("")) {
                 current.addCommitment(startTime, endTime, name, description, Optional.of(Long.parseLong(periodOfRepitition)));
             } else {
+                System.out.println("Going to run addCommitment");
+                System.out.println(current);
                 current.addCommitment(startTime, endTime, name, description, Optional.empty());
             }
+
             //  1) name
             //  2) description
             //  3) startTime -- explicitly given
