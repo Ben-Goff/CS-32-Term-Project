@@ -10,7 +10,7 @@ function Login() {
     let password = ""
 
     const [showError, setShowError] = useState(false)
-    const [message, setMessage] = useState("nothing happened")
+    const [message, setMessage] = useState("login error")
 
     let history = useHistory();
 
@@ -27,7 +27,7 @@ function Login() {
             //Sends the user to the main page.
             history.push('/');
             setShowError(false)
-        } else {
+        } else if (message === "login failed") {
             setShowError(true)
         }
     }, [message]);
@@ -82,7 +82,7 @@ function Login() {
                 <button onClick={requestLogin}>Login</button>
 
                 {showError &&
-                <p>Login Error: {message}</p>
+                <h2>Error: {message}</h2>
                 }
 
             </div>

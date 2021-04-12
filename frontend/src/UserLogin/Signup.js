@@ -11,7 +11,7 @@ function Signup() {
     let confirm = ""
 
     const [showError, setShowError] = useState(false)
-    const [message, setMessage] = useState("nothing happened")
+    const [message, setMessage] = useState("Signup failed")
 
     let history = useHistory();
 
@@ -22,6 +22,7 @@ function Signup() {
             requestSignup()
 
         } else {
+            setMessage("Password does not match confirm password")
             setShowError(true)
         }
     }
@@ -31,7 +32,7 @@ function Signup() {
             //Sends the user to the main page.
             history.push('/');
             setShowError(false)
-        } else {
+        } else if (message === "user ID already exists") {
             setShowError(true)
         }
     }, [message]);
@@ -98,7 +99,7 @@ function Signup() {
 
                 {showError &&
                 <h2>
-                    Error, password does not match confirm password.
+                    Error: {message}
                 </h2>
                 }
 
