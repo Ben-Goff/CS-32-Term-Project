@@ -11,14 +11,15 @@ function Calendar(props) {
     const [days, setDays] = useState([]);
     const [schedule, setSchedule] = useState([]);
 
-    // TODO: make this an actual axios request
-    const retrieveSchedule = () => {
+    useEffect(() => {
+        requestSchedule(props.displayMonday)
+        // console.log(schedule)
+    }, [])
+
+    useEffect(() => {
         requestSchedule(props.displayMonday)
         console.log(schedule)
-        return schedule;
-        //sdfd
-    }
-
+    }, [props.displayMonday])
 
     const requestSchedule = (displayMonday) => {
 
@@ -40,7 +41,7 @@ function Calendar(props) {
             config
         )
             .then(response => {
-                console.log(response.data);
+                // console.log(response.data);
                 setSchedule(response.data["schedule"])
             })
             .catch(function (error) {
@@ -124,9 +125,9 @@ function Calendar(props) {
     }
 
     const getBlocks = () => {
-        retrieveSchedule();
         let blocks = [];
-        console.log("hello is anyone out there im so alone")
+        // console.log("hello is anyone out there im so alone")
+        console.log(schedule)
         for (let i = 0; i < schedule.length; i++) {
             // console.log(schedule[i]);
             let blockData = schedule[i];
