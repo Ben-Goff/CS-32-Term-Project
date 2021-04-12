@@ -83,7 +83,9 @@ public class Handlers {
             loggingIn.loadTasks();
             loggingIn.loadProjects();
             loggingIn.loadSchedule();
-            HttpSession session = request.session().raw();
+            System.out.println(request.session(false));
+            HttpSession session = request.session(false).raw();
+            System.out.println(session);
             session.setAttribute("user", loggingIn);
             List<String> complete = loggingIn.updateSchedule().stream().map(t -> t.getID().toString()).collect(Collectors.toList());
             message = "login successful";
