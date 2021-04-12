@@ -14,6 +14,9 @@ function Calendar(props) {
         let schedule = getSchedule(props.displayMonday)
         console.log(schedule)
         //
+        if (schedule === undefined) {
+            schedule = [];
+        }
         return schedule;
     }
 

@@ -82,7 +82,7 @@ function Login() {
                 <button onClick={requestLogin}>Login</button>
 
                 {showError &&
-                <p>LOGIN ERROR</p>
+                <p>Login Error: {message}</p>
                 }
 
             </div>
