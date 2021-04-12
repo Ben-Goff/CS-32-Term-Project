@@ -192,19 +192,32 @@ public class Main {
             Map<String, Object> variables;
             JSONObject data = new JSONObject(request.body());
 
-            String start = data.getString("start");
-            String end = data.getString("end");
+            long start = data.getLong("start");
+            long end = data.getLong("end");
 
             HttpSession session = request.session().raw();
             System.out.println("0: " + session);
             System.out.println("1: " + current);
             Scheduler s = new Scheduler(current.getCommitments());
             System.out.println("1.5");
-            List<Block> blocks = s.schedule(current.getTasks(), Long.parseLong(start), Long.parseLong(end));
+            List<Block> blocks = s.schedule(current.getTasks(), start, end);
+            List<List<Block>> allBlocks = Arrays.asList(blocks, current.getPastBlocks());
+            List<Block> blocksToReturn = allBlocks.stream().flatMap(Collection::stream).map(b -> {
+                List<Block> blockBlocks = new ArrayList<>();
+                Date startDate = (new Date(b.getStartTime()));
+                Date endDate = (new Date(b.getEndTime()));
+                if ((new Date(startDate.getTime() + startDate.getTimezoneOffset())).getDay() != (new Date(endDate.getTime() + endDate.getTimezoneOffset())).getDay()) {
+                    System.out.println("hellooooooo" + (b.getEndTime() - (b.getEndTime() % 86400000) - 1 + startDate.getTimezoneOffset()* 60000L));
+                    blockBlocks.add(new Block(b.getStartTime(), b.getEndTime() - (b.getEndTime() % 86400000) - 1 + startDate.getTimezoneOffset()* 60000L, b.getiD(), b.getName(), b.getDescription(), b.getColor()));
+                    blockBlocks.add(new Block(b.getEndTime() - (b.getEndTime() % 86400000) + endDate.getTimezoneOffset()* 60000L, b.getEndTime(), b.getiD(), b.getName(), b.getDescription(), b.getColor()));
+                    return blockBlocks;
+                } else {
+                    return Collections.singletonList(b);
+                }
+            }).flatMap(Collection::stream).collect(Collectors.toList());
             System.out.println("2");
             List<List<Block>> toReturn = new ArrayList<>();
-            toReturn.add(current.getPastBlocks().stream().filter(b -> b.getEndTime() >= Long.parseLong(start) && b.getStartTime() <= Long.parseLong(end)).collect(Collectors.toList()));
-            toReturn.add(blocks.stream().filter(b -> b.getEndTime() >= Long.parseLong(start) && b.getStartTime() <= Long.parseLong(end)).collect(Collectors.toList()));
+            toReturn.add(blocksToReturn.stream().filter(b -> b.getEndTime() >= start && b.getStartTime() <= end).collect(Collectors.toList()));
             System.out.println("3");
             List<String[]> schedule = toReturn.stream().flatMap(Collection::stream).map(b -> new String[]{"" + b.getStartTime(), "" + b.getEndTime(), b.getiD().toString(), b.getName(), b.getDescription(), b.getColor()}).collect(Collectors.toList());
             variables = ImmutableMap.of("schedule", schedule);
