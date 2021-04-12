@@ -75,7 +75,7 @@ public class SchedulerTest {
     setUp();
     Commitment c = new Commitment(currentTime + 1000000, currentTime + 1100000, "commitment", "commitment", Optional.empty());
     schedule = new Scheduler(Collections.singletonList(c));
-    List<Block> output = schedule.schedule(Collections.emptyList(), 0, 0);
+    List<Block> output = schedule.schedule(Collections.emptyList(), 0, currentTime + 1100000);
     assertTrue(noBlocksOverlap(output));
     assertEquals(output.size(), 1);
     assertEquals(output.get(0).getEndTime(), c.getEndDate());
