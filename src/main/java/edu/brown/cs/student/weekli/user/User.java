@@ -74,7 +74,7 @@ public class User {
     Connection conn = DriverManager.getConnection(urlToDB);
     PreparedStatement prep = conn.prepareStatement(
         "INSERT INTO tasks (id, user, startTime, endTime, estTime, name, description, progress, " +
-            "sessionTime, project, color)" + " VALUES (" + update.getID().toString() + ", " + this.iD + ", " + update.getStartDate() + ", " + update.getEndDate() + ", " + update.getEstimatedTime() + ", " + update.getName() + ", " + update.getDescription() + ", " + update.getProgress() + ", " + update.getSessionTime() + ", " + projID + ", " + update.getColor() + ");");
+            "sessionTime, project, color)" + " VALUES ('" + update.getID().toString() + "', '" + this.iD + "', " + update.getStartDate() + ", " + update.getEndDate() + ", " + update.getEstimatedTime() + ", '" + update.getName() + "', '" + update.getDescription() + "', " + update.getProgress() + ", " + update.getSessionTime() + ", '" + projID + "', '" + update.getColor() + "');");
     prep.executeUpdate();
     prep.close();
   }
@@ -83,14 +83,16 @@ public class User {
                       long sessionTime, String color, String projID) throws ClassNotFoundException,
       SQLException {
     Task add = new Task(start, end, estTime, name, description, sessionTime, color);
-    add.addProjectID(UUID.fromString(projID));
+    if (!projID.equals("")) {
+      add.addProjectID(UUID.fromString(projID));
+    }
     this.tasks.add(add);
     Class.forName("org.sqlite.JDBC");
     String urlToDB = "jdbc:sqlite:data/weekli/tasks.sqlite3";
     Connection conn = DriverManager.getConnection(urlToDB);
     PreparedStatement prep = conn.prepareStatement(
         "INSERT INTO tasks (id, user, startTime, endTime, estTime, name, description, progress, " +
-            "sessionTime, project, color)" + " VALUES (" + add.getID().toString() + ", " + this.iD + ", " + add.getStartDate() + ", " + add.getEndDate() + ", " + add.getEstimatedTime() + ", " + add.getName() + ", " + add.getDescription() + ", " + add.getProgress() + ", " + add.getSessionTime() + ", " + projID + ", " + add.getColor() + ");");
+            "sessionTime, project, color)" + " VALUES ('" + add.getID().toString() + "', '" + this.iD + "', " + add.getStartDate() + ", " + add.getEndDate() + ", " + add.getEstimatedTime() + ", '" + add.getName() + "', '" + add.getDescription() + "', " + add.getProgress() + ", " + add.getSessionTime() + ", '" + projID + "', '" + add.getColor() + "');");
     prep.executeUpdate();
     prep.close();
   }
@@ -137,7 +139,7 @@ public class User {
     String urlToDB = "jdbc:sqlite:data/weekli/projects.sqlite3";
     Connection conn = DriverManager.getConnection(urlToDB);
     PreparedStatement prep = conn.prepareStatement(
-        "INSERT INTO projects (id, user, name, description)" + " VALUES (" + add.getID().toString() + ", " + this.iD + ", " + add.getName() + ", " + add.getDescription() + ");");
+        "INSERT INTO projects (id, user, name, description)" + " VALUES ('" + add.getID().toString() + "', '" + this.iD + "', '" + add.getName() + "', '" + add.getDescription() + "');");
     prep.executeUpdate();
     prep.close();
     this.projects.add(add);
@@ -153,7 +155,7 @@ public class User {
     for (Block b : schedule) {
       prep = conn.prepareStatement(
           "INSERT INTO schedules (user, id, startTime, endTime, name, description, color)" + " " +
-              "VALUES (" + this.iD + "," + b.getiD().toString() + ", " + b.getStartTime() + ", " + b.getEndTime() + ", " + b.getName() + ", " + b.getDescription() + ", " + b.getColor() + ");");
+              "VALUES ('" + this.iD + "', '" + b.getiD().toString() + "', " + b.getStartTime() + ", " + b.getEndTime() + ", '" + b.getName() + "', '" + b.getDescription() + "', '" + b.getColor() + "');");
       prep.executeUpdate();
     }
     prep.close();
@@ -178,7 +180,7 @@ public class User {
       long sessionTime = rs.getLong(9);
       UUID project;
       String projString = rs.getString(10);
-      if (projString.isEmpty()) {
+      if (projString.equals("")) {
         project = null;
       } else {
         project = UUID.fromString(projString);
@@ -206,9 +208,9 @@ public class User {
       long endTime = rs.getLong(4);
       String name = rs.getString(5);
       String description = rs.getString(6);
-      Long rep = rs.getLong(7);
+      long rep = rs.getLong(7);
       Optional<Long> repeating;
-      if (rep == null) {
+      if (rep == 0L) {
         repeating = Optional.empty();
       } else {
         repeating = Optional.of(rep);

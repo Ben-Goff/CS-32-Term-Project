@@ -31,11 +31,17 @@ public class Scheduler {
     } else {
       this.tasksEndTime = end;
     }
+    System.out.println("above commitblocks: " + globalStartTime);
+    System.out.println("above commitblocks: " + tasksEndTime);
     this.commitmentBlocks = this.commitments.stream().map(c -> c.getBlocks(globalStartTime, tasksEndTime)).flatMap(Collection::stream).collect(Collectors.toList());
+    System.out.println("above tasks");
     this.tasks = new TreeSet<>(new TaskComparator());
     this.tasks.addAll(tasksToSchedule);
+    System.out.println("above bins");
     buildBins();
+    System.out.println("above tasks");
     placeTasks();
+    System.out.println("above stream");
     List<Block> schedule = this.bins.stream().map(TimeBin::getBlocks).flatMap(Collection::stream).collect(Collectors.toList());
     schedule.addAll(commitmentBlocks);
     return schedule;
