@@ -108,4 +108,15 @@ public class SchedulerTest {
     assertEquals(output.size(),21);
   }
 
+  @Test
+  public void testBlank() {
+    setUp();
+    Commitment c = new Commitment(currentTime, currentTime + 480, "sleep", "sleep", Optional.of(1440L));
+    schedule = new Scheduler(Collections.singletonList(c));
+    List<Task> tList = new ArrayList<>();
+    List<Block> output = schedule.scheduleWithTime(tList, currentTime, currentTime + 3360L);
+    assertTrue(noBlocksOverlap(output));
+    assertEquals(output.size(), 3);
+  }
+
 }
