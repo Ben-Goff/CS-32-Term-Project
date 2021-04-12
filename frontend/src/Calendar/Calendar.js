@@ -43,7 +43,7 @@ function Calendar(props) {
                 setSchedule(response.data["schedule"])
             })
             .catch(function (error) {
-                console.log(error);
+                console.log(error.response);
             });
 
     }

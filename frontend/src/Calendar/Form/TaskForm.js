@@ -38,7 +38,8 @@ function TaskForm(props) {
             startTime: startMillisStr,
             endTime: endMillisStr,
             estTime: estimatedEffortMillisStr,
-            sessionTime: sessionLengthMillisStr
+            sessionTime: sessionLengthMillisStr,
+            color: color
         };
 
         let config = {
@@ -58,7 +59,7 @@ function TaskForm(props) {
                 console.log("SUCCESS");
             })
             .catch(function (error) {
-                console.log(error);
+                console.log(error.response);
             });
     }
 
