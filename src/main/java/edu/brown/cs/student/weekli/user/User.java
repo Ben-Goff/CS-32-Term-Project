@@ -22,6 +22,7 @@ public class User {
   private List<Project> projects;
   private List<Block> schedule;
   private List<Block> pastBlocks = new ArrayList<>();
+  private long breakTime = 0L;
 
   public User(String iD) throws ClassNotFoundException, SQLException {
     this.schedule = new ArrayList<>();
@@ -44,7 +45,7 @@ public class User {
     prep = conn.prepareStatement(
         "CREATE TABLE IF NOT EXISTS commitments (" + "id TEXT, " + "user TEXT, " + "startTime " +
             "INTEGER, " + "endTime INTEGER, " + "name TEXT, " + "description TEXT, " + "repeating" +
-            " INTEGER, " + "PRIMARY KEY (id));");
+            " INTEGER, " + "color TEXT, " + "PRIMARY KEY (id));");
     prep.executeUpdate();
     urlToDB = "jdbc:sqlite:data/weekli/projects.sqlite3";
     conn = DriverManager.getConnection(urlToDB);
@@ -98,9 +99,9 @@ public class User {
   }
 
   public void addCommitment(long start, long end, String name, String description,
-                            Optional<Long> repeating) throws ClassNotFoundException, SQLException {
+                            Optional<Long> repeating, String color) throws ClassNotFoundException, SQLException {
     System.out.println("running addCommitment");
-    Commitment add = new Commitment(start, end, name, description, repeating);
+    Commitment add = new Commitment(start, end, name, description, repeating, color);
     System.out.println(add);
     this.commitments.add(add);
     Class.forName("org.sqlite.JDBC");
@@ -112,12 +113,12 @@ public class User {
     if (rep.isPresent()) {
       System.out.println("repeating");
       prep = conn.prepareStatement(
-          "INSERT INTO commitments (id, user, startTime, endTime, name, description, repeating)" + " VALUES ('" + add.getID().toString() + "', '" + this.iD + "', " + add.getStartDate() + ", " + add.getEndDate() + ", '" + add.getName() + "', '" + add.getDescription() + "', " + add.getRepeating().get() + ");");
+          "INSERT INTO commitments (id, user, startTime, endTime, name, description, repeating, color)" + " VALUES ('" + add.getID().toString() + "', '" + this.iD + "', " + add.getStartDate() + ", " + add.getEndDate() + ", '" + add.getName() + "', '" + add.getDescription() + "', " + add.getRepeating().get() + "', '" +color+ "');");
     } else {
       System.out.println("non-repeating");
       prep = conn.prepareStatement(
-          "INSERT INTO commitments (id, user, startTime, endTime, name, description)" + " VALUES " +
-              "('" + add.getID().toString() + "', '" + this.iD + "', " + add.getStartDate() + ", " + add.getEndDate() + ", '" + add.getName() + "', '" + add.getDescription() + "');");
+          "INSERT INTO commitments (id, user, startTime, endTime, name, description, color)" + " VALUES " +
+              "('" + add.getID().toString() + "', '" + this.iD + "', " + add.getStartDate() + ", " + add.getEndDate() + ", '" + add.getName() + "', '" + add.getDescription() + "', '"+color+"');");
     }
     System.out.println("after sql...");
     prep.executeUpdate();
@@ -215,7 +216,8 @@ public class User {
       } else {
         repeating = Optional.of(rep);
       }
-      this.commitments.add(new Commitment(startTime, endTime, name, description, id, repeating));
+      String color = rs.getString(8);
+      this.commitments.add(new Commitment(startTime, endTime, name, description, id, repeating, color));
     }
     prep.close();
     rs.close();
@@ -366,5 +368,17 @@ public class User {
 
   public List<Block> getPastBlocks() {
     return pastBlocks;
+  }
+
+  public String getID() {
+    return iD;
+  }
+
+  public void setBreakTime(long breakTime) {
+    this.breakTime = breakTime;
+  }
+
+  public long getBreakTime() {
+    return breakTime;
   }
 }

@@ -11,13 +11,15 @@ public class TimeBin {
     private final long endTime;
     private NavigableSet<Task> tasks;
     private NavigableSet<Block> blocks;
+    private long breakTime;
 
 
-    public TimeBin(long startTime, long endTime) {
+    public TimeBin(long startTime, long endTime, long breakTime) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.blocks = new TreeSet<>(Comparator.comparingLong(Block::getStartTime));
         this.tasks = new TreeSet<>(new WiggleComparator(this.startTime, this.endTime));
+        this.breakTime = breakTime;
     }
 
     public boolean addBlock(Task t) {
@@ -28,7 +30,7 @@ public class TimeBin {
       String tDesc = t.getDescription();
       String tColor = t.getColor();
       long tMean = (tEnd - tStart) / 2;
-      Block toAdd = addLeftSide(blocks, t.getID(), tDur, tStart, tEnd, tName, tDesc, tColor);
+      Block toAdd = addLeftSide(blocks, t.getID(), tDur, tStart + breakTime, tEnd, tName, tDesc, tColor);
       if (toAdd != null) {
         blocks.add(toAdd);
         tasks.add(t);
@@ -40,9 +42,9 @@ public class TimeBin {
           long curEnd = Math.min(endTime, task.getEndDate());
           long curMean = (curEnd - curStart) / 2;
           if (curMean < tMean) {
-            toAdd = addLeftSide(attempt, task.getID(), curDur, curStart, curEnd, tName, tDesc, tColor);
+            toAdd = addLeftSide(attempt, task.getID(), curDur, curStart + breakTime, curEnd, tName, tDesc, tColor);
           } else {
-            toAdd = addRightSide(attempt.descendingSet(), task.getID(), curDur, curStart, curEnd, tName, tDesc, tColor);
+            toAdd = addRightSide(attempt.descendingSet(), task.getID(), curDur, curStart, curEnd - breakTime, tName, tDesc, tColor);
           }
           if(toAdd == null) {
             throw new RuntimeException("blocks did not refit");
@@ -50,7 +52,7 @@ public class TimeBin {
             attempt.add(toAdd);
           }
         }
-        toAdd = addLeftSide(attempt, t.getID(), tDur, tStart, tEnd, tName, tDesc, tColor);
+        toAdd = addLeftSide(attempt, t.getID(), tDur, tStart + breakTime, tEnd, tName, tDesc, tColor);
         if (toAdd != null) {
           blocks = attempt;
           blocks.add(toAdd);
@@ -70,12 +72,12 @@ public class TimeBin {
       for (Block b: blocks) {
         if (b.getEndTime() > startSearch) {
           if (b.getStartTime() < startSearch) {
-            return addLeftSide(blocks, id, duration, b.getEndTime(), endSearch, name, desc, color);
+            return addLeftSide(blocks, id, duration, b.getEndTime() + breakTime, endSearch, name, desc, color);
           } else {
             if ((b.getStartTime() - startSearch) >= duration) {
               return new Block(startSearch, startSearch + duration, id, name, desc, color);
             } else {
-              return addLeftSide(blocks, id, duration, b.getEndTime(), endSearch, name, desc, color);
+              return addLeftSide(blocks, id, duration, b.getEndTime() + breakTime, endSearch, name, desc, color);
             }
           }
         }
@@ -91,12 +93,12 @@ public class TimeBin {
     for (Block b: blocks) {
       if (b.getStartTime() < endSearch) {
         if (b.getEndTime() > endSearch) {
-          return addLeftSide(blocks, id, duration, startSearch, b.getStartTime(), name, desc, color);
+          return addRightSide(blocks, id, duration, startSearch, b.getStartTime() - breakTime, name, desc, color);
         } else {
           if ((endSearch - b.getEndTime()) >= duration) {
             return new Block(endSearch - duration, endSearch, id, name, desc, color);
           } else {
-            return addRightSide(blocks, id, duration, startSearch, b.getStartTime(), name, desc, color);
+            return addRightSide(blocks, id, duration, startSearch, b.getStartTime() - breakTime, name, desc, color);
           }
         }
       }

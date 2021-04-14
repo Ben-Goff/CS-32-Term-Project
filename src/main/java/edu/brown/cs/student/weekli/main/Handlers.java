@@ -129,7 +129,7 @@ public class Handlers {
             System.out.println("0: " + session);
             User loggedIn = (User) session.getAttribute("user");
             System.out.println("1: " + loggedIn);
-            Scheduler s = new Scheduler(loggedIn.getCommitments());
+            Scheduler s = new Scheduler(loggedIn.getCommitments(), loggedIn.getBreakTime());
             System.out.println("1.5");
             List<Block> blocks = s.schedule(loggedIn.getTasks(), Long.parseLong(start), Long.parseLong(end));
             System.out.println("2");

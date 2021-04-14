@@ -29,7 +29,7 @@ public class Commitment {
    * @throws NumberFormatException if estTime < 0
    */
   //TODO: handle commitments happening in the past when schedules remade causing bins to be made in the past
-  public Commitment(long start, long end, String name, String description, Optional<Long> repeating) throws NumberFormatException {
+  public Commitment(long start, long end, String name, String description, Optional<Long> repeating, String color) throws NumberFormatException {
     this.iD = UUID.randomUUID();
     this.startDate = start;
     this.endDate = end;
@@ -42,15 +42,15 @@ public class Commitment {
     this.name = name;
     this.repeating = repeating;
     this.description = description;
-    this.color = "#696969";
+    this.color = color;
     this.commitBlock = new Block(this.startDate, this.endDate, this.iD, this.name, this.description, this.color);
   }
 
-  public Commitment(long start, long end, String name, String description, UUID id, Optional<Long> repeating) throws NumberFormatException {
+  public Commitment(long start, long end, String name, String description, UUID id, Optional<Long> repeating, String color) throws NumberFormatException {
     this.iD = id;
     this.startDate = start;
     this.endDate = end;
-    this.color = "#696969";
+    this.color = color;
     long time = endDate - startDate;
     if (time < 0) {
       throw new NumberFormatException("ERROR: Duration of event is negative.");

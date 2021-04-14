@@ -3,6 +3,7 @@ package edu.brown.cs.student.weekli.main;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import edu.brown.cs.student.weekli.schedule.Block;
+import edu.brown.cs.student.weekli.schedule.Commitment;
 import edu.brown.cs.student.weekli.schedule.Scheduler;
 import edu.brown.cs.student.weekli.schedule.Task;
 import edu.brown.cs.student.weekli.user.Database;
@@ -153,11 +154,13 @@ public class Main {
             current.loadTasks();
             current.loadProjects();
             current.loadSchedule();
+            System.out.println("mamma mia");
 //            HttpSession session = request.session(false).raw();
 //            session.setAttribute("user", current);
             List<String> complete = current.updateSchedule().stream().map(t -> t.getID().toString()).collect(Collectors.toList());
             message = "login successful";
             variables = ImmutableMap.of("message", message, "complete", complete);
+            System.out.println("YAY WE DID IT");
             return GSON.toJson(variables);
         }
     }
@@ -176,8 +179,8 @@ public class Main {
                 variables = ImmutableMap.of("message", message);
                 return GSON.toJson(variables);
             }
-            HttpSession session = request.session().raw();
-            session.setAttribute("user", current);
+            //HttpSession session = request.session().raw();
+            //session.setAttribute("user", current);
             message = "sign up successful";
             variables = ImmutableMap.of("message", message);
             return GSON.toJson(variables);
@@ -193,10 +196,10 @@ public class Main {
             long start = data.getLong("start");
             long end = data.getLong("end");
 
-            HttpSession session = request.session().raw();
-            System.out.println("0: " + session);
+            //HttpSession session = request.session().raw();
+            //System.out.println("0: " + session);
             System.out.println("1: " + current);
-            Scheduler s = new Scheduler(current.getCommitments());
+            Scheduler s = new Scheduler(current.getCommitments(), current.getBreakTime());
             System.out.println("1.5");
             List<Block> blocks = s.schedule(current.getTasks(), start, end);
             List<List<Block>> allBlocks = Arrays.asList(blocks, current.getPastBlocks());
@@ -232,7 +235,7 @@ public class Main {
             Map<String, Object> variables;
             List<String[]> complete;
             List<String[]> tasks;
-            // HttpSession session = request.session().raw();
+            HttpSession session = request.session().raw();
             if (id.equals("") && progress.equals("")) {
                 List<Task> c = current.updateSchedule();
                 complete = c.stream().map(t -> new String[]{t.getName(), t.getDescription(), t.getID().toString(), Long.toString(t.getProgress()), t.getColor()}).collect(Collectors.toList());
@@ -263,9 +266,20 @@ public class Main {
             long estTime = Long.parseLong(data.getString("estTime"));
             long sessionTime = Long.parseLong(data.getString("sessionTime"));
             String color = data.getString("color");
-            Map<String, Object> variables = ImmutableMap.of();
-            HttpSession session = request.session().raw();
-            current.addTask(startTime, endTime, estTime, name, description, sessionTime, color, "");
+            String message = "";
+            //HttpSession session = request.session().raw();
+            Task tryingToAdd = new Task(startTime, endTime, estTime, name, description, sessionTime, color);
+            Scheduler s = new Scheduler(current.getCommitments(), current.getBreakTime());
+            List<Task> attempt = new ArrayList<>(current.getTasks());
+            attempt.add(tryingToAdd);
+            try {
+                s.schedule(attempt, 0, 0);
+                current.addTask(startTime, endTime, estTime, name, description, sessionTime, color, "");
+                message = "success";
+            } catch (Exception e) {
+                message = e.getMessage();
+                e.printStackTrace();
+            }
 
             //  1) name -- (this is Title)
             //  2) description
@@ -273,7 +287,7 @@ public class Main {
             //  4) endTime -- combo of date and time
             //  5) estTime -- this is estimated effort in milliseconds
             //  6) sessionTime -- in milliseconds
-
+            Map<String, Object> variables = ImmutableMap.of("message", message);
             return GSON.toJson(variables);
         }
     }
@@ -286,15 +300,30 @@ public class Main {
             long startTime = Long.parseLong(data.getString("startTime"));
             long endTime = Long.parseLong(data.getString("endTime"));
             String periodOfRepitition = data.getString("periodOfRepitition");
-            Map<String, Object> variables = ImmutableMap.of();
+            String color = data.getString("color");
+            String message = "";
             // HttpSession session = request.session().raw();
+            Commitment tryingToAdd;
             if (!periodOfRepitition.equals("")) {
-                current.addCommitment(startTime, endTime, name, description, Optional.of(Long.parseLong(periodOfRepitition)));
+                tryingToAdd = new Commitment(startTime, endTime, name, description, Optional.of(Long.parseLong(periodOfRepitition)), color);
             } else {
                 System.out.println("Going to run addCommitment");
                 System.out.println(current);
-                current.addCommitment(startTime, endTime, name, description, Optional.empty());
+                tryingToAdd = new Commitment(startTime, endTime, name, description, Optional.empty(), color);
             }
+
+            List<Commitment> attempt = new ArrayList<>(current.getCommitments());
+            attempt.add(tryingToAdd);
+            Scheduler s = new Scheduler(attempt, current.getBreakTime());
+            try {
+                s.schedule(current.getTasks(), 0, 0);
+                message = "success";
+                current.addCommitment(startTime, endTime, name, description, tryingToAdd.getRepeating(), color);
+            } catch (Exception e) {
+                message = e.getMessage();
+                e.printStackTrace();
+            }
+            Map<String, Object> variables = ImmutableMap.of("message", message);
 
             //  1) name
             //  2) description
@@ -311,7 +340,7 @@ public class Main {
             JSONObject data = new JSONObject(request.body());
             String id = data.getString("id");
             Map<String, Object> variables = ImmutableMap.of();
-            HttpSession session = request.session().raw();
+            //HttpSession session = request.session().raw();
             current.deleteTask(id);
 
             //  1) name -- (this is Title)
@@ -330,8 +359,27 @@ public class Main {
             JSONObject data = new JSONObject(request.body());
             String id = data.getString("id");
             Map<String, Object> variables = ImmutableMap.of();
-            // HttpSession session = request.session().raw();
+            //HttpSession session = request.session().raw();
             current.deleteCommitment(id);
+
+            //  1) name
+            //  2) description
+            //  3) startTime -- explicitly given
+            //  4) endTime -- Calculated in front based on duration (not explicit)
+            //  5) periodOfRepitition -- if non repeating, empty string
+
+            return GSON.toJson(variables);
+        }
+    }
+
+    protected static class AddBreakTimeHandler implements Route {
+        public Object handle(Request request, Response response) throws Exception {
+            JSONObject data = new JSONObject(request.body());
+            long breakTime = data.getLong("break");
+            db.setBreakTime(current.getID(), breakTime);
+            current.setBreakTime(breakTime);
+            Map<String, Object> variables = ImmutableMap.of();
+            // HttpSession session = request.session().raw();
 
             //  1) name
             //  2) description

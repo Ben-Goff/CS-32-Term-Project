@@ -11,10 +11,11 @@ public class Database {
     public Database() throws SQLException, ClassNotFoundException {
         Class.forName("org.sqlite.JDBC");
         String urlToDB = "jdbc:sqlite:data/weekli/users.sqlite3";
-        this.connection = DriverManager.getConnection(urlToDB);;
+        this.connection = DriverManager.getConnection(urlToDB);
         PreparedStatement prep = connection.prepareStatement("CREATE TABLE IF NOT EXISTS users ("
                 + "id TEXT,"
-                + "password TEXT);");
+                + "password TEXT"
+                + "break INTEGER);");
         prep.executeUpdate();
         prep.close();
     }
@@ -51,7 +52,7 @@ public class Database {
 
         PreparedStatement prep = this.connection.prepareStatement("SELECT * FROM users WHERE users.id = \"" +
                 id +"\";");
-        ResultSet rs = prep.executeQuery();;
+        ResultSet rs = prep.executeQuery();
         if (!rs.next()) {
             prep = this.connection.prepareStatement("INSERT INTO users (id, password) VALUES (\"" + id + "\"," +
                     "\"" + hashpw + "\");");
@@ -61,5 +62,10 @@ public class Database {
         prep.close();
         rs.close();
         return loggingIn;
+    }
+
+    public void setBreakTime(String id, long breakTime) throws SQLException {
+        PreparedStatement prep = this.connection.prepareStatement("UPDATE users SET users.break = \"" + breakTime + "\" WHERE users.id = \"" + id +"\";");
+        prep.executeUpdate();
     }
 }

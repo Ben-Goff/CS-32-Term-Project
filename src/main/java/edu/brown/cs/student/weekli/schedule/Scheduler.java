@@ -17,13 +17,15 @@ public class Scheduler {
   private List<Commitment> commitments;
   private List<Block> commitmentBlocks;
   private NavigableSet<Task> tasks;
+  private long breakTime;
   private List<TimeBin> bins = new ArrayList<>();
 
-  public Scheduler(List<Commitment> commitments) {
+  public Scheduler(List<Commitment> commitments, long breakTime) {
     this.commitments = commitments;
+    this.breakTime = breakTime;
   }
 
-  public List<Block> schedule(List<Task> tasksToSchedule, long start, long end) {
+  public List<Block> schedule(List<Task> tasksToSchedule, long startDONTUSE, long end) {
     this.globalStartTime = (new Date()).getTime();
     List<Long> endTimes = tasksToSchedule.stream().map(Task::getEndDate).sorted().collect(Collectors.toList());
     if (endTimes.size() > 0) {
@@ -87,10 +89,10 @@ public class Scheduler {
     Block currentCommitment;
     Block nextCommitment;
     if (commitmentBlocks.isEmpty()) {
-      this.bins.add(new TimeBin(globalStartTime, tasksEndTime));
+      this.bins.add(new TimeBin(globalStartTime, tasksEndTime, breakTime));
     } else {
       System.out.println("1");
-      this.bins.add(new TimeBin(globalStartTime, commitmentBlocks.get(0).getStartTime()));
+      this.bins.add(new TimeBin(globalStartTime, commitmentBlocks.get(0).getStartTime(), breakTime));
       System.out.println("2");
       int size = commitmentBlocks.size();
       System.out.println("3");
@@ -106,11 +108,11 @@ public class Scheduler {
           System.out.println(nextCommitment.getStartTime());
           throw new RuntimeException("Commitments are overlapping");
         }
-        this.bins.add(new TimeBin(currentCommitment.getEndTime(), nextCommitment.getStartTime()));
+        this.bins.add(new TimeBin(currentCommitment.getEndTime(), nextCommitment.getStartTime(), breakTime));
       }
       long endLastCommit = commitmentBlocks.get(size - 1).getEndTime();
       if (endLastCommit < tasksEndTime) {
-        this.bins.add(new TimeBin(endLastCommit, tasksEndTime));
+        this.bins.add(new TimeBin(endLastCommit, tasksEndTime, breakTime));
       }
     }
   }
