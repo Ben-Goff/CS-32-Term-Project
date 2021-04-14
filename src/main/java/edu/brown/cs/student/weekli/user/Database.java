@@ -54,8 +54,8 @@ public class Database {
                 id +"\";");
         ResultSet rs = prep.executeQuery();
         if (!rs.next()) {
-            prep = this.connection.prepareStatement("INSERT INTO users (id, password) VALUES (\"" + id + "\"," +
-                    "\"" + hashpw + "\");");
+            prep = this.connection.prepareStatement("INSERT INTO users (id, password, break) VALUES (\"" + id + "\"," +
+                    "\"" + hashpw + "\"," + 900000 + ");");
             prep.executeUpdate();
             loggingIn = new User(id);
         }
