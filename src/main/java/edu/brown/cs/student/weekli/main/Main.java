@@ -155,8 +155,8 @@ public class Main {
             current.loadProjects();
             current.loadSchedule();
             System.out.println("mamma mia");
-//            HttpSession session = request.session(false).raw();
-//            session.setAttribute("user", current);
+//          HttpSession session = request.session(false).raw();
+//          session.setAttribute("user", current);
             List<String> complete = current.updateSchedule().stream().map(t -> t.getID().toString()).collect(Collectors.toList());
             message = "login successful";
             variables = ImmutableMap.of("message", message, "complete", complete);
@@ -244,7 +244,7 @@ public class Main {
                 variables = ImmutableMap.of("complete", complete, "tasks", tasks);
             } else {
                 UUID ID = UUID.fromString(id);
-                long prog = Long.parseLong(progress);
+                double prog = Double.parseDouble(progress);
                 Task toUpdate = current.belongsToTask(ID);
                 toUpdate.setProgress(prog);
                 current.updateTaskInDB(toUpdate);
