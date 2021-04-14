@@ -238,8 +238,8 @@ public class Main {
             HttpSession session = request.session().raw();
             if (id.equals("") && progress.equals("")) {
                 List<Task> c = current.updateSchedule();
-                complete = c.stream().map(t -> new String[]{t.getName(), t.getDescription(), t.getID().toString(), Long.toString(t.getProgress()), t.getColor()}).collect(Collectors.toList());
-                tasks = current.getTasks().stream().map(t -> new String[]{t.getName(), t.getDescription(), t.getID().toString(), Long.toString(t.getProgress()), t.getColor()}).collect(Collectors.toList());
+                complete = c.stream().map(t -> new String[]{t.getName(), t.getDescription(), t.getID().toString(), Double.toString(t.getProgress()), t.getColor()}).collect(Collectors.toList());
+                tasks = current.getTasks().stream().map(t -> new String[]{t.getName(), t.getDescription(), t.getID().toString(), Double.toString(t.getProgress()), t.getColor()}).collect(Collectors.toList());
                 // send back both completed tasks as well as all tasks
                 variables = ImmutableMap.of("complete", complete, "tasks", tasks);
             } else {
@@ -248,7 +248,7 @@ public class Main {
                 Task toUpdate = current.belongsToTask(ID);
                 toUpdate.setProgress(prog);
                 current.updateTaskInDB(toUpdate);
-                String[] task = new String[]{toUpdate.getName(), toUpdate.getDescription(), toUpdate.getID().toString(), Long.toString(toUpdate.getProgress()), toUpdate.getColor()};
+                String[] task = new String[]{toUpdate.getName(), toUpdate.getDescription(), toUpdate.getID().toString(), Double.toString(toUpdate.getProgress()), toUpdate.getColor()};
                 // send back updated task
                 variables = ImmutableMap.of("updated", task);
             }
