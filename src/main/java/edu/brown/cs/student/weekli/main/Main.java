@@ -155,8 +155,8 @@ public class Main {
             current.loadProjects();
             current.loadSchedule();
             System.out.println("mamma mia");
-//            HttpSession session = request.session(false).raw();
-//            session.setAttribute("user", current);
+//          HttpSession session = request.session(false).raw();
+//          session.setAttribute("user", current);
             List<String> complete = current.updateSchedule().stream().map(t -> t.getID().toString()).collect(Collectors.toList());
             message = "login successful";
             variables = ImmutableMap.of("message", message, "complete", complete);
@@ -238,17 +238,17 @@ public class Main {
             HttpSession session = request.session().raw();
             if (id.equals("") && progress.equals("")) {
                 List<Task> c = current.updateSchedule();
-                complete = c.stream().map(t -> new String[]{t.getName(), t.getDescription(), t.getID().toString(), Long.toString(t.getProgress()), t.getColor()}).collect(Collectors.toList());
-                tasks = current.getTasks().stream().map(t -> new String[]{t.getName(), t.getDescription(), t.getID().toString(), Long.toString(t.getProgress()), t.getColor()}).collect(Collectors.toList());
+                complete = c.stream().map(t -> new String[]{t.getName(), t.getDescription(), t.getID().toString(), Double.toString(t.getProgress()), t.getColor()}).collect(Collectors.toList());
+                tasks = current.getTasks().stream().map(t -> new String[]{t.getName(), t.getDescription(), t.getID().toString(), Double.toString(t.getProgress()), t.getColor()}).collect(Collectors.toList());
                 // send back both completed tasks as well as all tasks
                 variables = ImmutableMap.of("complete", complete, "tasks", tasks);
             } else {
                 UUID ID = UUID.fromString(id);
-                long prog = Long.parseLong(progress);
+                double prog = Double.parseDouble(progress);
                 Task toUpdate = current.belongsToTask(ID);
                 toUpdate.setProgress(prog);
                 current.updateTaskInDB(toUpdate);
-                String[] task = new String[]{toUpdate.getName(), toUpdate.getDescription(), toUpdate.getID().toString(), Long.toString(toUpdate.getProgress()), toUpdate.getColor()};
+                String[] task = new String[]{toUpdate.getName(), toUpdate.getDescription(), toUpdate.getID().toString(), Double.toString(toUpdate.getProgress()), toUpdate.getColor()};
                 // send back updated task
                 variables = ImmutableMap.of("updated", task);
             }

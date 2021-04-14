@@ -144,8 +144,8 @@ public class Task {
  *
  * @return the progress
  */
-public long getProgress() {
-    return estTime;
+public double getProgress() {
+    return progress;
     }
 
 /**
