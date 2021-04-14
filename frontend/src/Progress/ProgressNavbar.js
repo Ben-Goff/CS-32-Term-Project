@@ -19,7 +19,7 @@ function ProgressNavbar(props) {
                         <div className="flexbox-section">
                         </div>
                         <div className="flexbox-section">
-                            <Link to="/">
+                            <Link to="/home">
                                 <button className="button back-button">
                                     <span className="back-icon">&lt;</span> <span className="back-text">Back To Calendar</span>
                                 </button>
@@ -36,7 +36,7 @@ function ProgressNavbar(props) {
 
                                     <ul id="menu">
                                         <Link to="/login"><li>Log Out</li></Link>
-                                        <a href="#"><li>Manage Data</li></a>
+                                        <Link to="/help"><li>Help</li></Link>
                                         <a href="#"><li style={{"color": "red"}}>Clear Schedule</li></a>
                                     </ul>
                                 </div>

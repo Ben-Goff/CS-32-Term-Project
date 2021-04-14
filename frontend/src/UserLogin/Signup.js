@@ -30,7 +30,7 @@ function Signup() {
     useEffect(() => {
         if (message === "sign up successful") {
             //Sends the user to the main page.
-            history.push('/');
+            history.push('/help');
             setShowError(false)
         } else if (message === "user ID already exists") {
             setShowError(true)

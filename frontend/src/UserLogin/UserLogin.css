@@ -1,3 +1,25 @@
 .textLink {
     color: blue;
 }
+
+.back-icon {
+    font-family: 'Tomorrow', sans-serif;
+    font-size: 30px;
+    margin-left: 10px;
+    margin-right: 15px;
+}
+
+.back-text {
+    position: relative;
+    top: -5px;
+    right: 5px;
+    font-size: 18px;
+}
+
+.back-button {
+    margin-right: 10px;
+}
+
+.help-text {
+    width: 40%;
+}

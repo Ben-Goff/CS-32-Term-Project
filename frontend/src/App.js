@@ -6,19 +6,21 @@ import Signup from "./UserLogin/Signup";
 
 import { Switch, Route } from 'react-router-dom';
 import {useState} from "react";
+import Help from "./UserLogin/Help";
 
 {/*Routing Help from https://stackoverflow.com/questions/41956465/how-to-create-multiple-page-app-using-react*/}
 const Router = () => {
     return (
         <Switch> {/* The Switch decides which component to show based on the current URL.*/}
-            <Route exact path='/login' render={() => (
+            <Route exact path='/' render={() => (
                 <Login isAuthed={true}/>
             )}/>
-            <Route exact path='/' render={() => (
+            <Route exact path='/home' render={() => (
                 <MainContainer isAuthed={true}/>
             )}/>
             <Route exact path='/progress' component={Progress}></Route>
             <Route exact path='/signup' component={Signup}></Route>
+            <Route exact path='/help' component={Help}></Route>
         </Switch>
     );
 }

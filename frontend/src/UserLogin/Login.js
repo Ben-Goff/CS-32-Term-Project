@@ -25,7 +25,7 @@ function Login() {
     useEffect(() => {
         if (message === "login successful") {
             //Sends the user to the main page.
-            history.push('/');
+            history.push('/home');
             setShowError(false)
         } else if (message === "login failed") {
             setShowError(true)
