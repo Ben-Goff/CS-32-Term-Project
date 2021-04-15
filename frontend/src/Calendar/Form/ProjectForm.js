@@ -8,7 +8,7 @@ function ProjectForm() {
 
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
-    const [color, setColor] = useState("red")
+    const [color, setColor] = useState("#EF8E96")
 
     const [nameDict, setNameDict] = useState({});
     const [descriptionDict, setDescriptionDict] = useState({});
@@ -42,9 +42,9 @@ function ProjectForm() {
                         " Time</label>
                     <input type="time" id={checkpointID + "-due-time"} name={checkpointID + "-due-time"} placeholder={"__:__ AM/PM"} onChange={(e) => handleCheckpointChange(e, dueTimeDict, i, setDueTimeDict)}/><br/>
                     <label htmlFor={checkpointID + "-estimated-effort"}>Estimated Effort (hrs)</label><br/>
-                    <input type="number" step="0.01" id={checkpointID + "-estimated-effort"} name={checkpointID + "-estimated-effort"} onChange={(e) => handleCheckpointChange(e, estimatedEffortDict, i, setEstimatedEffortDict)}/><br/>
+                    <input type="number" step="0.1" min="0" id={checkpointID + "-estimated-effort"} name={checkpointID + "-estimated-effort"} onChange={(e) => handleCheckpointChange(e, estimatedEffortDict, i, setEstimatedEffortDict)}/><br/>
                     <label htmlFor="session-length">Max Session Length (hrs)</label><br/>
-                    <input type="number" step="0.01" id="session-length" name="session-length" onChange={(e) => handleCheckpointChange(e, sessionLengthDict, i, setSessionLengthDict)}/><br/>
+                    <input type="number" step="0.1" min="0" id="session-length" name="session-length" onChange={(e) => handleCheckpointChange(e, sessionLengthDict, i, setSessionLengthDict)}/><br/>
                 </div>
             );
         }
@@ -87,14 +87,14 @@ function ProjectForm() {
                 {checkpointForms}
                 <label htmlFor="color">Color</label><br/>
                 <div className="color-input">
-                    <div style={{"width": "20px", "height": "20px", "background-color": color}}/>
+                    <div style={{"width": "20px", "height": "20px", "backgroundColor": color}}/>
                     <select id="color" name="color" onChange={(e) => handleChange(e, setColor)}>
-                        <option value="red">red</option>
-                        <option value="orange">orange</option>
-                        <option value="#FFCB0C">yellow</option>
-                        <option value="green">green</option>
-                        <option value="blue">blue</option>
-                        <option value="purple">purple</option>
+                        <option value="#EF8E96">red</option>
+                        <option value="#F9BA89">orange</option>
+                        <option value="#FED48F">yellow</option>
+                        <option value="#7FC0A0">green</option>
+                        <option value="#7EAFDB">blue</option>
+                        <option value="#A288BA">purple</option>
                     </select>
                 </div><br/>
                 <input id="submit" type="submit" value="Create"/>

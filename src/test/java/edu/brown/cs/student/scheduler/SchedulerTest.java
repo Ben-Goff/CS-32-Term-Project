@@ -42,7 +42,7 @@ public class SchedulerTest {
    */
   @Test
   public void testEmptySchedule() {
-    schedule = new Scheduler(Collections.emptyList());
+    schedule = new Scheduler(Collections.emptyList(), 0);
     assertEquals(schedule.schedule(Collections.emptyList(), 0, 0), Collections.emptyList());
   }
 
@@ -53,7 +53,7 @@ public class SchedulerTest {
   public void testOneTask() throws IOException {
     setUp();
     Task t = new Task(currentTime + 1000000, currentTime + 1100000, 20000, "task", "task", 5000, "");
-    schedule = new Scheduler(Collections.emptyList());
+    schedule = new Scheduler(Collections.emptyList(), 0);
     List<Block> output = schedule.schedule(Collections.singletonList(t), 0, 0);
     assertTrue(noBlocksOverlap(output));
     assertEquals(output.size(), 4);
@@ -73,8 +73,9 @@ public class SchedulerTest {
   @Test
   public void testOneCommitment() {
     setUp();
-    Commitment c = new Commitment(currentTime + 1000000, currentTime + 1100000, "commitment", "commitment", Optional.empty());
-    schedule = new Scheduler(Collections.singletonList(c));
+    Commitment c = new Commitment(currentTime + 1000000, currentTime + 1100000, "commitment",
+        "commitment", Optional.empty(), "");
+    schedule = new Scheduler(Collections.singletonList(c), 0);
     List<Block> output = schedule.schedule(Collections.emptyList(), 0, currentTime + 1100000);
     assertTrue(noBlocksOverlap(output));
     assertEquals(output.size(), 1);
@@ -85,9 +86,10 @@ public class SchedulerTest {
   @Test
   public void testTwoTimeBins() {
     setUp();
-    Commitment c = new Commitment(currentTime + 1000000, currentTime + 1100000, "commitment", "commitment", Optional.empty());
+    Commitment c = new Commitment(currentTime + 1000000, currentTime + 1100000, "commitment",
+        "commitment", Optional.empty(), "");
     Task t = new Task(currentTime + 500000, currentTime + 1600000, 1000000, "task", "task", 50000, "");
-    schedule = new Scheduler(Collections.singletonList(c));
+    schedule = new Scheduler(Collections.singletonList(c), 0);
     List<Block> output = schedule.schedule(Collections.singletonList(t), 0, 0);
     assertTrue(noBlocksOverlap(output));
     assertEquals(output.size(),21);
@@ -96,10 +98,11 @@ public class SchedulerTest {
   @Test
   public void twoTasks() {
     setUp();
-    Commitment c = new Commitment(currentTime + 1000000, currentTime + 1100000, "commitment", "commitment", Optional.empty());
+    Commitment c = new Commitment(currentTime + 1000000, currentTime + 1100000, "commitment",
+        "commitment", Optional.empty(), "");
     Task t1 = new Task(currentTime + 500000, currentTime + 1600000, 500000, "task", "task", 50000, "");
     Task t2 = new Task(currentTime + 500000, currentTime + 1600000, 500000, "task1", "task1", 50000, "");
-    schedule = new Scheduler(Collections.singletonList(c));
+    schedule = new Scheduler(Collections.singletonList(c), 0);
     List<Task> tList = new ArrayList<>();
     tList.add(t1);
     tList.add(t2);
@@ -111,8 +114,9 @@ public class SchedulerTest {
   @Test
   public void testBlank() {
     setUp();
-    Commitment c = new Commitment(currentTime, currentTime + 480, "sleep", "sleep", Optional.of(1440L));
-    schedule = new Scheduler(Collections.singletonList(c));
+    Commitment c = new Commitment(currentTime, currentTime + 480, "sleep", "sleep",
+        Optional.of(1440L), "");
+    schedule = new Scheduler(Collections.singletonList(c), 0);
     List<Task> tList = new ArrayList<>();
     List<Block> output = schedule.scheduleWithTime(tList, currentTime, currentTime + 3360L);
     assertTrue(noBlocksOverlap(output));

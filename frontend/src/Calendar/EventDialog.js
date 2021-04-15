@@ -18,23 +18,16 @@ function EventDialog(props) {
         setAdjustingProgress(false);
     }, [props.clickedBlock])
 
-
-    const adjustingProgressSlider = (
-        <div className="flexbox-section">
-            <input type="range" min="0" max="100" value={progress} onChange={(e) => setProgress(e.target.value)}/>
-            <div className="flexbox-section">
-                Progress: {progress}%
-                <button onClick={() => setAdjustingProgress(false)}>Submit</button>
-            </div>
-        </div>
-    )
-
     if (props.clickedBlock === null) {
         return <div/>;
     }
 
     const showProgressSlider = () => {
         setAdjustingProgress(true);
+    }
+
+    const submitNewProgress = () => {
+        setAdjustingProgress(false);
     }
 
     const deleteBlock = () => {
@@ -73,7 +66,7 @@ function EventDialog(props) {
                 "left": Math.min(window.innerWidth - 575, props.clickedX) + "px",
                 "top": Math.min(window.innerHeight - 360, props.clickedY) + "px",
                 "height": "300px",
-                "background-color": props.clickedBlock.props.color
+                "backgroundColor": props.clickedBlock.props.color
             }}>
             <button className="closeButton" onClick={() => props.setClickedBlock(null)}/>
             <div className="Title">
@@ -81,12 +74,31 @@ function EventDialog(props) {
             </div>
             <div className="ContentContainer">
                 <div className="Content">
-                    {props.clickedBlock.props.isCommitment ? <div/> : <div>{"progress: " + progress}%<br/></div>}
+                    {props.clickedBlock.props.isCommitment ? <div/> : (
+
+                        <div>
+                            <div className="progress-bar-back">
+                                <div className="progress-bar-front" style={{"backgroundColor": props.clickedBlock.props.color}}/>
+                            </div>
+                            <div className="progress-bar-text">
+                                {adjustingProgress ?
+                                    <div>
+                                        <form className="adjust-progress-form" onSubmit={submitNewProgress}>
+                                            <label htmlFor="new-progress" style={{"display": "hidden"}}>New progress: </label>
+                                            <input type="text" style={{"width": "20px"}}/>%
+                                            <input id="progress-submit" type="submit" value="Set new progress"/>
+                                        </form>
+                                    </div> :
+                                    <div className="progress-label">
+                                        {progress * 100}% done <button className="adjust-progress-button" onClick={showProgressSlider}>Adjust</button>
+                                    </div>}
+                            </div>
+                        </div>)
+                        }
+
                     {props.clickedBlock.props.desc}
                     <div className="DialogButtons">
-                        {props.clickedBlock.props.isCommitment ? <div/> : <button onClick={showProgressSlider}>Adjust Progress</button>}
-                        {(adjustingProgress && !props.clickedBlock.props.isCommitment) ? adjustingProgressSlider : <div/>}
-                        <button style={{"color": "red"}} onClick={deleteBlock}>Mark As Finished</button>
+                        <button style={{"color": "red"}} onClick={deleteBlock}>Delete all blocks for this event</button>
                     </div>
                 </div>
             </div>

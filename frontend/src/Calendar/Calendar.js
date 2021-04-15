@@ -13,11 +13,18 @@ function Calendar(props) {
     const [progressMap, setProgressMap] = useState({});
 
     useEffect(() => {
-        //requestSchedule(props.displayMonday)
+        requestProgress();
     }, [])
 
     useEffect(() => {
-        requestProgress()
+        const intervalId = setInterval(() => {  //assign interval to a variable to clear it.
+            requestProgress();
+        }, 5000)
+        return () => clearInterval(intervalId); //This is important
+    }, [])
+
+
+    useEffect(() => {
         requestSchedule(props.displayMonday)
     }, [props.displayMonday, props.showPopup, props.updateFlag])
 
@@ -43,6 +50,7 @@ function Calendar(props) {
             .then(response => {
                 // console.log(response.data);
                 setSchedule(response.data["schedule"])
+                // console.log(schedule)
             })
             .catch(function (error) {
                 console.log(error.response);
@@ -71,20 +79,20 @@ function Calendar(props) {
                 let newProgressMap = {};
                 let progressInfo = response.data["tasks"];
                 // console.log(progressInfo[0])
+                // console.log(progressInfo.length)
                 for (let i = 0; i < progressInfo.length; i++) {
                     let blockInfo = progressInfo[i];
                     let blockID = blockInfo[2];
                     let blockProgress = blockInfo[3];
                     newProgressMap[blockID] = blockProgress;
                 }
+                console.log(newProgressMap)
                 setProgressMap(newProgressMap);
-                console.log(progressMap)
             })
             .catch(function (error) {
                 console.log(error.response);
             });
     }
-
 
     useEffect(() => {
         getBlocks();
@@ -159,6 +167,17 @@ function Calendar(props) {
         props.setClickedY(event.clientY);
     }
 
+
+    function compareBlocks(a, b) {
+        if (a.props.start.getTime() < b.props.start.getTime()) {
+            return -1;
+        }
+        if (a.props.start.getTime() > b.props.start.getTime()) {
+            return 1;
+        }
+        return 0;
+    }
+
     const getBlocks = () => {
         let blocks = [];
         // console.log("hello is anyone out there im so alone")
@@ -175,12 +194,10 @@ function Calendar(props) {
             let color = blockData[5];
             let isCommitment = !(identifier in progressMap)
             let progress = progressMap[identifier];
-            // console.log(progress)
 
             let block = <Block identifier={identifier} isCommitment={isCommitment} start={startDate} end={endDate} color={color} title={title} desc={description} progress={progress} onClick={(e) => blockRegisterClick(e, block)}/>
             blocks.push({year: startDate.getFullYear(), month: startDate.getMonth(), date: startDate.getDate(), blockComponent: block});
         }
-
         let blockAcc = [];
 
         //Goes through each day of the display week and adds appropriate blocks
@@ -200,7 +217,7 @@ function Calendar(props) {
                 }
             }
         }
-
+        blockAcc.sort(compareBlocks);
         props.setTaskBlocks(blockAcc);
         setBlocksGrid(curBlocksGrid);
     }

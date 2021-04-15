@@ -14,7 +14,7 @@ public class Database {
         this.connection = DriverManager.getConnection(urlToDB);
         PreparedStatement prep = connection.prepareStatement("CREATE TABLE IF NOT EXISTS users ("
                 + "id TEXT,"
-                + "password TEXT"
+                + "password TEXT,"
                 + "break INTEGER);");
         prep.executeUpdate();
         prep.close();
@@ -65,7 +65,7 @@ public class Database {
     }
 
     public void setBreakTime(String id, long breakTime) throws SQLException {
-        PreparedStatement prep = this.connection.prepareStatement("UPDATE users SET users.break = \"" + breakTime + "\" WHERE users.id = \"" + id +"\";");
+        PreparedStatement prep = this.connection.prepareStatement("UPDATE users SET break = \"" + breakTime + "\" WHERE users.id = \"" + id +"\";");
         prep.executeUpdate();
     }
 }

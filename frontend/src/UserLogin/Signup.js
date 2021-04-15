@@ -35,7 +35,7 @@ function Signup() {
         } else if (message === "user ID already exists") {
             setShowError(true)
         }
-    }, [message]);
+    }, [message, history]);
 
     function changeUsername(event) {
         username = event.target.value;
@@ -76,7 +76,7 @@ function Signup() {
             })
 
             .catch(function (error) {
-                console.log(error);
+                console.log(error.response);
             });
 
     }
@@ -107,7 +107,7 @@ function Signup() {
             </div>
 
             Returning User?
-            <Link to="/login">
+            <Link to="/">
                 <a className="textLink">
                     Login Here
                 </a>

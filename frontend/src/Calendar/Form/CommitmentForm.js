@@ -12,6 +12,7 @@ function CommitmentForm(props) {
     const [repeats, setRepeats] = useState(false);
     const [repeatCount, setRepeatCount] = useState(0);
     const [repeatType, setRepeatType] = useState("day");
+    const [color, setColor] = useState("#EF8E96");
 
     const handleChange = (e, setter) => {
         setter(e.target.value);
@@ -42,7 +43,8 @@ function CommitmentForm(props) {
             description: description,
             startTime: startMillisStr,
             endTime: endMillisStr,
-            periodOfRepitition: repeatPeriodMillisStr
+            periodOfRepitition: repeatPeriodMillisStr,
+            color: color
         };
 
         let config = {
@@ -69,7 +71,7 @@ function CommitmentForm(props) {
     const repeatsInputs = (
         <div>
             <label htmlFor="repeat-count">Repeat every</label>
-            <input type="number" id="repeat-count" name="repeat-count" onChange={(e) => handleChange(e, setRepeatCount)}/>
+            <input type="number" min="1" id="repeat-count" name="repeat-count" onChange={(e) => handleChange(e, setRepeatCount)}/>
             <label htmlFor="repeat-type" style={{"display": "none"}}>Repeat type</label>
             <select id="repeat-type" name="repeat-type" onChange={(e) => handleChange(e, setRepeatType)}>
                 <option value="day">days</option>
@@ -89,10 +91,22 @@ function CommitmentForm(props) {
                 <label htmlFor="start-time" style={{"display": "none"}}>Start Time</label>
                 <input type="time" id="start-time" name="start-time" placeholder={"__:__ AM/PM"} onChange={(e) => handleChange(e, setStartTime)}/><br/>
                 <label htmlFor="duration">Duration (hrs)</label><br/>
-                <input type="number" step="0.01" id="duration" name="duration" onChange={(e) => handleChange(e, setDuration)}/><br/>
+                <input type="number" step="0.1" min="0" id="duration" name="duration" onChange={(e) => handleChange(e, setDuration)}/><br/>
                 <label htmlFor="repeats">Repeats?</label>
                 <input type="checkbox" id="repeats" name="repeats" value="checked" onChange={(e) => handleChange(e, setRepeats)}/><br/>
                 {repeats ? repeatsInputs : <div/>}
+                <label htmlFor="color">Color</label><br/>
+                <div className="color-input">
+                    <div style={{"width": "20px", "height": "20px", "backgroundColor": color}}/>
+                    <select id="color" name="color" onChange={(e) => handleChange(e, setColor)}>
+                        <option value="#EF8E96">red</option>
+                        <option value="#F9BA89">orange</option>
+                        <option value="#FED48F">yellow</option>
+                        <option value="#7FC0A0">green</option>
+                        <option value="#7EAFDB">blue</option>
+                        <option value="#A288BA">purple</option>
+                    </select>
+                </div><br/>
                 <input id="submit" type="submit" value="Create"/>
             </form>
         </div>

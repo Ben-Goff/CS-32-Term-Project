@@ -30,7 +30,7 @@ function Login() {
         } else if (message === "login failed") {
             setShowError(true)
         }
-    }, [message]);
+    }, [message, history]);
 
     /**
      * Makes an axios request to login.
@@ -61,7 +61,7 @@ function Login() {
             })
 
             .catch(function (error) {
-                console.log(error);
+                console.log(error.response);
             });
 
     }

@@ -24,7 +24,7 @@ function CalendarContainer(props) {
     }
 
     let dayLabels = [0, 1, 2, 3, 4, 5, 6].map(idx => {
-        return <div className="DayLabel">{dayNames[idx]}<br/>{dayNumbers[idx]}</div>
+        return <div key={idx} className="DayLabel">{dayNames[idx]}<br/>{dayNumbers[idx]}</div>
     })
 
     let d = new Date();

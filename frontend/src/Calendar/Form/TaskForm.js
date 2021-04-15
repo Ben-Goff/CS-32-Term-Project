@@ -10,7 +10,7 @@ function TaskForm(props) {
     const [dueTime, setDueTime] = useState("");
     const [estimatedEffort, setEstimatedEffort] = useState(0);
     const [sessionLength, setSessionLength] = useState(0);
-    const [color, setColor] = useState("red");
+    const [color, setColor] = useState("#EF8E96");
 
     const handleChange = (e, setter) => {
         setter(e.target.value);
@@ -75,19 +75,19 @@ function TaskForm(props) {
                 <label htmlFor="due-time" style={{"display": "none"}}>Due Time</label>
                 <input type="time" id="due-time" name="due-time" placeholder={"__:__ AM/PM"} onChange={(e) => handleChange(e, setDueTime)}/><br/>
                 <label htmlFor="estimated-effort">Estimated Effort (hrs)</label><br/>
-                <input type="number" step="0.01" id="estimated-effort" name="estimated-effort" onChange={(e) => handleChange(e, setEstimatedEffort)}/><br/>
+                <input type="number" step="0.1" min="0" id="estimated-effort" name="estimated-effort" onChange={(e) => handleChange(e, setEstimatedEffort)}/><br/>
                 <label htmlFor="session-length">Max Session Length (hrs)</label><br/>
-                <input type="number" step="0.01" id="session-length" name="session-length" onChange={(e) => handleChange(e, setSessionLength)}/><br/>
+                <input type="number" step="0.1" min="0" id="session-length" name="session-length" onChange={(e) => handleChange(e, setSessionLength)}/><br/>
                 <label htmlFor="color">Color</label><br/>
                 <div className="color-input">
-                    <div style={{"width": "20px", "height": "20px", "background-color": color}}/>
+                    <div style={{"width": "20px", "height": "20px", "backgroundColor": color}}/>
                     <select id="color" name="color" onChange={(e) => handleChange(e, setColor)}>
-                        <option value="red">red</option>
-                        <option value="orange">orange</option>
-                        <option value="#FFCB0C">yellow</option>
-                        <option value="green">green</option>
-                        <option value="blue">blue</option>
-                        <option value="purple">purple</option>
+                        <option value="#EF8E96">red</option>
+                        <option value="#F9BA89">orange</option>
+                        <option value="#FED48F">yellow</option>
+                        <option value="#7FC0A0">green</option>
+                        <option value="#7EAFDB">blue</option>
+                        <option value="#A288BA">purple</option>
                     </select>
                 </div>
 
