@@ -1,5 +1,6 @@
 package edu.brown.cs.student.weekli.schedule;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -141,8 +142,15 @@ public class Commitment {
   public List<Block> getBlocks(long startTime, long endTime) {
     List<Block> blocks = new ArrayList<>();
     if (this.repeating.isPresent()) {
-      final int repetitions = (int) Math.floor((endTime - startTime - this.estTime) / (double) repeating.get());
-      int startIndex = (int) Math.floor((startTime - this.startDate) / (double) repeating.get());
+      final int repetitions =
+          (int) Math.floor((endTime - startTime - this.estTime) / (double) repeating.get());
+      int startIndex =
+          Math.max(0, (int) Math.floor((startTime - this.startDate) / (double) repeating.get()));
+      System.out.println("-----START INDEX STUFF------");
+      System.out.println(repeating.get());
+      System.out.println(startIndex);
+      System.out.println("startTime: " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(startTime));
+      System.out.println("endTime: " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(endTime));
       blocks = IntStream.rangeClosed(
         startIndex, startIndex + repetitions).mapToObj(
           i -> new Block(
