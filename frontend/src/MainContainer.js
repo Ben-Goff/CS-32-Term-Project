@@ -27,7 +27,7 @@ function MainContainer(props) {
                          updateFlag={updateFlag} setUpdateFlag={setUpdateFlag}/>
             <div className="main-grid">
                 <Navbar displayMonday={displayMonday} setDisplayMonday={setDisplayMonday}
-                        setShowPopup={setShowPopup}/>
+                        setShowPopup={setShowPopup} updateFlag={updateFlag} setUpdateFlag={setUpdateFlag}/>
                 <Taskbar taskBlocks={blocks} setTaskBlocks={setBlocks}/>
                 <CalendarContainer displayMonday={displayMonday} setDisplayMonday={setDisplayMonday}
                                    setTaskBlocks={setBlocks} setClickedBLock={setClickedBlock}

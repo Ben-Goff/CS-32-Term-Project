@@ -324,3 +324,9 @@ body
 .forward-button {
     margin-right: 10px;
 }
+
+.clear-schedule-button {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+}

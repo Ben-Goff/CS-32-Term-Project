@@ -115,6 +115,7 @@ public class Main {
         Spark.post("/deletecommitment", new DeleteCommitmentHandler());
         Spark.post("/deletetask", new DeleteTaskHandler());
         Spark.post("/changebreaktime", new AddBreakTimeHandler());
+        Spark.get("/deleteall", new DeleteAllHandler());
     }
 
 
@@ -353,6 +354,25 @@ public class Main {
             //  5) estTime -- this is estimated effort in milliseconds
             //  6) sessionTime -- in milliseconds
 
+            return GSON.toJson(variables);
+        }
+    }
+
+    protected static class DeleteAllHandler implements Route {
+        public Object handle(Request request, Response response) throws Exception {
+            Map<String, Object> variables = ImmutableMap.of();
+            List<Commitment> commitments = current.getCommitments();
+            List<Task> tasks = current.getTasks();
+            System.out.println("Commitments:");
+            for (Commitment commitment: commitments) {
+                System.out.println(commitment.getName());
+                current.deleteCommitment(commitment.getID().toString());
+            }
+            System.out.println("Tasks:");
+            for (Task task: tasks) {
+                System.out.println(task.getName());
+                current.deleteTask(task.getID().toString());
+            }
             return GSON.toJson(variables);
         }
     }

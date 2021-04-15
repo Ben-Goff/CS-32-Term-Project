@@ -3,6 +3,7 @@ import './App.css';
 import React, {useState, useEffect} from "react";
 import {getMonday} from "./WeekliHelpers";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 function Navbar(props) {
     let monthList = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
@@ -63,10 +64,17 @@ function Navbar(props) {
         props.setShowPopup(true);
     }
 
-    let dropdownValue = "0"
-    function onDropDownClick() {
-
+    const clearSchedule = () => {
+        axios.get("http://localhost:4567/deleteall")
+            .then(response => {
+                console.log("successfully deleted");
+                props.setUpdateFlag(!props.updateFlag);
+            })
+            .catch(function (error) {
+                console.log(error.response);
+            });
     }
+
 
     return (
         <div className="Navbar">
@@ -127,7 +135,7 @@ function Navbar(props) {
                                         <Link to="/"><li>Log Out</li></Link>
                                         <Link to="/help"><li>Help</li></Link>
                                         <Link to="/settings"><li>Settings</li></Link>
-                                        <a href="#"><li style={{"color": "red"}}>Clear Schedule</li></a>
+                                        <button className="clear-schedule-button" onClick={clearSchedule}><li style={{"color": "red"}}>Clear Schedule</li></button>
                                     </ul>
                                 </div>
                             </nav>

@@ -98,7 +98,7 @@ function Calendar(props) {
                     let blockProgress = blockInfo[3];
                     newProgressMap[blockID] = blockProgress;
                 }
-                console.log(newProgressMap)
+                // console.log(newProgressMap)
                 setProgressMap(newProgressMap);
             })
             .catch(function (error) {
@@ -222,7 +222,7 @@ function Calendar(props) {
             }
         }
         blockAcc.sort(compareBlocks);
-        console.log(blockAcc);
+        // console.log(blockAcc);
         props.setTaskBlocks(blockAcc);
         setBlocksGrid(curBlocksGrid);
     }
