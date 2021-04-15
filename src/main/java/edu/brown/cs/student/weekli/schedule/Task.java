@@ -1,5 +1,9 @@
 package edu.brown.cs.student.weekli.schedule;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.*;
 
 public class Task {
@@ -165,8 +169,14 @@ public void setProgress(double prog) {
     return this.iD;
   }
 
-  public void addProjectID(UUID projID) {
+  public void addProjectID(UUID projID) throws ClassNotFoundException, SQLException {
     this.projectiD = projID;
+    Class.forName("org.sqlite.JDBC");
+    String urlToDB = "jdbc:sqlite:data/weekli/tasks.sqlite3";
+    Connection conn = DriverManager.getConnection(urlToDB);
+    PreparedStatement prep =
+        conn.prepareStatement("UPDATE tasks SET project = '" + projID.toString() + "' WHERE tasks.id = '" + this.getID().toString() + "';");
+    prep.executeUpdate();
   }
 
   public UUID getProjectID() {

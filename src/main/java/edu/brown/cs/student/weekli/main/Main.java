@@ -2,15 +2,13 @@ package edu.brown.cs.student.weekli.main;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
-import edu.brown.cs.student.weekli.schedule.Block;
-import edu.brown.cs.student.weekli.schedule.Commitment;
-import edu.brown.cs.student.weekli.schedule.Scheduler;
-import edu.brown.cs.student.weekli.schedule.Task;
+import edu.brown.cs.student.weekli.schedule.*;
 import edu.brown.cs.student.weekli.user.Database;
 import edu.brown.cs.student.weekli.user.User;
 import freemarker.template.Configuration;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import spark.*;
 import spark.template.freemarker.FreeMarkerEngine;
@@ -113,6 +111,7 @@ public class Main {
         Spark.post("/update", new UpdateProgressHandler());
         Spark.post("/createcommitment", new CreateCommitmentHandler());
         Spark.post("/createtask", new CreateTaskHandler());
+        Spark.post("/createproject", new CreateProjectHandler());
         Spark.post("/deletecommitment", new DeleteCommitmentHandler());
         Spark.post("/deletetask", new DeleteTaskHandler());
         Spark.post("/changebreaktime", new AddBreakTimeHandler());
@@ -302,6 +301,46 @@ public class Main {
             return GSON.toJson(variables);
         }
     }
+
+    protected static class CreateProjectHandler implements Route {
+        public Object handle(Request request, Response response) throws Exception {
+            JSONObject data = new JSONObject(request.body());
+            String projName = data.getString("name");
+            String projDescription = data.getString("description");
+            JSONArray checkpointsData = data.getJSONArray("checkpoints");
+            List<UUID> checkpointIDs = new ArrayList<>();
+            String message = "success";
+            try {
+                for (int i = 0; i < checkpointsData.length(); i++) {
+                    JSONObject checkpointData = checkpointsData.getJSONObject(i);
+                    String name = checkpointData.getString("name");
+                    String description = checkpointData.getString("description");
+                    long startTime = Long.parseLong(checkpointData.getString("startTime"));
+                    long endTime = Long.parseLong(checkpointData.getString("endTime"));
+                    long estTime = Long.parseLong(checkpointData.getString("estTime"));
+                    long sessionTime = Long.parseLong(checkpointData.getString("sessionTime"));
+                    String color = checkpointData.getString("color");
+
+                    Task tryingToAddCheckpoint = new Task(startTime, endTime, estTime, name,
+                        description, sessionTime, color);
+                    Scheduler s = new Scheduler(current.getCommitments(), current.getBreakTime());
+                    List<Task> attempt = new ArrayList<>(current.getTasks());
+                    attempt.add(tryingToAddCheckpoint);
+                    s.schedule(attempt, 0, 0);
+                    UUID checkpointID = current.addTask(startTime, endTime, estTime, name,
+                        description, sessionTime, color, "");
+                    checkpointIDs.add(checkpointID);
+                }
+            } catch (Exception e) {
+                message = e.getMessage();
+                e.printStackTrace();
+            }
+            current.addProject(projName, projDescription, checkpointIDs);
+            Map<String, Object> variables = ImmutableMap.of("message", message);
+            return GSON.toJson(variables);
+        }
+    }
+
 
     protected static class CreateCommitmentHandler implements Route {
         public Object handle(Request request, Response response) throws Exception {

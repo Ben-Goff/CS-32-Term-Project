@@ -34,6 +34,7 @@ public class Database {
             System.out.println(BCrypt.checkpw(pw, rs.getString(2)));
             if (BCrypt.checkpw(pw, rs.getString(2))) {
                 loggingIn = new User(rs.getString(1));
+                loggingIn.setBreakTime(rs.getLong(3));
                 System.out.println("loggingIN" + loggingIn);
             }
         }
@@ -65,7 +66,7 @@ public class Database {
     }
 
     public void setBreakTime(String id, long breakTime) throws SQLException {
-        PreparedStatement prep = this.connection.prepareStatement("UPDATE users SET break = \"" + breakTime + "\" WHERE users.id = \"" + id +"\";");
+        PreparedStatement prep = this.connection.prepareStatement("UPDATE users SET break = " + breakTime + " WHERE users.id = \"" + id +"\";");
         prep.executeUpdate();
     }
 }

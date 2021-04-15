@@ -1,8 +1,9 @@
 import './Form.css';
 import '../../App.css';
 import React, {useState, useEffect} from "react";
+import axios from "axios";
 
-function ProjectForm() {
+function ProjectForm(props) {
     const [numCheckpoints, setNumCheckpoints] = useState(0);
     const [checkpointForms, setCheckpointForms] = useState(null);
 
@@ -65,12 +66,46 @@ function ProjectForm() {
             let endMillisStr = endMillis.toString();
             let estimatedEffortMillisStr = (estimatedEffortDict[i] * 60 * 60 * 1000).toString();
             let sessionLengthMillisStr = (sessionLengthDict[i] * 60 * 60 * 1000).toString();
-            checkpoints.push([nameDict[i], descriptionDict[i], startMillisStr, endMillisStr, estimatedEffortMillisStr, sessionLengthMillisStr, color]);
+            checkpoints.push({
+                name: nameDict[i],
+                description: descriptionDict[i],
+                startTime: startMillisStr,
+                endTime: endMillisStr,
+                estTime: estimatedEffortMillisStr,
+                sessionTime: sessionLengthMillisStr,
+                color: color});
             curTime = endMillis;
         }
+
         console.log(name);
         console.log(description);
         console.log(checkpoints);
+
+        const toSend = {
+            name: name,
+            description: description,
+            checkpoints: checkpoints
+        };
+
+        let config = {
+            headers: {
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Origin': '*',
+            }
+        }
+
+        axios.post(
+            "http://localhost:4567/createproject",
+            toSend,
+            config
+        )
+            .then(response => {
+                props.setShowPopup(false);
+                console.log(response.data["message"]);
+            })
+            .catch(function (error) {
+                console.log(error.response);
+            });
     }
 
 

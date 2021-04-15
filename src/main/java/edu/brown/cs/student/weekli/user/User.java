@@ -80,7 +80,7 @@ public class User {
     prep.close();
   }
 
-  public void addTask(long start, long end, long estTime, String name, String description,
+  public UUID addTask(long start, long end, long estTime, String name, String description,
                       long sessionTime, String color, String projID) throws ClassNotFoundException,
       SQLException {
     Task add = new Task(start, end, estTime, name, description, sessionTime, color);
@@ -96,6 +96,7 @@ public class User {
             "sessionTime, project, color)" + " VALUES ('" + add.getID().toString() + "', '" + this.iD + "', " + add.getStartDate() + ", " + add.getEndDate() + ", " + add.getEstimatedTime() + ", '" + add.getName() + "', '" + add.getDescription() + "', " + add.getProgress() + ", " + add.getSessionTime() + ", '" + projID + "', '" + add.getColor() + "');");
     prep.executeUpdate();
     prep.close();
+    return add.getID();
   }
 
   public void addCommitment(long start, long end, String name, String description,
@@ -129,8 +130,8 @@ public class User {
       ClassNotFoundException, SQLException {
     Project add = new Project(name, description);
     this.tasks.stream().filter(t -> checkpoints.contains(t.getID())).forEach(task -> {
-      task.addProjectID(add.getID());
       try {
+        task.addProjectID(add.getID());
         updateTaskInDB(task);
       } catch (ClassNotFoundException | SQLException e) {
         e.printStackTrace();
