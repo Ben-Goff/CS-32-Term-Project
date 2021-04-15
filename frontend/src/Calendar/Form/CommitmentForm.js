@@ -37,6 +37,7 @@ function CommitmentForm(props) {
         console.log(startMillisStr)
         console.log(endMillisStr)
         console.log(repeatPeriodMillisStr)
+        console.log(color)
 
         const toSend = {
             name: name,
