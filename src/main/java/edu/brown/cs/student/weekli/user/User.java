@@ -310,21 +310,17 @@ public class User {
     List<Task> complete = new ArrayList<>();
     List<Block> toDelete = schedule.stream().filter(b -> b.getEndTime() < rightNow).collect(
         Collectors.toList());
-    toDelete.forEach(block -> {
-      // TODO
-      Task t = belongsToTask(block.getiD());
-      if (t != null) {
-        t.blockComplete();
-        if (t.getEstimatedTime() < t.getSessionTime()) {
-          complete.add(t);
-        }
-        try {
-          updateTaskInDB(t);
-        } catch (ClassNotFoundException | SQLException e) {
-          e.printStackTrace();
-        }
+    toDelete.forEach(block -> tasks.stream().filter(task -> task.getID() == block.getiD()).forEach(task -> {
+      task.blockComplete();
+      if (task.getEstimatedTime() < task.getSessionTime()) {
+        complete.add(task);
       }
-    });
+      try {
+        updateTaskInDB(task);
+      } catch (ClassNotFoundException | SQLException e) {
+        e.printStackTrace();
+      }
+    }));
     // Live progress
 //    List<Block> current =
 //        schedule.stream().filter(b -> b.getEndTime() > rightNow && b.getStartTime() <= rightNow).collect(
@@ -338,17 +334,6 @@ public class User {
     this.schedule.removeAll(toDelete);
     storeSchedule();
     return complete;
-  }
-
-  public Task belongsToTask(UUID id) {
-    List<Task> t = tasks.stream().filter(task -> task.getID() == id).collect(Collectors.toList());
-    if (t.isEmpty()) {
-      return null;
-    } else if (t.size() == 1) {
-      return t.get(0);
-    } else {
-      throw new RuntimeException("Multiple tasks with same id.");
-    }
   }
 
   public Commitment belongsToCommitment(UUID id) {

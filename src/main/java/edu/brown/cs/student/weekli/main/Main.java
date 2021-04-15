@@ -15,13 +15,14 @@ import org.json.JSONObject;
 import spark.*;
 import spark.template.freemarker.FreeMarkerEngine;
 
-import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.atomic.AtomicReferenceArray;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -249,12 +250,18 @@ public class Main {
             } else {
                 UUID ID = UUID.fromString(id);
                 double prog = Double.parseDouble(progress);
-                Task toUpdate = current.belongsToTask(ID);
-                toUpdate.setProgress(prog);
-                current.updateTaskInDB(toUpdate);
-                String[] task = new String[]{toUpdate.getName(), toUpdate.getDescription(), toUpdate.getID().toString(), Double.toString(toUpdate.getProgress()), toUpdate.getColor()};
+                AtomicReference<String[]> updatedTask = new AtomicReference<>(new String[0]);
+                current.getTasks().stream().filter(t -> t.getID().equals(ID)).forEach(task -> {
+                    task.setProgress(prog);
+                    try {
+                        current.updateTaskInDB(task);
+                    } catch (ClassNotFoundException | SQLException e) {
+                        e.printStackTrace();
+                    }
+                    updatedTask.set(new String[]{task.getName(), task.getDescription(), task.getID().toString(), Double.toString(task.getProgress()), task.getColor()});
+                });
                 // send back updated task
-                variables = ImmutableMap.of("updated", task);
+                variables = ImmutableMap.of("updated", updatedTask.get());
             }
             return GSON.toJson(variables);
         }
