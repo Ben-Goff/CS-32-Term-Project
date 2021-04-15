@@ -174,17 +174,19 @@ public class Main {
             String password = data.getString("password");
             Map<String, Object> variables;
             String message = "";
-            User current = db.signUp(username, password);
-            if (current == null) {
+            User attempt = db.signUp(username, password);
+            if (attempt == null) {
                 message = "user ID already exists";
+                variables = ImmutableMap.of("message", message);
+                return GSON.toJson(variables);
+            } else {
+                current = attempt;
+                message = "sign up successful";
                 variables = ImmutableMap.of("message", message);
                 return GSON.toJson(variables);
             }
             //HttpSession session = request.session().raw();
             //session.setAttribute("user", current);
-            message = "sign up successful";
-            variables = ImmutableMap.of("message", message);
-            return GSON.toJson(variables);
         }
     }
 

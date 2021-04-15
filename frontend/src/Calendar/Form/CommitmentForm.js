@@ -12,6 +12,7 @@ function CommitmentForm(props) {
     const [repeats, setRepeats] = useState(false);
     const [repeatCount, setRepeatCount] = useState(0);
     const [repeatType, setRepeatType] = useState("day");
+    const [color, setColor] = useState("red");
 
     const handleChange = (e, setter) => {
         setter(e.target.value);
@@ -36,13 +37,15 @@ function CommitmentForm(props) {
         console.log(startMillisStr)
         console.log(endMillisStr)
         console.log(repeatPeriodMillisStr)
+        console.log(color)
 
         const toSend = {
             name: name,
             description: description,
             startTime: startMillisStr,
             endTime: endMillisStr,
-            periodOfRepitition: repeatPeriodMillisStr
+            periodOfRepitition: repeatPeriodMillisStr,
+            color: color
         };
 
         let config = {
@@ -93,6 +96,18 @@ function CommitmentForm(props) {
                 <label htmlFor="repeats">Repeats?</label>
                 <input type="checkbox" id="repeats" name="repeats" value="checked" onChange={(e) => handleChange(e, setRepeats)}/><br/>
                 {repeats ? repeatsInputs : <div/>}
+                <label htmlFor="color">Color</label><br/>
+                <div className="color-input">
+                    <div style={{"width": "20px", "height": "20px", "background-color": color}}/>
+                    <select id="color" name="color" onChange={(e) => handleChange(e, setColor)}>
+                        <option value="red">red</option>
+                        <option value="orange">orange</option>
+                        <option value="#FFCB0C">yellow</option>
+                        <option value="green">green</option>
+                        <option value="blue">blue</option>
+                        <option value="purple">purple</option>
+                    </select>
+                </div>
                 <input id="submit" type="submit" value="Create"/>
             </form>
         </div>
