@@ -14,7 +14,7 @@ public class Database {
         this.connection = DriverManager.getConnection(urlToDB);
         PreparedStatement prep = connection.prepareStatement("CREATE TABLE IF NOT EXISTS users ("
                 + "id TEXT,"
-                + "password TEXT"
+                + "password TEXT,"
                 + "break INTEGER);");
         prep.executeUpdate();
         prep.close();

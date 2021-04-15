@@ -212,9 +212,9 @@ public class Handlers {
             HttpSession session = request.session().raw();
             User loggedIn = (User) session.getAttribute("user");
             if (!periodOfRepitition.equals("")) {
-                loggedIn.addCommitment(startTime, endTime, name, description, Optional.of(Long.parseLong(periodOfRepitition)));
+                loggedIn.addCommitment(startTime, endTime, name, description, Optional.of(Long.parseLong(periodOfRepitition)), "grey");
             } else {
-                loggedIn.addCommitment(startTime, endTime, name, description, Optional.empty());
+                loggedIn.addCommitment(startTime, endTime, name, description, Optional.empty(), "grey");
             }
             //  1) name
             //  2) description

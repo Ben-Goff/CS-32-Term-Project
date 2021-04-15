@@ -107,7 +107,7 @@ function Signup() {
             </div>
 
             Returning User?
-            <Link to="/login">
+            <Link to="/">
                 <a className="textLink">
                     Login Here
                 </a>
