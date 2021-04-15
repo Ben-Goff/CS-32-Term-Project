@@ -114,6 +114,7 @@ public class Main {
         Spark.post("/createtask", new CreateTaskHandler());
         Spark.post("/deletecommitment", new DeleteCommitmentHandler());
         Spark.post("/deletetask", new DeleteTaskHandler());
+        Spark.post("/changebreaktime", new AddBreakTimeHandler());
     }
 
 

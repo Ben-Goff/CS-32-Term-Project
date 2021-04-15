@@ -1,12 +1,13 @@
 import './App.css';
 import MainContainer from "./MainContainer";
-import Progress from "./Progress/Progress";
+import Progress from "./SidePages/Progress";
 import Login from "./UserLogin/Login";
 import Signup from "./UserLogin/Signup";
 
 import { Switch, Route } from 'react-router-dom';
 import {useState} from "react";
-import Help from "./UserLogin/Help";
+import Help from "./SidePages/Help";
+import Settings from "./SidePages/Settings";
 
 {/*Routing Help from https://stackoverflow.com/questions/41956465/how-to-create-multiple-page-app-using-react*/}
 const Router = () => {
@@ -21,6 +22,7 @@ const Router = () => {
             <Route exact path='/progress' component={Progress}></Route>
             <Route exact path='/signup' component={Signup}></Route>
             <Route exact path='/help' component={Help}></Route>
+            <Route exact path='/settings' component={Settings}></Route>
         </Switch>
     );
 }
