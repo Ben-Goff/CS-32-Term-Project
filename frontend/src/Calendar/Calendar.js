@@ -17,6 +17,10 @@ function Calendar(props) {
     }, [])
 
     useEffect(() => {
+        requestProgress();
+    }, [schedule])
+
+    useEffect(() => {
         const intervalId = setInterval(() => {  //assign interval to a variable to clear it.
             requestProgress();
         }, 5000)
@@ -27,6 +31,14 @@ function Calendar(props) {
     useEffect(() => {
         requestSchedule(props.displayMonday)
     }, [props.displayMonday, props.showPopup, props.updateFlag])
+
+    useEffect(() => {
+        getBlocks();
+    }, [schedule, progressMap]);
+
+    useEffect(() => {
+        setDays(prepareBlocks());
+    }, [blocksGrid]);
 
     const requestSchedule = (displayMonday) => {
         // console.log("requested schedule: " + displayMonday)
@@ -93,14 +105,6 @@ function Calendar(props) {
                 console.log(error.response);
             });
     }
-
-    useEffect(() => {
-        getBlocks();
-    }, [schedule]);
-
-    useEffect(() => {
-        setDays(prepareBlocks());
-    }, [blocksGrid]);
 
     let hourLabels = [];
     for (let i = 0; i < 24; i++) {
@@ -218,6 +222,7 @@ function Calendar(props) {
             }
         }
         blockAcc.sort(compareBlocks);
+        console.log(blockAcc);
         props.setTaskBlocks(blockAcc);
         setBlocksGrid(curBlocksGrid);
     }
