@@ -239,7 +239,7 @@ public class Main {
             Map<String, Object> variables;
             List<String[]> complete;
             List<String[]> tasks;
-            HttpSession session = request.session().raw();
+//            HttpSession session = request.session().raw();
             if (id.equals("") && progress.equals("")) {
                 List<Task> c = current.updateSchedule();
                 complete = c.stream().map(t -> new String[]{t.getName(), t.getDescription(), t.getID().toString(), Double.toString(t.getProgress()), t.getColor()}).collect(Collectors.toList());

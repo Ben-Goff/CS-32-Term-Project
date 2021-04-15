@@ -53,9 +53,12 @@ function Progress() {
     return (
         <div className="Progress">
             <ProgressNavbar/>
-            <div className="Bars">
-                {displayBars}
-            </div>
+            {displayBars.length !== 0 ?
+                <div className="Bars">
+                    {displayBars}
+                </div>:
+                <div>Add some tasks to track progress!</div>}
+
         </div>
     );
 }

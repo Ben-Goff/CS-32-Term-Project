@@ -113,7 +113,7 @@ public class User {
     if (rep.isPresent()) {
       System.out.println("repeating");
       prep = conn.prepareStatement(
-          "INSERT INTO commitments (id, user, startTime, endTime, name, description, repeating, color)" + " VALUES ('" + add.getID().toString() + "', '" + this.iD + "', " + add.getStartDate() + ", " + add.getEndDate() + ", '" + add.getName() + "', '" + add.getDescription() + "', " + add.getRepeating().get() + "', '" +color+ "');");
+          "INSERT INTO commitments (id, user, startTime, endTime, name, description, repeating, color)" + " VALUES ('" + add.getID().toString() + "', '" + this.iD + "', " + add.getStartDate() + ", " + add.getEndDate() + ", '" + add.getName() + "', '" + add.getDescription() + "', " + add.getRepeating().get() + ", '" +color+ "');");
     } else {
       System.out.println("non-repeating");
       prep = conn.prepareStatement(
@@ -311,6 +311,7 @@ public class User {
     List<Block> toDelete = schedule.stream().filter(b -> b.getEndTime() < rightNow).collect(
         Collectors.toList());
     toDelete.forEach(block -> {
+      // TODO
       Task t = belongsToTask(block.getiD());
       if (t != null) {
         t.blockComplete();
@@ -324,6 +325,15 @@ public class User {
         }
       }
     });
+    // Live progress
+//    List<Block> current =
+//        schedule.stream().filter(b -> b.getEndTime() > rightNow && b.getStartTime() <= rightNow).collect(
+//            Collectors.toList());
+//    if (current.size() == 1) {
+//      Task taskToUpdate = belongsToTask(current.get(0).getiD());
+//      taskToUpdate.setProgress(taskToUpdate.getProgress() + current.get(0));
+//    }
+
     pastBlocks.addAll(toDelete);
     this.schedule.removeAll(toDelete);
     storeSchedule();

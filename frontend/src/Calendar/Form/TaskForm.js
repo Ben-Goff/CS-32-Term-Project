@@ -56,7 +56,7 @@ function TaskForm(props) {
         )
             .then(response => {
                 props.setShowPopup(false);
-                console.log("SUCCESS");
+                console.log(response.data["message"]);
             })
             .catch(function (error) {
                 console.log(error.response);
