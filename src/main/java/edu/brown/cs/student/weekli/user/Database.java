@@ -26,16 +26,16 @@ public class Database {
         PreparedStatement prep = this.connection.prepareStatement(statement);
         ResultSet rs = prep.executeQuery();
         User loggingIn = null;
-        System.out.println("About to try...");
+//        System.out.println("About to try...");
         if (rs.next()) {
-            System.out.println("Something happened yay");
-            System.out.println(pw);
-            System.out.println(rs.getString(2));
-            System.out.println(BCrypt.checkpw(pw, rs.getString(2)));
+//            System.out.println("Something happened yay");
+//            System.out.println(pw);
+//            System.out.println(rs.getString(2));
+//            System.out.println(BCrypt.checkpw(pw, rs.getString(2)));
             if (BCrypt.checkpw(pw, rs.getString(2))) {
                 loggingIn = new User(rs.getString(1));
                 loggingIn.setBreakTime(rs.getLong(3));
-                System.out.println("loggingIN" + loggingIn);
+//                System.out.println("loggingIN" + loggingIn);
             }
         }
         prep.close();

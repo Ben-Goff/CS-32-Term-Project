@@ -156,13 +156,13 @@ public class Main {
             current.loadTasks();
             current.loadProjects();
             current.loadSchedule();
-            System.out.println("mamma mia");
+            // System.out.println("mamma mia");
 //          HttpSession session = request.session(false).raw();
 //          session.setAttribute("user", current);
             List<String> complete = current.updateSchedule().stream().map(t -> t.getID().toString()).collect(Collectors.toList());
             message = "login successful";
             variables = ImmutableMap.of("message", message, "complete", complete);
-            System.out.println("YAY WE DID IT");
+            // System.out.println("YAY WE DID IT");
             return GSON.toJson(variables);
         }
     }
@@ -202,9 +202,9 @@ public class Main {
 
             //HttpSession session = request.session().raw();
             //System.out.println("0: " + session);
-            System.out.println("1: " + current);
+            // System.out.println("1: " + current);
             Scheduler s = new Scheduler(current.getCommitments(), current.getBreakTime());
-            System.out.println("1.5");
+            // System.out.println("1.5");
             List<Block> blocks = s.schedule(current.getTasks(), start, end);
             List<List<Block>> allBlocks = Arrays.asList(blocks, current.getPastBlocks());
             List<Block> blocksToReturn = allBlocks.stream().flatMap(Collection::stream).map(b -> {
@@ -212,7 +212,8 @@ public class Main {
                 Date startDate = (new Date(b.getStartTime()));
                 Date endDate = (new Date(b.getEndTime()));
                 if ((new Date(startDate.getTime() + startDate.getTimezoneOffset())).getDay() != (new Date(endDate.getTime() + endDate.getTimezoneOffset())).getDay()) {
-                    System.out.println("hellooooooo" + (b.getEndTime() - (b.getEndTime() % 86400000) - 1 + startDate.getTimezoneOffset()* 60000L));
+                    // System.out.println("hellooooooo" + (b.getEndTime() - (b.getEndTime() %
+                    // 86400000) - 1 + startDate.getTimezoneOffset()* 60000L));
                     blockBlocks.add(new Block(b.getStartTime(), b.getEndTime() - (b.getEndTime() % 86400000) - 1 + startDate.getTimezoneOffset()* 60000L, b.getiD(), b.getName(), b.getDescription(), b.getColor()));
                     blockBlocks.add(new Block(b.getEndTime() - (b.getEndTime() % 86400000) + endDate.getTimezoneOffset()* 60000L, b.getEndTime(), b.getiD(), b.getName(), b.getDescription(), b.getColor()));
                     return blockBlocks;
@@ -220,13 +221,13 @@ public class Main {
                     return Collections.singletonList(b);
                 }
             }).flatMap(Collection::stream).collect(Collectors.toList());
-            System.out.println("2");
+            // System.out.println("2");
             List<List<Block>> toReturn = new ArrayList<>();
             toReturn.add(blocksToReturn.stream().filter(b -> b.getEndTime() >= start && b.getStartTime() <= end).collect(Collectors.toList()));
-            System.out.println("3");
+            // System.out.println("3");
             List<String[]> schedule = toReturn.stream().flatMap(Collection::stream).map(b -> new String[]{"" + b.getStartTime(), "" + b.getEndTime(), b.getiD().toString(), b.getName(), b.getDescription(), b.getColor()}).collect(Collectors.toList());
             variables = ImmutableMap.of("schedule", schedule);
-            System.out.println("4");
+            // System.out.println("4");
             return GSON.toJson(variables);
         }
     }
@@ -357,8 +358,8 @@ public class Main {
             if (!periodOfRepitition.equals("")) {
                 tryingToAdd = new Commitment(startTime, endTime, name, description, Optional.of(Long.parseLong(periodOfRepitition)), color);
             } else {
-                System.out.println("Going to run addCommitment");
-                System.out.println(current);
+                // System.out.println("Going to run addCommitment");
+                // System.out.println(current);
                 tryingToAdd = new Commitment(startTime, endTime, name, description, Optional.empty(), color);
             }
 
@@ -409,14 +410,14 @@ public class Main {
             Map<String, Object> variables = ImmutableMap.of();
             List<Commitment> commitments = current.getCommitments();
             List<Task> tasks = current.getTasks();
-            System.out.println("Commitments:");
+            // System.out.println("Commitments:");
             for (Commitment commitment: commitments) {
-                System.out.println(commitment.getName());
+                // System.out.println(commitment.getName());
                 current.deleteCommitment(commitment.getID().toString());
             }
-            System.out.println("Tasks:");
+            // System.out.println("Tasks:");
             for (Task task: tasks) {
-                System.out.println(task.getName());
+                // System.out.println(task.getName());
                 current.deleteTask(task.getID().toString());
             }
             return GSON.toJson(variables);

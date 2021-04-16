@@ -6,12 +6,13 @@ import axios from "axios";
 function EventDialog(props) {
     let [adjustingProgress, setAdjustingProgress] = useState(false);
     let [progress, setProgress] = useState(0);
+    let [newProgress, setNewProgress]= useState(0);
 
     useEffect(() => {
         if (props.clickedBlock == null) {
             return;
         }
-        setProgress(props.clickedBlock.props.progress / (props.clickedBlock.props.end.getTime() - props.clickedBlock.props.start.getTime()) * 100)
+        setProgress(props.clickedBlock.props.progress)
     }, [adjustingProgress, props.clickedBlock])
 
     useEffect(() => {
@@ -26,8 +27,32 @@ function EventDialog(props) {
         setAdjustingProgress(true);
     }
 
-    const submitNewProgress = () => {
-        setAdjustingProgress(false);
+    const submitNewProgress = (e) => {
+        e.preventDefault();
+        const toSend = {
+            id: props.clickedBlock.props.identifier,
+            progress: (newProgress / 100).toString()
+        };
+
+        let config = {
+            headers: {
+                "Content-Type": "application/json",
+                'Access-Control-Allow-Origin': '*',
+            }
+        }
+
+        axios.post(
+            "http://localhost:4567/update",
+            toSend,
+            config
+        )
+            .then(response => {
+                setAdjustingProgress(false);
+                props.setUpdateFlag(!props.updateFlag);
+            })
+            .catch(function (error) {
+                console.log(error.response);
+            });
     }
 
     const deleteBlock = () => {
@@ -78,14 +103,14 @@ function EventDialog(props) {
 
                         <div>
                             <div className="progress-bar-back">
-                                <div className="progress-bar-front" style={{"backgroundColor": props.clickedBlock.props.color}}/>
+                                <div className="progress-bar-front" style={{"width": (progress * 100) + "%", "backgroundColor": props.clickedBlock.props.color}}/>
                             </div>
                             <div className="progress-bar-text">
                                 {adjustingProgress ?
                                     <div>
                                         <form className="adjust-progress-form" onSubmit={submitNewProgress}>
                                             <label htmlFor="new-progress" style={{"display": "hidden"}}>New progress: </label>
-                                            <input type="text" style={{"width": "20px"}}/>%
+                                            <input type="number" min="0" max="100" onChange={(e) => setNewProgress(e.target.value)} style={{"width": "30px"}}/>%
                                             <input id="progress-submit" type="submit" value="Set new progress"/>
                                         </form>
                                     </div> :
