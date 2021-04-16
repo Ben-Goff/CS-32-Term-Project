@@ -23,3 +23,46 @@
 .help-text {
     width: 40%;
 }
+
+.login-grid {
+    display: grid;
+    text-align: center;
+
+    margin-top: 10%;
+}
+
+.login-form {
+    background: #FFFFFF;
+
+    width: 300px;
+    height: 120px;
+
+    margin-left: auto;
+    margin-right: auto;
+
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 50px;
+    padding: 20px;
+}
+
+.logo {
+    height: 90px;
+    width: auto;
+}
+
+.logo-text {
+    font-size: 48px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.login-button {
+    font-size: 20px;
+    padding-right: 10px;
+    padding-left: 10px;
+    margin-top: 20px;
+
+    background: #FBE08F;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 21px;
+}
