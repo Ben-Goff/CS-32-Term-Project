@@ -308,11 +308,14 @@ public class User {
    * @return
    */
   public List<Task> updateSchedule() throws SQLException, ClassNotFoundException {
+    System.out.println("hi updateSchedule is running are you free to go out some time?");
     long rightNow = (new Date()).getTime();
     List<Task> complete = new ArrayList<>();
     List<Block> toDelete = schedule.stream().filter(b -> b.getEndTime() < rightNow).collect(
         Collectors.toList());
+    System.out.println("toDelete.size() = " + toDelete.size());
     toDelete.forEach(block -> tasks.stream().filter(task -> task.getID() == block.getiD()).forEach(task -> {
+      System.out.println("task.getName() = " + task.getName());
       task.blockComplete();
       if (task.getEstimatedTime() < task.getSessionTime()) {
         complete.add(task);
@@ -378,4 +381,14 @@ public class User {
   public long getBreakTime() {
     return breakTime;
   }
+
+  public void setSchedule(List<Block> blocks) {
+    this.schedule = blocks;
+    try {
+      storeSchedule();
+    } catch (ClassNotFoundException | SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
 }

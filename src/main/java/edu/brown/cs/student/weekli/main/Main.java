@@ -206,6 +206,8 @@ public class Main {
             Scheduler s = new Scheduler(current.getCommitments(), current.getBreakTime());
             // System.out.println("1.5");
             List<Block> blocks = s.schedule(current.getTasks(), start, end);
+            current.setSchedule(blocks);
+
             List<List<Block>> allBlocks = Arrays.asList(blocks, current.getPastBlocks());
             List<Block> blocksToReturn = allBlocks.stream().flatMap(Collection::stream).map(b -> {
                 List<Block> blockBlocks = new ArrayList<>();
