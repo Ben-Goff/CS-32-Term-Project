@@ -21,10 +21,10 @@ function Calendar(props) {
     }, [schedule, props.updateFlag])
 
     useEffect(() => {
-        const intervalId = setInterval(() => {  //assign interval to a variable to clear it.
+        const intervalId = setInterval(() => {
             requestProgress();
         }, 10000)
-        return () => clearInterval(intervalId); //This is important
+        return () => clearInterval(intervalId);
     }, [])
 
 
@@ -62,7 +62,8 @@ function Calendar(props) {
             .then(response => {
                 // console.log(response.data);
                 setSchedule(response.data["schedule"])
-                // console.log(schedule)
+                console.log("Schedule: ")
+                console.log(schedule.map(block => block[3]))
             })
             .catch(function (error) {
                 console.log(error.response);
@@ -90,7 +91,7 @@ function Calendar(props) {
             .then(response => {
                 let newProgressMap = {};
                 let progressInfo = response.data["tasks"];
-                console.log(progressInfo)
+                // console.log(progressInfo)
                 // console.log(progressInfo.length)
                 for (let i = 0; i < progressInfo.length; i++) {
                     let blockInfo = progressInfo[i];

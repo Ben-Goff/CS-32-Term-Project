@@ -1,6 +1,5 @@
 import './Day.css';
 import '../App.css';
-import {useInterval} from "../WeekliHelpers";
 import React, {useState} from "react";
 
 function Day(props) {

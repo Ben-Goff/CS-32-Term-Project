@@ -1,6 +1,6 @@
 import './Form.css';
 import '../../App.css';
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import axios from "axios";
 
 function CommitmentForm(props) {

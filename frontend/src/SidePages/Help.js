@@ -7,7 +7,7 @@ function Help() {
 
     return (
         <div>
-            <img src="WeekliLogo.png" className="logo"/>
+            <img alt="" src="WeekliLogo.png" className="logo"/>
             <h1>Weekli</h1>
 
             <h2>Help</h2>

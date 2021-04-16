@@ -1,6 +1,5 @@
 import './Taskbar.css';
 import './App.css';
-import React, {useEffect} from "react";
 
 function Taskbar(props) {
     let taskBlocks = props.taskBlocks;
@@ -18,7 +17,7 @@ function Taskbar(props) {
         return hours + ':' + minutes + ' ' + ampm;
     }
 
-
+    // console.log(taskBlocks)
     return (
         <div className="Taskbar">
             <div className="space-filler"/>
@@ -32,9 +31,9 @@ function Taskbar(props) {
                     let thisDate = new Date().getDate();
                     let now = new Date().getTime();
 
-                    if (attrs.start.getFullYear() === thisYear && attrs.start.getMonth() === thisMonth && attrs.start.getDate() === thisDate) {
+                    if (attrs.start.getFullYear() === thisYear && attrs.start.getMonth() === thisMonth && attrs.start.getDate() === thisDate && attrs.end.getTime() >= now) {
                         let boxClassName = (attrs.start.getTime() <= now && attrs.end.getTime() >= now) ? "task-box highlighted" : "task-box"
-                        return <div key={attrs.start} className={boxClassName} style={{"backgroundColor": attrs.color}} onClick={attrs.onClick}>
+                        return <div className={boxClassName} style={{"backgroundColor": attrs.color}} onClick={attrs.onClick}>
                             <div className="contents">
                                 {monthNames[attrs.start.getMonth()] + " " + attrs.start.getDate() + " "}
                                 {formatAMPM(attrs.start)}-{formatAMPM(attrs.end)}<br/>
@@ -43,7 +42,7 @@ function Taskbar(props) {
                             </div>
                         </div>
                     } else {
-                        return <div key={attrs.start}/>
+                        return <div/>
                     }
                 })}
             </div>

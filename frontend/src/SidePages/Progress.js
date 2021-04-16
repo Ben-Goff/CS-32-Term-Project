@@ -1,5 +1,4 @@
 import '../App.css';
-import { Link } from "react-router-dom";
 import ProgressNavbar from "./ProgressNavbar";
 import ProgressBar from "./ProgressBar";
 import React, {useState, useEffect} from 'react'

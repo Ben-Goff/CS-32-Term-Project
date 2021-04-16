@@ -60,7 +60,7 @@ function Schedule() {
         <div className="Schedule">
             <div className="flexbox-section">
                 <div className="logo-area">
-                    <img src="WeekliLogo.png" className="logo"/>
+                    <img alt="" src="WeekliLogo.png" className="logo"/>
                     <div className="logo-text">
                         Weekli
                     </div>

@@ -4,7 +4,7 @@ import './App.css';
 import Navbar from "./Navbar";
 import Taskbar from "./Taskbar";
 import CalendarContainer from "./Calendar/CalendarContainer";
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import {getMonday} from "./WeekliHelpers";
 import Popup from "./Calendar/Popup";
 import EventDialog from "./Calendar/EventDialog";

@@ -80,7 +80,7 @@ function Navbar(props) {
         <div className="Navbar">
             <div className="navbar-body">
                 <div className="logo-area">
-                    <img src="WeekliLogo.png" className="logo"/>
+                    <img alt="" src="WeekliLogo.png" className="logo"/>
                     <div className="logo-text">
                         Weekli
                     </div>
@@ -108,16 +108,16 @@ function Navbar(props) {
 
                         <div className="flexbox-section">
                             <button className="button create" onClick={createTask}>
-                                <img src="plus.png" className="plus-icon"/> <div className="create-text">Create</div>
+                                <img alt="" src="plus.png" className="plus-icon"/> <div className="create-text">Create</div>
                             </button>
 
                             {/*<button className="button shuffle">*/}
-                            {/*    <img src="shuffle.png" className="shuffle-icon"/> <div className="shuffle-text">Shuffle</div>*/}
+                            {/*    <img alt="" src="shuffle.png" className="shuffle-icon"/> <div className="shuffle-text">Shuffle</div>*/}
                             {/*</button>*/}
 
                             <Link to="/progress" style={{ textDecoration: 'none' }}>
                                 <button className="button progress">
-                                    <img src="bars.png" className="bars-icon"/> <div className="progress-text">Progress</div>
+                                    <img alt="" src="bars.png" className="bars-icon"/> <div className="progress-text">Progress</div>
                                 </button>
                             </Link>
 

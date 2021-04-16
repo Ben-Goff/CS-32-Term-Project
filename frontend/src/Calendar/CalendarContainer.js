@@ -3,7 +3,6 @@ import '../App.css';
 import Calendar from "./Calendar";
 import {getMonday} from "../WeekliHelpers";
 import React, {useEffect} from "react";
-import Taskbar from "../Taskbar";
 
 function CalendarContainer(props) {
 

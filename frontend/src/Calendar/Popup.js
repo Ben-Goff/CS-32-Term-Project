@@ -1,6 +1,6 @@
 import './Popup.css';
 import '../App.css';
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import CommitmentForm from "./Form/CommitmentForm";
 import ProjectForm from "./Form/ProjectForm";
 import TaskForm from "./Form/TaskForm";
