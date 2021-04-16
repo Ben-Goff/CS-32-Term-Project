@@ -58,7 +58,7 @@ function ProgressBar(props) {
                         </form>
                     </div> :
                     <div className="progress-label">
-                        {props.progress * 100}% done <button className="adjust-progress-button" onClick={showProgressSlider}>Adjust</button>
+                        {Math.round(props.progress * 100)}% done <button className="adjust-progress-button" onClick={showProgressSlider}>Adjust</button>
                     </div>}
             </div>
         </div>

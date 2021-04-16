@@ -157,8 +157,12 @@ public double getProgress() {
  *
  */
 public void setProgress(double prog) {
-  setEstimatedTime((long) (getEstimatedTime() / (1 - this.progress) * (1 - prog)));
-  this.progress = prog;
+  double temp = prog;
+  if (temp == 1) {
+    temp = 0.999;
+  }
+  setEstimatedTime((long) (getEstimatedTime() / (1 - this.progress) * (1 - temp)));
+  this.progress = temp;
 }
 
   /**

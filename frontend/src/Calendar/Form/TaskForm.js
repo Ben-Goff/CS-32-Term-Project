@@ -22,8 +22,8 @@ function TaskForm(props) {
         let endMillis = Date.parse(dueDate + " " + dueTime);
         let startMillisStr = startMillis.toString();
         let endMillisStr = endMillis.toString();
-        let estimatedEffortMillisStr = (estimatedEffort * 60 * 60 * 1000).toString();
-        let sessionLengthMillisStr = (sessionLength * 60 * 60 * 1000).toString();
+        let estimatedEffortMillisStr = Math.round(estimatedEffort * 60 * 60 * 1000).toString();
+        let sessionLengthMillisStr = Math.round(sessionLength * 60 * 60 * 1000).toString();
         console.log(name);
         console.log(description);
         console.log(startMillisStr);
@@ -55,6 +55,7 @@ function TaskForm(props) {
             config
         )
             .then(response => {
+                console.log("helloo? uthere?")
                 props.setShowPopup(false);
                 console.log(response.data["message"]);
             })
@@ -75,9 +76,9 @@ function TaskForm(props) {
                 <label htmlFor="due-time" style={{"display": "none"}}>Due Time</label>
                 <input type="time" id="due-time" name="due-time" placeholder={"__:__ AM/PM"} onChange={(e) => handleChange(e, setDueTime)}/><br/>
                 <label htmlFor="estimated-effort">Estimated Effort (hrs)</label><br/>
-                <input type="number" step="0.1" min="0" id="estimated-effort" name="estimated-effort" onChange={(e) => handleChange(e, setEstimatedEffort)}/><br/>
+                <input type="number" step="0.001" min="0" id="estimated-effort" name="estimated-effort" onChange={(e) => handleChange(e, setEstimatedEffort)}/><br/>
                 <label htmlFor="session-length">Max Session Length (hrs)</label><br/>
-                <input type="number" step="0.1" min="0" id="session-length" name="session-length" onChange={(e) => handleChange(e, setSessionLength)}/><br/>
+                <input type="number" step="0.001" min="0" id="session-length" name="session-length" onChange={(e) => handleChange(e, setSessionLength)}/><br/>
                 <label htmlFor="color">Color</label><br/>
                 <div className="color-input">
                     <div style={{"width": "20px", "height": "20px", "backgroundColor": color}}/>

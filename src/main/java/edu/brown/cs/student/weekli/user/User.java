@@ -70,11 +70,12 @@ public class User {
     } else {
       projID = update.getProjectID().toString();
     }
+    System.out.println(update.getProgress());
     Class.forName("org.sqlite.JDBC");
     String urlToDB = "jdbc:sqlite:data/weekli/tasks.sqlite3";
     Connection conn = DriverManager.getConnection(urlToDB);
     PreparedStatement prep = conn.prepareStatement(
-        "INSERT INTO tasks (id, user, startTime, endTime, estTime, name, description, progress, " +
+        "REPLACE INTO tasks (id, user, startTime, endTime, estTime, name, description, progress, " +
             "sessionTime, project, color)" + " VALUES ('" + update.getID().toString() + "', '" + this.iD + "', " + update.getStartDate() + ", " + update.getEndDate() + ", " + update.getEstimatedTime() + ", '" + update.getName() + "', '" + update.getDescription() + "', " + update.getProgress() + ", " + update.getSessionTime() + ", '" + projID + "', '" + update.getColor() + "');");
     prep.executeUpdate();
     prep.close();

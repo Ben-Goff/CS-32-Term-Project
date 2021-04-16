@@ -115,7 +115,7 @@ function EventDialog(props) {
                                         </form>
                                     </div> :
                                     <div className="progress-label">
-                                        {progress * 100}% done <button className="adjust-progress-button" onClick={showProgressSlider}>Adjust</button>
+                                        {Math.round(progress * 100)}% done <button className="adjust-progress-button" onClick={showProgressSlider}>Adjust</button>
                                     </div>}
                             </div>
                         </div>)

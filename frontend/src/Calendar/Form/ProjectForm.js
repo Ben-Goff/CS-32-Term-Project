@@ -64,8 +64,8 @@ function ProjectForm(props) {
             let endMillis = Date.parse(dueDateDict[i] + " " + dueTimeDict[i]);
             let startMillisStr = startMillis.toString();
             let endMillisStr = endMillis.toString();
-            let estimatedEffortMillisStr = (estimatedEffortDict[i] * 60 * 60 * 1000).toString();
-            let sessionLengthMillisStr = (sessionLengthDict[i] * 60 * 60 * 1000).toString();
+            let estimatedEffortMillisStr = Math.round(estimatedEffortDict[i] * 60 * 60 * 1000).toString();
+            let sessionLengthMillisStr = Math.round(sessionLengthDict[i] * 60 * 60 * 1000).toString();
             checkpoints.push({
                 name: nameDict[i],
                 description: descriptionDict[i],
