@@ -151,6 +151,7 @@ public class Commitment {
       System.out.println(startIndex);
       System.out.println("startTime: " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(startTime));
       System.out.println("endTime: " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(endTime));
+
       blocks = IntStream.rangeClosed(
         startIndex, startIndex + repetitions).mapToObj(
           i -> new Block(
@@ -165,6 +166,7 @@ public class Commitment {
         blocks = Collections.singletonList(this.commitBlock);
       }
     }
+    System.out.println("size of list of commitment blocks: " + blocks.size());
     return blocks;
   }
 }

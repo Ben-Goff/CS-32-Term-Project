@@ -240,6 +240,7 @@ public class Main {
             List<String[]> complete;
             List<String[]> tasks;
 //            HttpSession session = request.session().raw();
+            //If the progress is to be updated automatically.
             if (id.equals("") && progress.equals("")) {
                 List<Task> c = current.updateSchedule();
                 complete = c.stream().map(t -> new String[]{t.getName(), t.getDescription(), t.getID().toString(), Double.toString(t.getProgress()), t.getColor()}).collect(Collectors.toList());
