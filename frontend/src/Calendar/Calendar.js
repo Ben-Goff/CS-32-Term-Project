@@ -18,7 +18,7 @@ function Calendar(props) {
 
     useEffect(() => {
         requestProgress();
-    }, [schedule])
+    }, [schedule, props.updateFlag])
 
     useEffect(() => {
         const intervalId = setInterval(() => {  //assign interval to a variable to clear it.
@@ -96,6 +96,7 @@ function Calendar(props) {
                     let blockInfo = progressInfo[i];
                     let blockID = blockInfo[2];
                     let blockProgress = blockInfo[3];
+                    // console.log(blockProgress);
                     newProgressMap[blockID] = blockProgress;
                 }
                 // console.log(newProgressMap)

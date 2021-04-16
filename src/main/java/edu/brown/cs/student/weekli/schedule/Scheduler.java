@@ -33,22 +33,22 @@ public class Scheduler {
     } else {
       this.tasksEndTime = end;
     }
-    System.out.println("above commitblocks: " + globalStartTime);
-    System.out.println("above commitblocks: " + tasksEndTime);
+//    System.out.println("above commitblocks: " + globalStartTime);
+//    System.out.println("above commitblocks: " + tasksEndTime);
     this.commitmentBlocks = this.commitments.stream().map(c -> c.getBlocks(globalStartTime, tasksEndTime)).flatMap(Collection::stream).sorted(Comparator.comparingLong(Block::getStartTime)).collect(Collectors.toList());
     for (Block b : commitmentBlocks) {
-      System.out.println(b.getName());
-      System.out.println(b.getStartTime());
-      System.out.println(b.getEndTime());
-      System.out.println();
+//      System.out.println(b.getName());
+//      System.out.println(b.getStartTime());
+//      System.out.println(b.getEndTime());
+//      System.out.println();
     }
     this.tasks = new TreeSet<>(new TaskComparator());
     this.tasks.addAll(tasksToSchedule);
-    System.out.println("above bins");
+//    System.out.println("above bins");
     buildBins();
-    System.out.println("above tasks");
+//    System.out.println("above tasks");
     placeTasks();
-    System.out.println("above stream");
+//    System.out.println("above stream");
     List<Block> schedule = this.bins.stream().map(TimeBin::getBlocks).flatMap(Collection::stream).collect(Collectors.toList());
     schedule.addAll(commitmentBlocks);
     return schedule;
@@ -91,11 +91,11 @@ public class Scheduler {
     if (commitmentBlocks.isEmpty()) {
       this.bins.add(new TimeBin(globalStartTime, tasksEndTime, breakTime));
     } else {
-      System.out.println("1");
+//      System.out.println("1");
       this.bins.add(new TimeBin(globalStartTime, commitmentBlocks.get(0).getStartTime(), breakTime));
-      System.out.println("2");
+//      System.out.println("2");
       int size = commitmentBlocks.size();
-      System.out.println("3");
+//      System.out.println("3");
 
       for (int i = 0; i < size - 1; i++) {
         currentCommitment = commitmentBlocks.get(i);
@@ -103,9 +103,9 @@ public class Scheduler {
         validCommitments = currentCommitment.getEndTime() < nextCommitment.getStartTime();
         if (!validCommitments) {
           //commitments are overlapping, schedule can't be made
-          System.out.println("4");
-          System.out.println(currentCommitment.getEndTime());
-          System.out.println(nextCommitment.getStartTime());
+//          System.out.println("4");
+//          System.out.println(currentCommitment.getEndTime());
+//          System.out.println(nextCommitment.getStartTime());
           throw new RuntimeException("Commitments are overlapping");
         }
         this.bins.add(new TimeBin(currentCommitment.getEndTime(), nextCommitment.getStartTime(), breakTime));
