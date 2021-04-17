@@ -15,8 +15,10 @@ function ProjectForm(props) {
     const [descriptionDict, setDescriptionDict] = useState({});
     const [dueDateDict, setDueDateDict] = useState({});
     const [dueTimeDict, setDueTimeDict] = useState({});
-    const [estimatedEffortDict, setEstimatedEffortDict] = useState({});
-    const [sessionLengthDict, setSessionLengthDict] = useState({});
+    const [estimatedEffortHoursDict, setEstimatedEffortHoursDict] = useState({});
+    const [estimatedEffortMinutesDict, setEstimatedEffortMinutesDict] = useState({});
+    const [sessionLengthHoursDict, setSessionLengthHoursDict] = useState({});
+    const [sessionLengthMinutesDict, setSessionLengthMinutesDict] = useState({});
     const [errorMessage, setErrorMessage] = useState("");
 
     const handleChange = (e, setter) => {
@@ -43,10 +45,14 @@ function ProjectForm(props) {
                     <label htmlFor={checkpointID + "-due-time"} style={{"display": "none"}}>Due" +
                         " Time</label>
                     <input type="time" id={checkpointID + "-due-time"} name={checkpointID + "-due-time"} placeholder={"__:__ AM/PM"} onChange={(e) => handleCheckpointChange(e, dueTimeDict, i, setDueTimeDict)}/><br/>
-                    <label htmlFor={checkpointID + "-estimated-effort"}>Estimated Effort (hrs)</label><br/>
-                    <input type="number" step="0.1" min="0" id={checkpointID + "-estimated-effort"} name={checkpointID + "-estimated-effort"} onChange={(e) => handleCheckpointChange(e, estimatedEffortDict, i, setEstimatedEffortDict)}/><br/>
-                    <label htmlFor="session-length">Max Session Length (hrs)</label><br/>
-                    <input type="number" step="0.1" min="0" id="session-length" name="session-length" onChange={(e) => handleCheckpointChange(e, sessionLengthDict, i, setSessionLengthDict)}/><br/>
+                    <label htmlFor={checkpointID + "-estimated-effort-hours"}>Estimated Effort</label><br/>
+                    <input type="number" step="1" min="0" id={checkpointID + "-estimated-effort-hours"} name={checkpointID + "-estimated-effort-hours"} onChange={(e) => handleCheckpointChange(e, estimatedEffortHoursDict, i, setEstimatedEffortHoursDict)}/> hours{" "}
+                    <label style={{"display": "none"}} htmlFor={checkpointID + "-estimated-effort-minutes"}>Estimated Effort (mins)</label>
+                    <input type="number" step="1" min="0" max="59" id={checkpointID + "-estimated-effort-minutes"} name={checkpointID + "-estimated-effort-minutes"} onChange={(e) => handleCheckpointChange(e, estimatedEffortMinutesDict, i, setEstimatedEffortMinutesDict)}/> minutes<br/>
+                    <label htmlFor="session-length-hours">Max Session Length</label><br/>
+                    <input type="number" step="1" min="0" id="session-length-hours" name="session-length-hours" onChange={(e) => handleCheckpointChange(e, sessionLengthHoursDict, i, setSessionLengthHoursDict)}/> hours{" "}
+                    <label style={{"display": "none"}} htmlFor="session-length-minutes">Max Session Length (mins)</label>
+                    <input type="number" step="1" min="0" max="59" id="session-length-minutes" name="session-length-minutes" onChange={(e) => handleCheckpointChange(e, sessionLengthMinutesDict, i, setSessionLengthMinutesDict)}/> minutes<br/><br/>
                 </div>
             );
         }
@@ -65,8 +71,8 @@ function ProjectForm(props) {
             let endMillis = Date.parse(dueDateDict[i] + " " + dueTimeDict[i]);
             let startMillisStr = startMillis.toString();
             let endMillisStr = endMillis.toString();
-            let estimatedEffortMillisStr = Math.round(estimatedEffortDict[i] * 60 * 60 * 1000).toString();
-            let sessionLengthMillisStr = Math.round(sessionLengthDict[i] * 60 * 60 * 1000).toString();
+            let estimatedEffortMillisStr = (estimatedEffortHoursDict[i] * 60 * 60 * 1000 + estimatedEffortMinutesDict[i] * 60 * 1000).toString();
+            let sessionLengthMillisStr = (sessionLengthHoursDict[i] * 60 * 60 * 1000 + sessionLengthMinutesDict[i] * 60 * 1000).toString();
             checkpoints.push({
                 name: nameDict[i],
                 description: descriptionDict[i],

@@ -8,7 +8,8 @@ function CommitmentForm(props) {
     const [description, setDescription] = useState("");
     const [startDate, setStartDate] = useState(0);
     const [startTime, setStartTime] = useState(0);
-    const [duration, setDuration] = useState(0);
+    const [durationHours, setDurationHours] = useState(0);
+    const [durationMinutes, setDurationMinutes] = useState(0);
     const [repeats, setRepeats] = useState(false);
     const [repeatCount, setRepeatCount] = useState(0);
     const [repeatType, setRepeatType] = useState("day");
@@ -26,7 +27,7 @@ function CommitmentForm(props) {
     const createCommitment = (e) => {
         e.preventDefault();
         let startMillis = Date.parse(startDate + " " + startTime);
-        let endMillis = startMillis + duration * 60 * 60 * 1000;
+        let endMillis = startMillis + durationHours * 60 * 60 * 1000 + durationMinutes * 60 * 1000;
         let startMillisStr = startMillis.toString();
         let endMillisStr = endMillis.toString();
         let repeatTypeHours = repeatTypeDict[repeatType];
@@ -100,8 +101,10 @@ function CommitmentForm(props) {
                 <input type="date" id="start-date" name="start-date" placeholder={"mm-dd-yyyy"} onChange={(e) => handleChange(e, setStartDate)}/>
                 <label htmlFor="start-time" style={{"display": "none"}}>Start Time</label>
                 <input type="time" id="start-time" name="start-time" placeholder={"__:__ AM/PM"} onChange={(e) => handleChange(e, setStartTime)}/><br/>
-                <label htmlFor="duration">Duration (hrs)</label><br/>
-                <input type="number" step="0.1" min="0" id="duration" name="duration" onChange={(e) => handleChange(e, setDuration)}/><br/>
+                <label htmlFor="duration-hours">Duration</label><br/>
+                <input type="number" step="1" min="0" id="duration-hours" name="duration-hours" onChange={(e) => handleChange(e, setDurationHours)}/> hours{" "}
+                <label htmlFor="duration-minutes" style={{"display": "none"}}>Duration minutes</label>
+                <input type="number" step="1" min="0" max="59" id="duration-minutes" name="duration-minutes" onChange={(e) => handleChange(e, setDurationMinutes)}/> minutes<br/>
                 <label htmlFor="repeats">Repeats?</label>
                 <input type="checkbox" id="repeats" name="repeats" value="checked" onChange={(e) => setRepeats(!repeats)}/><br/>
                 {repeats ? repeatsInputs : <div/>}

@@ -8,8 +8,10 @@ function TaskForm(props) {
     const [description, setDescription] = useState("");
     const [dueDate, setDueDate] = useState("");
     const [dueTime, setDueTime] = useState("");
-    const [estimatedEffort, setEstimatedEffort] = useState(0);
-    const [sessionLength, setSessionLength] = useState(0);
+    const [estimatedEffortHours, setEstimatedEffortHours] = useState(0);
+    const [estimatedEffortMinutes, setEstimatedEffortMinutes] = useState(0);
+    const [sessionLengthHours, setSessionLengthHours] = useState(0);
+    const [sessionLengthMinutes, setSessionLengthMinutes] = useState(0);
     const [color, setColor] = useState("#EF8E96");
     const [errorMessage, setErrorMessage] = useState("");
 
@@ -23,8 +25,8 @@ function TaskForm(props) {
         let endMillis = Date.parse(dueDate + " " + dueTime);
         let startMillisStr = startMillis.toString();
         let endMillisStr = endMillis.toString();
-        let estimatedEffortMillisStr = Math.round(estimatedEffort * 60 * 60 * 1000).toString();
-        let sessionLengthMillisStr = Math.round(sessionLength * 60 * 60 * 1000).toString();
+        let estimatedEffortMillisStr = (estimatedEffortHours * 60 * 60 * 1000 + estimatedEffortMinutes * 60 * 1000).toString();
+        let sessionLengthMillisStr = (sessionLengthHours * 60 * 60 * 1000 + sessionLengthMinutes * 60 * 1000).toString();
         console.log(name);
         console.log(description);
         console.log(startMillisStr);
@@ -81,10 +83,14 @@ function TaskForm(props) {
                 <input type="date" id="due-date" name="due-date" placeholder={"mm-dd-yyyy"} onChange={(e) => handleChange(e, setDueDate)}/>
                 <label htmlFor="due-time" style={{"display": "none"}}>Due Time</label>
                 <input type="time" id="due-time" name="due-time" placeholder={"__:__ AM/PM"} onChange={(e) => handleChange(e, setDueTime)}/><br/>
-                <label htmlFor="estimated-effort">Estimated Effort (hrs)</label><br/>
-                <input type="number" step="0.001" min="0" id="estimated-effort" name="estimated-effort" onChange={(e) => handleChange(e, setEstimatedEffort)}/><br/>
-                <label htmlFor="session-length">Max Session Length (hrs)</label><br/>
-                <input type="number" step="0.001" min="0" id="session-length" name="session-length" onChange={(e) => handleChange(e, setSessionLength)}/><br/>
+                <label htmlFor="estimated-effort-hours">Estimated Effort</label><br/>
+                <input type="number" step="1" min="0" id="estimated-effort-hours" name="estimated-effort-hours" onChange={(e) => handleChange(e, setEstimatedEffortHours)}/> hours{" "}
+                <label htmlFor="estimated-effort-minutes" style={{"display": "none"}}>Estimated Effort</label>
+                <input type="number" step="1" min="0" max="59" id="estimated-effort-minutes" name="estimated-effort-minutes" onChange={(e) => handleChange(e, setEstimatedEffortMinutes)}/> minutes<br/>
+                <label htmlFor="session-length-hours">Max Session Length</label><br/>
+                <input type="number" step="1" min="0" id="session-length-hours" name="session-length-hours" onChange={(e) => handleChange(e, setSessionLengthHours)}/> hours{" "}
+                <label htmlFor="session-length-minutes" style={{"display": "none"}}>Estimated Effort</label>
+                <input type="number" step="1" min="0" max="59" id="session-length-minutes" name="session-length-minutes" onChange={(e) => handleChange(e, setSessionLengthMinutes)}/> minutes<br/>
                 <label htmlFor="color">Color</label><br/>
                 <div className="color-input">
                     <div style={{"width": "20px", "height": "20px", "backgroundColor": color}}/>
