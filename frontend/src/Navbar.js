@@ -80,8 +80,8 @@ function Navbar(props) {
         <div className="Navbar">
             <div className="navbar-body">
                 <div className="logo-area">
-                    <img alt="" src="WeekliLogo.png" className="logo"/>
-                    <div className="logo-text">
+                    <img alt="" src="WeekliLogo.png" className="logo" style={{"width": "50px", "height": "50px"}}/>
+                    <div className="logo-text" style={{"marginTop": "-10px"}}>
                         Weekli
                     </div>
                 </div>

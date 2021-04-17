@@ -1,14 +1,15 @@
 import '../Navbar.css';
 import '../App.css';
 import { Link } from "react-router-dom";
+import React from "react";
 
 function ProgressNavbar() {
     return (
         <div className="Navbar">
             <div className="navbar-body" style={{"margin-top": "20px"}}>
                 <div className="logo-area">
-                    <img alt="" src="WeekliLogo.png" className="logo"/>
-                    <div className="logo-text">
+                    <img alt="" src="WeekliLogo.png" style={{"width": "50px", "height": "50px"}} className="logo"/>
+                    <div className="logo-text" style={{"marginTop": "-10px"}}>
                         Weekli
                     </div>
                 </div>
