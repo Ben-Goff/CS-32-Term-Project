@@ -13,6 +13,7 @@ function CommitmentForm(props) {
     const [repeatCount, setRepeatCount] = useState(0);
     const [repeatType, setRepeatType] = useState("day");
     const [color, setColor] = useState("#EF8E96");
+    const [errorMessage, setErrorMessage] = useState("");
 
     const handleChange = (e, setter) => {
         setter(e.target.value);
@@ -61,10 +62,18 @@ function CommitmentForm(props) {
             config
         )
             .then(response => {
-                props.setShowPopup(false);
+                if (response.data["message"] !== "success") {
+                    setErrorMessage("Error: commitment overlaps with another block in" +
+                        " the schedule.")
+                } else {
+                    setErrorMessage("");
+                    props.setShowPopup(false);
+                }
                 console.log(response.data["message"]);
             })
             .catch(function (error) {
+                setErrorMessage("Error: commitment overlaps with another block in" +
+                    " the schedule.")
                 console.log(error.response);
             });
     }
@@ -94,7 +103,7 @@ function CommitmentForm(props) {
                 <label htmlFor="duration">Duration (hrs)</label><br/>
                 <input type="number" step="0.1" min="0" id="duration" name="duration" onChange={(e) => handleChange(e, setDuration)}/><br/>
                 <label htmlFor="repeats">Repeats?</label>
-                <input type="checkbox" id="repeats" name="repeats" value="checked" onChange={(e) => handleChange(e, setRepeats)}/><br/>
+                <input type="checkbox" id="repeats" name="repeats" value="checked" onChange={(e) => setRepeats(!repeats)}/><br/>
                 {repeats ? repeatsInputs : <div/>}
                 <label htmlFor="color">Color</label><br/>
                 <div className="color-input">
@@ -108,6 +117,7 @@ function CommitmentForm(props) {
                         <option value="#A288BA">purple</option>
                     </select>
                 </div><br/>
+                <div className="error-message">{errorMessage}</div><br/>
                 <input id="submit" type="submit" value="Create"/>
             </form>
         </div>

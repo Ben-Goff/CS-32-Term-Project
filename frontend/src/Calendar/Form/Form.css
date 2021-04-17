@@ -19,3 +19,7 @@ input {
 .color-input {
     display: flex;
 }
+
+.error-message {
+    color: red;
+}

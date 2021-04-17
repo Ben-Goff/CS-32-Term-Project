@@ -11,6 +11,7 @@ function TaskForm(props) {
     const [estimatedEffort, setEstimatedEffort] = useState(0);
     const [sessionLength, setSessionLength] = useState(0);
     const [color, setColor] = useState("#EF8E96");
+    const [errorMessage, setErrorMessage] = useState("");
 
     const handleChange = (e, setter) => {
         setter(e.target.value);
@@ -55,11 +56,16 @@ function TaskForm(props) {
             config
         )
             .then(response => {
-                console.log("helloo? uthere?")
-                props.setShowPopup(false);
+                if (response.data["message"] !== "success") {
+                    setErrorMessage("Error: no room for task in current schedule");
+                } else {
+                    setErrorMessage("");
+                    props.setShowPopup(false);
+                }
                 console.log(response.data["message"]);
             })
             .catch(function (error) {
+                setErrorMessage("Error: no room for task in current schedule");
                 console.log(error.response);
             });
     }
@@ -91,7 +97,7 @@ function TaskForm(props) {
                         <option value="#A288BA">purple</option>
                     </select>
                 </div>
-
+                <div className="error-message">{errorMessage}</div><br/>
                 <input id="submit" type="submit" value="Create"/>
             </form>
         </div>

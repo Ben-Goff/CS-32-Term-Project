@@ -17,6 +17,7 @@ function ProjectForm(props) {
     const [dueTimeDict, setDueTimeDict] = useState({});
     const [estimatedEffortDict, setEstimatedEffortDict] = useState({});
     const [sessionLengthDict, setSessionLengthDict] = useState({});
+    const [errorMessage, setErrorMessage] = useState("");
 
     const handleChange = (e, setter) => {
         setter(e.target.value);
@@ -100,10 +101,16 @@ function ProjectForm(props) {
             config
         )
             .then(response => {
-                props.setShowPopup(false);
+                if (response.data["message"] !== "success") {
+                    setErrorMessage("Error: no room for project in current schedule");
+                } else {
+                    setErrorMessage("");
+                    props.setShowPopup(false);
+                }
                 console.log(response.data["message"]);
             })
             .catch(function (error) {
+                setErrorMessage("Error: no room for project in current schedule");
                 console.log(error.response);
             });
     }
@@ -132,6 +139,7 @@ function ProjectForm(props) {
                         <option value="#A288BA">purple</option>
                     </select>
                 </div><br/>
+                <div className="error-message">{errorMessage}</div><br/>
                 <input id="submit" type="submit" value="Create"/>
             </form>
         </div>
