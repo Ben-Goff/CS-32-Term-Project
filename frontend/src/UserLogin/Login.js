@@ -93,9 +93,11 @@ function Login() {
 
                 <button className="login-button" onClick={requestLogin}>Login</button>
 
-                {<div className="error-text">
-                    Error: {message}
-                </div>}
+                {showError &&
+                    <div className="error-text">
+                        Error: {message}
+                    </div>
+                }
 
             </div>
             <br/>
