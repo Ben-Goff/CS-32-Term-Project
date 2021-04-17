@@ -287,7 +287,7 @@ public class Main {
             List<Task> attempt = new ArrayList<>(current.getTasks());
             attempt.add(tryingToAdd);
             try {
-                s.schedule(attempt, 0, 0);
+                s.schedule(attempt, 0, (new Date()).getTime() + 604800000);
                 current.addTask(startTime, endTime, estTime, name, description, sessionTime, color, "");
                 message = "success";
             } catch (Exception e) {
@@ -330,16 +330,16 @@ public class Main {
                     Scheduler s = new Scheduler(current.getCommitments(), current.getBreakTime());
                     List<Task> attempt = new ArrayList<>(current.getTasks());
                     attempt.add(tryingToAddCheckpoint);
-                    s.schedule(attempt, 0, 0);
+                    s.schedule(attempt, 0, (new Date()).getTime() + 604800000);
                     UUID checkpointID = current.addTask(startTime, endTime, estTime, name,
                         description, sessionTime, color, "");
                     checkpointIDs.add(checkpointID);
                 }
+                current.addProject(projName, projDescription, checkpointIDs);
             } catch (Exception e) {
                 message = e.getMessage();
                 e.printStackTrace();
             }
-            current.addProject(projName, projDescription, checkpointIDs);
             Map<String, Object> variables = ImmutableMap.of("message", message);
             return GSON.toJson(variables);
         }

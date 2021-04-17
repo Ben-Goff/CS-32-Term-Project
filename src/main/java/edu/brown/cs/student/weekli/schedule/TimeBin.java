@@ -30,7 +30,8 @@ public class TimeBin {
       String tDesc = t.getDescription();
       String tColor = t.getColor();
       long tMean = (tEnd - tStart) / 2;
-      Block toAdd = addLeftSide(blocks, t.getID(), tDur, tStart + breakTime, tEnd, tName, tDesc, tColor);
+      Block toAdd = addLeftSide(blocks, t.getID(), tDur, tStart + breakTime, tEnd - breakTime,
+          tName, tDesc, tColor);
       if (toAdd != null) {
         blocks.add(toAdd);
         tasks.add(t);
@@ -42,9 +43,11 @@ public class TimeBin {
           long curEnd = Math.min(endTime, task.getEndDate());
           long curMean = (curEnd - curStart) / 2;
           if (curMean < tMean) {
-            toAdd = addLeftSide(attempt, task.getID(), curDur, curStart + breakTime, curEnd, tName, tDesc, tColor);
+            toAdd = addLeftSide(attempt, task.getID(), curDur, curStart + breakTime,
+                curEnd - breakTime, tName, tDesc, tColor);
           } else {
-            toAdd = addRightSide(attempt.descendingSet(), task.getID(), curDur, curStart, curEnd - breakTime, tName, tDesc, tColor);
+            toAdd = addRightSide(attempt.descendingSet(), task.getID(), curDur,
+                curStart + breakTime, curEnd - breakTime, tName, tDesc, tColor);
           }
           if(toAdd == null) {
             throw new RuntimeException("blocks did not refit");
@@ -52,7 +55,8 @@ public class TimeBin {
             attempt.add(toAdd);
           }
         }
-        toAdd = addLeftSide(attempt, t.getID(), tDur, tStart + breakTime, tEnd, tName, tDesc, tColor);
+        toAdd = addLeftSide(attempt, t.getID(), tDur, tStart + breakTime, tEnd - breakTime, tName,
+            tDesc, tColor);
         if (toAdd != null) {
           blocks = attempt;
           blocks.add(toAdd);
