@@ -121,6 +121,7 @@ public class User {
       prep = conn.prepareStatement(
           "INSERT INTO commitments (id, user, startTime, endTime, name, description, color)" + " VALUES " +
               "('" + add.getID().toString() + "', '" + this.iD + "', " + add.getStartDate() + ", " + add.getEndDate() + ", '" + add.getName() + "', '" + add.getDescription() + "', '"+color+"');");
+      System.out.println("added non-repeating commitment");
     }
     System.out.println("after sql...");
     prep.executeUpdate();
@@ -252,6 +253,7 @@ public class User {
     prep.executeUpdate();
     commitments = commitments.stream().filter(c -> !c.getID().toString().equals(id)).collect(
         Collectors.toList());
+    pastBlocks = pastBlocks.stream().filter(c -> !c.getiD().toString().equals(id)).collect(Collectors.toList());
   }
 
   public void deleteTask(String id) throws ClassNotFoundException, SQLException {
@@ -263,6 +265,7 @@ public class User {
     prep.executeUpdate();
     tasks = tasks.stream().filter(c -> !c.getID().toString().equals(id)).collect(
         Collectors.toList());
+    pastBlocks = pastBlocks.stream().filter(c -> !c.getiD().toString().equals(id)).collect(Collectors.toList());
   }
 
 //    public void deleteProject(String id) throws ClassNotFoundException, SQLException {

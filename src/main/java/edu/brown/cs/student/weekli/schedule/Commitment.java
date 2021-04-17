@@ -146,11 +146,11 @@ public class Commitment {
           (int) Math.floor((endTime - startTime - this.estTime) / (double) repeating.get());
       int startIndex =
           Math.max(0, (int) Math.floor((startTime - this.startDate) / (double) repeating.get()));
-      System.out.println("-----START INDEX STUFF------");
-      System.out.println(repeating.get());
-      System.out.println(startIndex);
-      System.out.println("startTime: " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(startTime));
-      System.out.println("endTime: " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(endTime));
+//      System.out.println("-----START INDEX STUFF------");
+//      System.out.println(repeating.get());
+//      System.out.println(startIndex);
+//      System.out.println("startTime: " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(startTime));
+//      System.out.println("endTime: " + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(endTime));
 
       blocks = IntStream.rangeClosed(
         startIndex, startIndex + repetitions).mapToObj(

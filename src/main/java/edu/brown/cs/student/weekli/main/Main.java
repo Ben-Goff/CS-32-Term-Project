@@ -366,16 +366,25 @@ public class Main {
                 tryingToAdd = new Commitment(startTime, endTime, name, description, Optional.empty(), color);
             }
 
-            List<Commitment> attempt = new ArrayList<>(current.getCommitments());
-            attempt.add(tryingToAdd);
-            Scheduler s = new Scheduler(attempt, current.getBreakTime());
+            boolean works = true;
+
             try {
-                s.schedule(current.getTasks(), 0, 0);
-                message = "success";
-                current.addCommitment(startTime, endTime, name, description, tryingToAdd.getRepeating(), color);
-            } catch (Exception e) {
+                List<Commitment> attempt = new ArrayList<>(current.getCommitments());
+                System.out.println("printing attempt sizes");
+                System.out.println(attempt.size());
+                attempt.add(tryingToAdd);
+                System.out.println(attempt.size());
+                Scheduler s = new Scheduler(attempt, current.getBreakTime());
+                s.schedule(current.getTasks(), 0, (new Date()).getTime() + 604800000);
+            } catch (Throwable e) {
+                works = false;
+                System.out.println("caught exception");
                 message = e.getMessage();
                 e.printStackTrace();
+            }
+            if (works) {
+                message = "success";
+                current.addCommitment(startTime, endTime, name, description, tryingToAdd.getRepeating(), color);
             }
             Map<String, Object> variables = ImmutableMap.of("message", message);
 

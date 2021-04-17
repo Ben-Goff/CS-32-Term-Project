@@ -25,7 +25,7 @@ public class Scheduler {
     this.breakTime = breakTime;
   }
 
-  public List<Block> schedule(List<Task> tasksToSchedule, long startDONTUSE, long end) {
+  public List<Block> schedule(List<Task> tasksToSchedule, long startDONTUSE, long end) throws RuntimeException {
     this.globalStartTime = (new Date()).getTime();
     List<Long> endTimes = tasksToSchedule.stream().map(Task::getEndDate).sorted().collect(Collectors.toList());
     if (endTimes.size() > 0) {
@@ -83,7 +83,7 @@ public class Scheduler {
     return smartWiggle;
   }
 
-  public void buildBins() {
+  public void buildBins() throws RuntimeException {
     bins.clear();
     boolean validCommitments;
     Block currentCommitment;
@@ -106,6 +106,7 @@ public class Scheduler {
 //          System.out.println("4");
 //          System.out.println(currentCommitment.getEndTime());
 //          System.out.println(nextCommitment.getStartTime());
+          System.out.println("threw commitment overlapping exception");
           throw new RuntimeException("Commitments are overlapping");
         }
         this.bins.add(new TimeBin(currentCommitment.getEndTime(), nextCommitment.getStartTime(), breakTime));
