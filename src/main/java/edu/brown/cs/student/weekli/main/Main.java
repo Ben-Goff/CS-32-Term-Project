@@ -115,6 +115,7 @@ public class Main {
         Spark.post("/deletecommitment", new DeleteCommitmentHandler());
         Spark.post("/deletetask", new DeleteTaskHandler());
         Spark.post("/changebreaktime", new AddBreakTimeHandler());
+        Spark.post("/getbreaktime", new GetBreakTimeHandler());
         Spark.get("/deleteall", new DeleteAllHandler());
     }
 
@@ -468,6 +469,14 @@ public class Main {
             //  3) startTime -- explicitly given
             //  4) endTime -- Calculated in front based on duration (not explicit)
             //  5) periodOfRepitition -- if non repeating, empty string
+
+            return GSON.toJson(variables);
+        }
+    }
+
+    protected static class GetBreakTimeHandler implements Route {
+        public Object handle(Request request, Response response) throws Exception {
+            Map<String, Object> variables = ImmutableMap.of("breaktime", current.getBreakTime());
 
             return GSON.toJson(variables);
         }
