@@ -228,7 +228,9 @@ public class Main {
             List<List<Block>> toReturn = new ArrayList<>();
             toReturn.add(blocksToReturn.stream().filter(b -> b.getEndTime() >= start && b.getStartTime() <= end).collect(Collectors.toList()));
             // System.out.println("3");
-            List<String[]> schedule = toReturn.stream().flatMap(Collection::stream).map(b -> new String[]{"" + b.getStartTime(), "" + b.getEndTime(), b.getiD().toString(), b.getName(), b.getDescription(), b.getColor()}).collect(Collectors.toList());
+            List<String[]> schedule =
+                blocksToReturn.stream().map(b -> new String[]{"" + b.getStartTime(),
+                "" + b.getEndTime(), b.getiD().toString(), b.getName(), b.getDescription(), b.getColor()}).collect(Collectors.toList());
             variables = ImmutableMap.of("schedule", schedule);
             // System.out.println("4");
             return GSON.toJson(variables);

@@ -6,23 +6,23 @@
 
 Benjamin:
 
-<<<<<<< HEAD
-- Coding strengths: I think that I have good attention to detail, which makes me good at debugging my code.
-I also think that I am patient when working in groups.
+- Coding strengths: I think that I have good attention to detail, which makes me good at debugging
+  my code. I also think that I am patient when working in groups.
 
-- Coding weaknesses: I came from the CS19 track, so I have limited experience with object-oriented programming.
-  In addition, I sometimes struggle with code readability and procrastination.
+- Coding weaknesses: I came from the CS19 track, so I have limited experience with object-oriented
+  programming. In addition, I sometimes struggle with code readability and procrastination.
 
 Cameron:
 
-* Strengths: I like to think I am good at setting up a project's structure, as in creating appropriate
-  class heirarchies, interface implentation, inheretance, etc. I am good at choosing appropriate data
-  structures for time efficiency. Like Dustin, I also like to think I am good at making pseudo code for
-  a given algorithm.
-* Weaknesses: Clearly, my biggest weakness is comitting changes. I am not great at finding edge cases for 
-  testing, and I tend to avoid testing till the end of a project. I am also not very great at front end coding
+* Strengths: I like to think I am good at setting up a project's structure, as in creating
+  appropriate class heirarchies, interface implentation, inheretance, etc. I am good at choosing
+  appropriate data structures for time efficiency. Like Dustin, I also like to think I am good at
+  making pseudo code for a given algorithm.
+* Weaknesses: Clearly, my biggest weakness is comitting changes. I am not great at finding edge
+  cases for testing, and I tend to avoid testing till the end of a project. I am also not very great
+  at front end coding
   (e.g. writing html, css, js).
-  
+
 Dustin:
 
 * Strengths: I'd like to think that I'm good at planning out code and getting ideas onto pseudo-code
@@ -34,12 +34,12 @@ Dustin:
 
 Miru:
 
-* Strengths: I'm pretty familiar with Java and object oriented programming in Java since I've 
-  been using it on and off for several years now. I also think I generally do an okay to good job with
+* Strengths: I'm pretty familiar with Java and object oriented programming in Java since I've been
+  using it on and off for several years now. I also think I generally do an okay to good job with
   commenting my code as I write it and keeping it easily readable.
-* Weaknesses: I can have an unfortunate tendency to procrastinate and am not very confident
-  in my understanding of data structures and making my code more efficient. I also tend to not
-  test my code as thoroughly as I probably should. 
+* Weaknesses: I can have an unfortunate tendency to procrastinate and am not very confident in my
+  understanding of data structures and making my code more efficient. I also tend to not test my
+  code as thoroughly as I probably should.
 
 **Project Idea(s):** _Fill this in with three unique ideas! (Due by March 1)_
 
@@ -83,7 +83,7 @@ the most difficult task of the project.
 
 ### Idea 2
 
-Study scheduler web app: addresses a similar problem to the previous idea but with different 
+Study scheduler web app: addresses a similar problem to the previous idea but with different
 features:
 
 Problem: With all that students have to balance - classes, homework, extracurriculars, sports,
@@ -123,13 +123,16 @@ their studies, which could decrease productivity, or would it give them the push
 on track? The most challenging part of this feature would be providing the infrastructure for users
 to connect to each other through their profiles.
 
-**HTA Approval (dpark20):** Idea not approved - it needs more algorithmic complexity beyond just the features you have!
+**HTA Approval (dpark20):** Idea not approved - it needs more algorithmic complexity beyond just the
+features you have!
 
 Good ideas! Looking forward to seeing what you make.
 
-### Idea 3
+## Mentor TA
 
-**Mentor TA:** _Put your mentor TA's name and email here once you're assigned one!_
+Sarah Rockhill
+
+sarah_rockhill@brown.edu
 
 ## Meetings
 
@@ -145,4 +148,16 @@ TA)_
 
 ## How to Build and Run
 
-_A necessary part of any README!_
+In the main project directory, run ```mvn package``` if it hasn't been run already to compile the
+project. Then, run ```./run --gui``` to run the backend server, which will run on port 4567.
+
+Then, in a separate terminal window, ```cd``` into the ```frontend/``` directory. Before running the
+frontend, run ```npm install``` to install all the dependencies of the project. Now,
+run ```npm start``` to start the frontend gui hosted on port 3000.
+
+A browser window should automatically open (and if it doesn't you can go
+to ```http://localhost:3000/``` manually), where you will be greeted with a login/signup page. The
+database already contains a user with a sample schedule with username "testuser" and password
+"testpassword". To make a new user, go to the sign up page and choose a username and password. 
+From there, the help instructions and intuitive interface should be sufficient to understand 
+where to go from here.

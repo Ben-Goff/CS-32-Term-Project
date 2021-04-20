@@ -6,6 +6,7 @@ edu/brown/cs/student/weekli/main/Main.class
 edu/brown/cs/student/weekli/schedule/Scheduler.class
 edu/brown/cs/student/weekli/main/Main$AddBreakTimeHandler.class
 edu/brown/cs/student/weekli/main/Main$GetScheduleHandler.class
+edu/brown/cs/student/weekli/main/Main$GetBreakTimeHandler.class
 edu/brown/cs/student/weekli/schedule/Project.class
 edu/brown/cs/student/weekli/main/Main$DeleteAllHandler.class
 edu/brown/cs/student/weekli/schedule/Scheduler$TaskComparator.class

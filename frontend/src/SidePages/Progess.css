@@ -1,7 +1,15 @@
-.Bars {
+.BarsContainer {
     overflow-y: scroll;
+    height: 80vh;
+    background-color: white;
+    padding-left: 50px;
+    border-radius: 20px;
+}
+
+.Bars {
     overflow-x: hidden;
     margin-top: 50px;
+    overflow-y: auto;
 }
 
 .ProgressBar {

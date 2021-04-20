@@ -33,6 +33,8 @@ function Progress() {
             .then(response => {
                 let newDisplayBars = [];
                 let progressInfo = response.data["tasks"];
+                let progressInfoSet = new Set(progressInfo)
+                progressInfo = Array.from(progressInfoSet);
                 for (let i = 0; i < progressInfo.length; i++) {
                     let blockInfo = progressInfo[i];
                     let blockName = blockInfo[0];
@@ -53,8 +55,10 @@ function Progress() {
         <div className="Progress">
             <ProgressNavbar/>
             {displayBars.length !== 0 ?
-                <div className="Bars">
-                    {displayBars}
+                <div className="BarsContainer">
+                    <div className="Bars">
+                        {displayBars}
+                    </div>
                 </div>:
                 <div>Add some tasks to track progress!</div>}
 

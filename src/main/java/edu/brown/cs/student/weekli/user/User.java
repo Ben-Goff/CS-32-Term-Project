@@ -191,7 +191,8 @@ public class User {
       }
       String color = rs.getString(11);
       this.tasks.add(
-          new Task(startTime, endTime, estTime, name, description, progress, id, sessionTime,
+          new Task(startTime, endTime, Math.max(0, estTime), name, description, progress, id,
+              sessionTime,
               project, color));
     }
     prep.close();
