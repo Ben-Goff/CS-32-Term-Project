@@ -7,8 +7,7 @@ import java.util.*;
 
 import edu.brown.cs.student.weekli.schedule.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class SchedulerTest {
 
@@ -121,6 +120,44 @@ public class SchedulerTest {
     List<Block> output = schedule.scheduleWithTime(tList, currentTime, currentTime + 3360L);
     assertTrue(noBlocksOverlap(output));
     assertEquals(output.size(), 3);
+  }
+
+  @Test
+  public void testWigglePositive() {
+    setUp();
+    Commitment c = new Commitment(currentTime + 1000000, currentTime + 1100000, "commitment",
+            "commitment", Optional.empty(), "");
+    Task t = new Task(currentTime + 500000, currentTime + 1700000, 1000000, "task", "task", 50000, "");
+    schedule = new Scheduler(Collections.singletonList(c), 0);
+    schedule.schedule(Collections.singletonList(t), 0, 9999999);
+    assertEquals(100000, schedule.taskWiggle(t));
+  }
+
+  @Test
+  public void testWiggleZero() {
+    setUp();
+    Commitment c = new Commitment(currentTime + 1000000, currentTime + 1100000, "commitment",
+            "commitment", Optional.empty(), "");
+    Task t = new Task(currentTime + 500000, currentTime + 1600000, 1000000, "task", "task", 50000, "");
+    schedule = new Scheduler(Collections.singletonList(c), 0);
+    schedule.schedule(Collections.singletonList(t), 0, 9999999);
+    assertEquals(0, schedule.taskWiggle(t));
+  }
+
+  @Test
+  public void testWiggleNegative() {
+    setUp();
+    Commitment c = new Commitment(currentTime + 1000000, currentTime + 1100000, "commitment",
+            "commitment", Optional.empty(), "");
+    Task t = new Task(currentTime + 500000, currentTime + 1600000, 10000000, "task", "task", 50000, "");
+    schedule = new Scheduler(Collections.singletonList(c), 0);
+    boolean throwing = false;
+    try {
+      schedule.taskWiggle(t);
+    } catch (RuntimeException e) {
+      throwing = true;
+    }
+    assertTrue(throwing);
   }
 
 }

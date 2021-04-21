@@ -126,7 +126,11 @@ public class TimeBin {
         return endTime;
     }
 
-    public static class WiggleComparator implements Comparator<Task> {
+  public long getBreakTime() {
+    return breakTime;
+  }
+
+  public static class WiggleComparator implements Comparator<Task> {
 
       private long startTime;
       private long endTime;

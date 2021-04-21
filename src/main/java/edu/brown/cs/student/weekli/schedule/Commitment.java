@@ -140,12 +140,13 @@ public class Commitment {
    * @return
    */
   public List<Block> getBlocks(long startTime, long endTime) {
-    List<Block> blocks = new ArrayList<>();
+    List<Block> blocks;
     if (this.repeating.isPresent()) {
-      final int repetitions =
-          (int) Math.floor((endTime - startTime - this.estTime) / (double) repeating.get());
-      int startIndex =
-          Math.max(0, (int) Math.floor((startTime - this.startDate) / (double) repeating.get()));
+      final int repetitions = (int) Math.floor((endTime - startTime - this.estTime) / (double) repeating.get());
+      int startIndex = (int) ((startTime - this.startDate) / (double) repeating.get());
+      if ((startTime - this.startDate) % (double) repeating.get() != 0) {
+        startIndex = (int) Math.ceil((startTime - this.startDate) / (double) repeating.get());
+      }
 //      System.out.println("-----START INDEX STUFF------");
 //      System.out.println(repeating.get());
 //      System.out.println(startIndex);
@@ -162,8 +163,10 @@ public class Commitment {
             this.description,
             this.color)).collect(Collectors.toList());
     } else {
-      if (this.startDate < endTime && this.endDate > startTime) {
+      if (this.startDate <= endTime && this.endDate >= startTime) {
         blocks = Collections.singletonList(this.commitBlock);
+      } else {
+        blocks = Collections.emptyList();
       }
     }
     System.out.println("size of list of commitment blocks: " + blocks.size());
