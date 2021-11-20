@@ -1,4 +1,4 @@
-# cs0320 Term Project 2021
+# Weekli: cs0320 Term Project 2021
 
 **Team Members:** Benjamin Goff, Cameron Fiore, Dustin Wu, Miru Yang
 
