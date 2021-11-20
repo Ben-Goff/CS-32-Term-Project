@@ -41,11 +41,7 @@ Miru:
   understanding of data structures and making my code more efficient. I also tend to not test my
   code as thoroughly as I probably should.
 
-**Project Idea(s):** _Fill this in with three unique ideas! (Due by March 1)_
-
-### Idea 1
-
-Our first idea is to create a productivity-boosting application that creates a more involved
+Our idea is to create a productivity-boosting application that creates a more involved
 connection between the user and the app. Planners and reminders are productivity tools that work for
 some but what they lack is a way react to when things don't go perfectly according to plan
 (examples include getting stuck on a certain task or procrastination). Users will enter in their
@@ -79,72 +75,11 @@ accordingly. This is so that the app can help the user improve, rather than simp
 productivity. Deciding on how the app should detect and categorize such issues is speculated to be
 the most difficult task of the project.
 
-**HTA Approval (dpark20):** Idea approved
-
-### Idea 2
-
-Study scheduler web app: addresses a similar problem to the previous idea but with different
-features:
-
-Problem: With all that students have to balance - classes, homework, extracurriculars, sports,
-social commitments - it can be hard to fit everything into a sustainable schedule. Although many
-calendar apps exist, they rely on the student finding their optimal schedule on their own, and
-holding themselves to the schedule.
-
-Solution: A web app that intelligently creates schedules for a student given their obligations and
-predicted time commitments.
-
-Feature #1: Throughout the day, users will be able to log how long scheduled tasks took in
-actuality. Using this data, schedules can be improved on in future days with more fine-tuned times.
-This feature is important in helping users realize what is realistic for them to complete given time
-constraints. In addition, it will help them have a better grasp on their daily schedule. The most
-challenging part of this feature is knowing which tasks are similar in nature to each other, and
-should have altered time allocation in the future.
-
-Feature #2: Chooses an order of tasks for each day that minimizes burnout. It could do this by
-grouping tasks into categories and mixing them together throughout the day. This way, users wont
-have 3 hours of straight reading followed by 3 hours of straight problem sets. In my experience,
-variety throughout the day helps me stay focused while studying. The most challenging part of this
-feature is figuring out how users can separate tasks by type. Options include having a set of
-options they can choose from, which could allow us to include more functionality for each, or
-allowing users to define their own categories, which would give users the most variety of options.
-
-Feature #3: Promote motivation and efficiency throughout the day. This could be done in a few
-different ways. The first would be to tie the app to a chrome extension that would blacklist a set
-of websites while the user should be focusing (or whitelist just the ones needed to focus on a
-specific task). The second approach is to be able to connect with friends in you same classes /
-activities. With these fellow users, you could start a "study streak," where every day you
-successfully do your work for your shared class / activity without being distracted (visiting a
-blacklisted website in chrome), the streak goes up by one. When one of you fail to do so, the streak
-breaks. This social motivation would work similarly to snapchat streaks, which have proven extremely
-effective. We would need to reach out to users to see if this second approach would be effective, as
-I believe it's viability depends heavily on users study methodology. Would this add more pressure on
-their studies, which could decrease productivity, or would it give them the push they need to stay
-on track? The most challenging part of this feature would be providing the infrastructure for users
-to connect to each other through their profiles.
-
-**HTA Approval (dpark20):** Idea not approved - it needs more algorithmic complexity beyond just the
-features you have!
-
-Good ideas! Looking forward to seeing what you make.
-
 ## Mentor TA
 
 Sarah Rockhill
 
 sarah_rockhill@brown.edu
-
-## Meetings
-
-_On your first meeting with your mentor TA, you should plan dates for at least the following
-meetings:_
-
-**Specs, Mockup, and Design Meeting:** _(Schedule for on or before March 15)_
-
-**4-Way Checkpoint:** _(Schedule for on or before April 5)_
-
-**Adversary Checkpoint:** _(Schedule for on or before April 12 once you are assigned an adversary
-TA)_
 
 ## How to Build and Run
 
